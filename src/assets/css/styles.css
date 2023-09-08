@@ -1,0 +1,96 @@
+
+@import url('src/assets/font-awesome-4.7.0/css/font-awesome.min.css');
+
+@font-face {
+    font-family: 'Roboto Regular';
+    src: url('src/assets/fonts/Roboto-Regular.ttf') format('truetype');
+  }
+  
+  @font-face {
+    font-family: 'Roboto Thin';
+    src: url('src/assets/fonts/Roboto-Thin.ttf') format('truetype');
+  }
+
+  @font-face {
+    font-family: 'Noto Serif Bengali';
+    src: url('src/assets/fonts/NotoSerifBengali-Regular.ttf') format('truetype');
+  }
+  
+  .bengali-text {
+    font-family: 'Bengali Serif', sans-serif;
+  }
+  
+  body {
+    font-family: 'Roboto', sans-serif;
+    /* background-image: url('../images/bg1.jpg'); */
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
+    position: relative;
+    /* animation: shuffleImages 210s infinite; */
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: teal;
+  }
+  .content {
+    max-width: 1920px;
+    width: 100%;
+    background-color: white;
+  }
+
+  ::-webkit-scrollbar {
+    width: 7px;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background-color: rgb(105, 185, 185);
+  }
+  ::-webkit-scrollbar {
+    background-color: rgba(0, 128, 128, 0.5); 
+  }
+  
+  @keyframes shuffleImages {
+    0% { background-image: url('../images/bg1.jpg'); }
+    14.285% { background-image: url('../images/bg2.jpg'); }
+    28.571% { background-image: url('../images/bg3.jpg'); }
+    42.857% { background-image: url('../images/bg4.jpg'); }
+    57.143% { background-image: url('../images/bg5.jpg'); }
+    71.428% { background-image: url('../images/bg6.jpg'); }
+    85.714% { background-image: url('../images/bg7.jpg'); }
+    100% { background-image: url('../images/bg1.jpg'); }
+  }
+  body .cdk-overlay-container {
+    background-color: rgba(1,128,128,0.25);
+    top: 200px;
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    text-align: center;
+    transform: translate(-50%, -50%);
+    user-select: none;
+    pointer-events: none;
+  }
+  body .mdc-snackbar__actions {
+    color: darkred;
+  }
+  body .mat-mdc-snack-bar-label.mdc-snackbar__label {
+  background-color: rgb(203, 230, 230);
+    text-shadow: -0.25px 0.25px white;
+}
+.menu_item2{
+  display: none;
+}
+.form-control:disabled {
+  background-color: #00808008;
+}
+select:disabled {
+  background-color: #00808008;
+}
+input:disabled {
+  background-color: #00808008;
+  user-select: none;
+  pointer-events: none;
+}
