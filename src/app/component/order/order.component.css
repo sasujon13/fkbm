@@ -171,14 +171,6 @@ input#trxid, input#paidFrom {
   border-radius: 5px;
   min-width: 220px;
 }
-button#verify {
-  padding: 7px;
-  border-radius: 5px;
-  border-bottom-left-radius: 15px;
-  border-top-left-radius: 15px;
-  margin-top: -1px;
-  margin-left: -58px;
-}
 select#paymentMethod {
   margin-left: 19px;
   padding: 7px;
