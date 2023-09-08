@@ -3,6 +3,7 @@ import { CartService } from 'src/app/service/cart.service';
 import { Router } from '@angular/router';
 import { ApiService } from '../../service/api.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-order',
@@ -10,6 +11,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   styleUrls: ['./order.component.css']
 })
 export class OrderComponent implements OnInit {
+  authForm: FormGroup;
   @ViewChild('consoleOutput') consoleOutput: ElementRef | undefined;
   orderDetails: any[] = [];
   transaction: any[] = [];
@@ -40,14 +42,31 @@ export class OrderComponent implements OnInit {
   public grandTotal !: number;
   public grandDiscount !: number;
   constructor(
+    private fb: FormBuilder,
     private apiService: ApiService, 
     private cartService : CartService, 
     private router: Router,
     private snackBar: MatSnackBar,
-    ) { }
+    ) { 
+      this.authForm = this.fb.group({
+      });
+    }
   ngOnInit(): void {
     document.addEventListener('contextmenu', function (event) {
       event.preventDefault();
+    });
+    this.authForm = this.fb.group({
+      fullName: ['', [Validators.required, Validators.maxLength(31)]],
+      division: ['', [Validators.required, Validators.maxLength(31)]],
+      district: ['', [Validators.required, Validators.maxLength(31)]],
+      thana: ['', [Validators.required, Validators.maxLength(31)]],
+      union: ['', [Validators.required, Validators.maxLength(31)]],
+      village: ['', [Validators.required, Validators.maxLength(255)]],
+      trxid: ['', [Validators.required, Validators.maxLength(31)]],
+      paymentMethod: ['', [Validators.required, Validators.maxLength(31)]],
+      paidFrom:['', [Validators.required, Validators.maxLength(17)]],
+      altMobileNo: ['', [Validators.required, Validators.maxLength(11)]],
+      username: ['', [Validators.required, Validators.maxLength(11)]],
     });
     this.username = localStorage.getItem('username');
     this.jsonData.username = this.username;
@@ -167,19 +186,35 @@ export class OrderComponent implements OnInit {
       );
     }
   }
+
+hasEmptyFields() {
+  const formControls = this.authForm.controls;
+  for (const key in formControls) {
+    if (formControls[key].value === '') {
+      return true; 
+    }
+  }
+  return false; 
+}
   saveJsonData() {
-    const jsonDataString = JSON.stringify(this.jsonData);
+    this.authForm.markAllAsTouched();
+    if(this.hasEmptyFields()){
+      this.handleResponse("Please Fillup the Red-Marked Fields!");
+    }
+    else{
+      const jsonDataString = JSON.stringify(this.jsonData);
     localStorage.setItem(this.username, jsonDataString);
     this.apiService.saveJsonData(jsonDataString).subscribe(
       (response) => {
-        console.log('JSON data saved:', response);
+        // console.log(response);
         this.handleResponse(response);
       },
       (error) => {
-        console.error('Error saving JSON data:', error);
+        // console.error(error);
         this.handleResponse(error);
       }
     );
+    }
   }
 
   handleResponse(response: any) {

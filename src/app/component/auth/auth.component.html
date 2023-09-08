@@ -3,8 +3,7 @@
   <form [formGroup]="authForm" (ngSubmit)="onAuth()">
     <label for="username">Mobile No</label>
     <input type="text" formControlName="username" id="username" placeholder="Your 11 Digits Mobile Number"
-      class="form-control"
-      [ngClass]="{ 'is-invalid': authForm.get('username')?.touched && authForm.get('username')?.invalid }" />
+      class="form-control" [ngClass]="{ 'is-invalid': authForm.get('username')?.touched && authForm.get('username')?.invalid }" />
 
     <div *ngIf="isMobileNumberRegistered" class="error-message errormessage">
       This Mobile number is already registered. Please <a [routerLink]="['/login']" routerLinkActive="login">Login</a> /
@@ -13,8 +12,7 @@
     <label for="password">Password</label>
     <div class="input-group">
       <input type="{{ showPassword ? 'text' : 'password' }}" formControlName="password" id="password"
-        class="form-control"
-        [ngClass]="{ 'is-invalid': authForm.get('password')?.touched && authForm.get('password')?.invalid }" />
+        class="form-control" [ngClass]="{ 'is-invalid': authForm.get('password')?.touched && authForm.get('password')?.invalid }" />
       <div class="input-group-append">
         <span class="input-group-text" (click)="togglePasswordVisibility()">
           <i class="fa {{ showPassword ? 'fa-eye-slash' : 'fa-eye' }}"></i>
@@ -45,8 +43,7 @@
 
     <label for="division">Division</label>
     <select class="address form-control" formControlName="division" id="division" (change)="onDivisionChange()"
-      class="form-control"
-      [ngClass]="{ 'is-invalid': authForm.get('division')?.touched && authForm.get('division')?.invalid }">
+      class="form-control" [ngClass]="{ 'is-invalid': authForm.get('division')?.touched && authForm.get('division')?.invalid }">
       <option value="">Select Division</option>
       <option *ngFor="let division of divisions" [value]="division">{{ division }}</option>
     </select>
