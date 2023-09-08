@@ -102,4 +102,9 @@ export class ApiService {
   saveJsonData(jsonData: any) {
     return this.http.post(`${this.baseUrl}/save_json_data/`, jsonData);
   }
+  adminRedirect(){
+    //return window.location.replace("http://127.0.0.1:8000/api/admin");
+    window.location.href = `${this.baseUrl}/admin/`;
+    return window.location.href;
+  }
 }

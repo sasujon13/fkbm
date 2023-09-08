@@ -1,3 +1,72 @@
+ .menu_item2 {
+    position: relative;
+    cursor: pointer;
+  }
+
+  ul.profileMenu {
+    margin-top: 124px;
+    position: absolute;
+    background-color: teal;
+    width: 40px;
+    height: 40px;
+    border: none;
+    border-radius: 50px;
+    right: 4px;
+    z-index: 110;
+}
+
+  .fa-user {
+    margin-top: 10px;
+    position: absolute;
+    z-index: 110;
+    font-size: 20px;
+    margin-left: -20px;
+    color: white !important;
+}
+  ul.dropdown {
+    position: absolute;
+    margin: 40px 61px 0px -145px;
+    list-style-type: none;
+    padding: 10px;
+    width: 160px;
+    border: 1px solid #ccc;
+    z-index: 110;
+    background-color: white;
+  }
+  ul.dropdown li a {
+    text-decoration: none;
+    color: teal;
+}
+  
+  .menu_item2.open .dropdown {
+    display: block;
+  }
+  
+  /* Add transition for a smoother appearance */
+  .dropdown {
+    transition: display 0.3s ease-in-out;
+  }
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 .caution-box {
   position: relative;
   width: 3px; /* Adjust width as needed */
@@ -54,7 +123,7 @@ a:hover{
   color: yellowgreen !important;
 }
 .fa:hover{
-  color: yellowgreen;
+  color: yellowgreen !important;
 }
 .sign_menu{
   margin-top: 45px;

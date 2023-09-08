@@ -13,6 +13,8 @@ import { AuthGuard } from './service/authgard.service';
 import { Router } from '@angular/router';
 import { AuthComponent } from './component/auth/auth.component';
 import { AdminComponent } from './component/admin/admin.component';
+import { ProfileComponent } from './component/profile/profile.component';
+import { MyorderComponent } from './component/myorder/myorder.component';
 
 const routes: Routes = [
   {path:'', redirectTo:'products',pathMatch:'full'},
@@ -25,10 +27,12 @@ const routes: Routes = [
   {path:'order', component: OrderComponent, canActivate: [AuthGuard]},
   {path:'cart', component: CartComponent},
   {path:'login', component: LoginComponent},
-  {path:'auth/login', redirectTo:'login',pathMatch:'full'},
   {path:'auth', component: AuthComponent},
-  {path: 'admin', component: AdminComponent},
+  {path:'auth/login', redirectTo:'login',pathMatch:'full'},
   {path:'login/auth', redirectTo:'auth',pathMatch:'full'},
+  {path: 'admin', component: AdminComponent},
+  {path: 'myorder', component: MyorderComponent},
+  {path: 'profile', component: ProfileComponent},
 ];
 
 @NgModule({
@@ -37,14 +41,6 @@ const routes: Routes = [
 })
 
 export class AppRoutingModule {
-  constructor(private router: Router) {}
-
-onLoginSuccess() {
-  this.router.navigate(['/order']);
-}
-
-onSignupSuccess() {
-  this.router.navigate(['/order']);
-  }
+  constructor() {}
 }
 

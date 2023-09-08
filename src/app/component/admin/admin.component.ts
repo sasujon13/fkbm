@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ApiService } from 'src/app/service/api.service';
 
 @Component({
   selector: 'app-admin',
@@ -6,9 +7,8 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./admin.component.css'],
 })
 export class AdminComponent implements OnInit {
+  constructor(private apiService: ApiService){}
   ngOnInit(): void {
-    // window.location.replace("http://127.0.0.1:8000/api/admin");
-    window.location.href = "http://127.0.0.1:8000/api/admin";
-    
+    this.apiService.adminRedirect();
   }
 }

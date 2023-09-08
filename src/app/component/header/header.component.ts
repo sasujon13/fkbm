@@ -24,7 +24,12 @@ import { ActivatedRoute } from '@angular/router';
   ]
 })
 export class HeaderComponent implements OnInit {
-
+  isDropdownOpen = false;
+  toggleDropdown() {
+    this.isDropdownOpen = !this.isDropdownOpen;
+    this.resetInactivityTimeout();
+  }
+  
   public totalCartItem: number = 0;
   public totalChoiceItem: number = 0;
   public searchTerm!: string;
@@ -33,6 +38,7 @@ export class HeaderComponent implements OnInit {
   loginStatus: boolean = false;
 
   @ViewChild('menuToggle', { static: true }) menuToggle!: ElementRef;
+  @ViewChild('menu_item2', { static: true }) menu_item2!: ElementRef; 
   item2: any;
   item1: any;
 
@@ -46,14 +52,18 @@ export class HeaderComponent implements OnInit {
     const menu_item0 = document.getElementById('menu_item0');
     const menu_item1 = document.getElementById('menu_item1');
     const menu_item2 = document.getElementById('menu_item2');
-    if (menu_item2 && menu_item1 && menu_item0) {
+    const sign_menu = document.getElementById('sign_menu');
+    const profileMenu = document.getElementById('profileMenu');
+    if (menu_item2 && menu_item1 && menu_item0 && sign_menu && profileMenu) {
       this.loginStatus = localStorage.getItem('isLoggedIn') === 'true';
       if (this.loginStatus) {
         menu_item2.style.display = 'block';
         menu_item1.style.display = 'none';
         menu_item0.style.display = 'none';
+        sign_menu.style.display = 'none';
       }
       else {
+        profileMenu.style.display = 'none';
         menu_item2.style.display = 'none';
         menu_item1.style.display = 'block';
         menu_item0.style.display = 'block';
@@ -126,18 +136,25 @@ export class HeaderComponent implements OnInit {
   closeMenu() {
     this.menuActive = false;
   }
+  closeProfileMenu() {
+    this.isDropdownOpen = false;  //added
+  }
 
 
   resetInactivityTimeout() {
     clearTimeout(this.inactivityTimeout);
     this.inactivityTimeout = setTimeout(() => {
       this.closeMenu();
-    }, 10000); // 10 seconds in milliseconds
+      this.closeProfileMenu(); //added
+    }, 7000); // 10 seconds in milliseconds
   }
   @HostListener('document:click', ['$event'])
   onDocumentClick(event: Event) {
     if (!this.menuToggle.nativeElement.contains(event.target)) {
       this.closeMenu();
+    }
+    if (!this.menu_item2.nativeElement.contains(event.target)) {
+      this.closeProfileMenu(); //added
     }
   }
 
@@ -158,10 +175,14 @@ export class HeaderComponent implements OnInit {
     const menu_item0 = document.getElementById('menu_item0');
     const menu_item1 = document.getElementById('menu_item1');
     const menu_item2 = document.getElementById('menu_item2');
-    if (menu_item2 && menu_item1 && menu_item0) {
-        menu_item2.style.display = 'none';
-        menu_item1.style.display = 'block';
+    const profileMenu = document.getElementById('profileMenu');
+    const sign_menu = document.getElementById('sign_menu');
+    if (menu_item2 && menu_item1 && menu_item0 && profileMenu && sign_menu) {
+        sign_menu.style.display = '-webkit-inline-box';
         menu_item0.style.display = 'block';
+        menu_item1.style.display = 'block';
+        menu_item2.style.display = 'none';
+        profileMenu.style.display = 'none';
 
       }
   }

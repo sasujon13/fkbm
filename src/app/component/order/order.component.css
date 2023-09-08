@@ -5,13 +5,19 @@
   max-width: 1000px !important;
 }
 
-.order {
+/* .order {
   text-align: center;
-  margin: 52px auto auto auto;
+  margin: 62px auto auto auto;
   padding-top: 18px;
   position: absolute;
+  color: teal;
+} */
+.order {
+  text-align: center;
+  margin: 72px auto auto auto;
+  padding-top: 18px;
+  color: teal;
 }
-
 .previous_order,
 .current_order {
   font-family: Roboto Thin;
@@ -263,4 +269,11 @@ textarea#village {
 .card-table{
   max-width: 1000px !important;
   margin: auto;
+}
+/* will be deleted late */
+form{
+  margin-top: -92px;
+}
+.search-bar.ng-tns-c1116856951-0 {
+    display: none;
 }

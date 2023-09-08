@@ -1,7 +1,7 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { CartService } from 'src/app/service/cart.service';
 import { Router } from '@angular/router';
-import { ApiService } from '../../service/api.service';
+import { ApiService } from 'src/app/service/api.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 
@@ -52,6 +52,12 @@ export class OrderComponent implements OnInit {
       });
     }
   ngOnInit(): void {
+    
+  const searchBarElement = document.getElementById('searchBar');
+
+  if (searchBarElement) {
+    searchBarElement.style.display = 'none';
+  }
     document.addEventListener('contextmenu', function (event) {
       event.preventDefault();
     });

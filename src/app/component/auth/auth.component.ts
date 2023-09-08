@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
-import { ApiService } from '../../service/api.service';
+import { ApiService } from 'src/app/service/api.service';
 import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
 import { of } from 'rxjs';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -168,11 +168,14 @@ export class AuthComponent implements OnInit {
     const menu_item0 = document.getElementById('menu_item0');
     const menu_item1 = document.getElementById('menu_item1');
     const menu_item2 = document.getElementById('menu_item2');
-    if (menu_item2 && menu_item1 && menu_item0) {
+    const profileMenu = document.getElementById('profileMenu');
+    const sign_menu = document.getElementById('sign_menu');
+    if (menu_item2 && menu_item1 && menu_item0 && profileMenu && sign_menu) {
         menu_item2.style.display = 'block';
         menu_item1.style.display = 'none';
         menu_item0.style.display = 'none';
-
+        sign_menu.style.display = 'none';
+        profileMenu.style.display = 'block';
       }
   }
 

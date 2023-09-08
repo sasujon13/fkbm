@@ -4,7 +4,7 @@
     <div class="menu-toggle" #menuToggle (click)="toggleMenu()">
         <i class="fa fa-bars"></i><img src="./assets/images/cheradip.svg" class="logo">
     </div>
-    <div class="search-bar">
+    <div class="search-bar" id="searchBar">
       <input type="text" class="form-control" name="searchTerm" id="searchTerm" [(ngModel)]="searchTerm" (keyup)="search($event)" placeholder="Fish Name or Code">
       <i class="fa fa-search"></i>
     </div>
@@ -20,10 +20,19 @@
         <li class="menu_item"><a [routerLink]="['/choice']" routerLinkActive="choice"><i class="fa fa-heart fa-heart2"></i><div class="badge">{{totalChoiceItem}}</div></a></li>
         <li class="menu_item"><a [routerLink]="['/cart']" routerLinkActive="cart"><div class="badge badge2">{{totalCartItem}}</div><i class="fa fa-shopping-cart"></i>Cart</a></li>
       </ul>
-      <ul class="menu sign_menu">
+      <ul class="menu sign_menu" id="sign_menu" #sign_menu>
         <li class="menu_item menu_item0" id="menu_item0"><a [routerLink]="['/login']" routerLinkActive="login"><i class="fa fa-sign-in"></i>Login</a></li>
         <li class="menu_item menu_item1" id="menu_item1"><a [routerLink]="['/auth']" routerLinkActive="auth"><i class="fa fa-user-plus"></i>SignUp</a></li>
-        <li class="menu_item menu_item2" id="menu_item2" (click)="logout()"><a [routerLink]="['']" routerLinkActive="products"><i class="fa fa-sign-out-alt"></i>Logout</a></li>
+      </ul>
+      <ul class="profileMenu" id="profileMenu" #profileMenu>
+        <li class="menu_item menu_item2" #menu_item2 id="menu_item2" (click)="toggleDropdown()">
+          <a><i class="fa fa-user"></i></a>
+          <ul class="dropdown" *ngIf="isDropdownOpen">
+            <li><a [routerLink]="['/myorder']"><i class="fa fa-shopping-cart"></i>&nbsp;&nbsp; My Order</a></li>
+            <li><a [routerLink]="['/profile']"><i class="fa fa-user-edit"></i>&nbsp; Update Profile</a></li>
+            <li><a (click)="logout()"><i class="fa fa-sign-out-alt"></i>&nbsp;&nbsp; Logout</a></li>
+          </ul>
+        </li>
       </ul>
 </div>
 </header>

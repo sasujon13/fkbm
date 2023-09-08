@@ -21,6 +21,8 @@ import { LoginComponent } from './component/login/login.component';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { AdminComponent } from './component/admin/admin.component';
+import { ProfileComponent } from './component/profile/profile.component';
+import { MyorderComponent } from './component/myorder/myorder.component';
 
 @NgModule({
   declarations: [
@@ -38,6 +40,8 @@ import { AdminComponent } from './component/admin/admin.component';
     AuthComponent,
     LoginComponent,
     AdminComponent,
+    ProfileComponent,
+    MyorderComponent,
   ],
   imports: [
     BrowserModule,

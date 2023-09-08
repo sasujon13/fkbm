@@ -1,9 +1,10 @@
 
 <div class="order">
-    <i class="fas fa-arrow-left left_arrow"></i>
-    <button routerLink="/order" class="btn previous_order btn-success">Previous Order</button>
-    <button routerLink="/order" class="btn current_order btn-success">Current Order</button>
-    <i class="fa fa-arrow-down right_arrow"></i>
+    <h5>Hi, Please fillup the form with necessary details to Confirm Order.</h5>
+    <!-- <i class="fas fa-arrow-left left_arrow"></i> -->
+    <!-- <button routerLink="/order" class="btn previous_order btn-success">Previous Order</button> -->
+    <!-- <button routerLink="/order" class="btn current_order btn-success">Current Order</button> -->
+    <!-- <i class="fa fa-arrow-down right_arrow"></i> -->
 </div>
 <form (ngSubmit)="saveJsonData()" [formGroup]="authForm">
     <ng-container *ngIf="products.length != 0">

@@ -9,6 +9,11 @@ export class BlogComponent implements OnInit {
   constructor(private renderer: Renderer2, private el: ElementRef) { }
   
   ngOnInit(): void {
+    const searchBarElement = document.getElementById('searchBar');
+
+  if (searchBarElement) {
+    searchBarElement.style.display = 'none';
+  }
     this.applyMargin();
     document.addEventListener('contextmenu', function (event) {
       event.preventDefault();

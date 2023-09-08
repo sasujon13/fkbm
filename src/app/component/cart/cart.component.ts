@@ -14,6 +14,11 @@ export class CartComponent implements OnInit {
   constructor(private cartService : CartService) { }
 
   ngOnInit(): void {
+    const searchBarElement = document.getElementById('searchBar');
+
+  if (searchBarElement) {
+    searchBarElement.style.display = 'none';
+  }
     
     document.addEventListener('contextmenu', function (event) {
       event.preventDefault();
