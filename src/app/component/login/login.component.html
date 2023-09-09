@@ -8,8 +8,8 @@
 
     <div *ngIf="isMobileNumberRegistered" class="error-message errormessage">
       You don't have an account with this Mobile number. Please <a [routerLink]="['/auth']"
-        routerLinkActive="auth">Signup</a> / <a [routerLink]="['']" routerLinkActive="reset">Reset Password</a> / try
-      with a different Mobile number.....
+        routerLinkActive="auth">Signup</a> / try
+      with a different Mobile number!
     </div>
 
     <label for="password">Password</label>
@@ -24,15 +24,15 @@
       </div>
     </div>
     <div *ngIf="isPasswordMismatch" class="error-message errormessage">
-      Your Password doesn't match. Please try again or <a [routerLink]="['']" routerLinkActive="reset">Reset</a>
-      password / <a [routerLink]="['/auth']" routerLinkActive="auth">Signup</a> with a different Mobile number.
+      Your Password doesn't match. Please try again or <a [routerLink]="['/password']" routerLinkActive="reset">Reset</a>
+      password / <a [routerLink]="['/auth']" routerLinkActive="auth">Signup</a> with a different Mobile number!
     </div>
     <div *ngIf="isPasswordLength" class="error-message errormessage">
       Password must be within 6 - 14 Characters.
     </div>
 
 
-    <button type="submit">Login</button>
+    <button type="submit" class="loginButton">Login</button>
     <div class="error-message errormessage submitError">
       Can't Remember Password! Please try to <a [routerLink]="['']" routerLinkActive="reset">Reset</a> it.
     </div>

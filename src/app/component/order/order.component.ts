@@ -25,7 +25,7 @@ export class OrderComponent implements OnInit {
   districts: string[] = [];
   thanas: string[] = [];
   division: string = '';
-  district: string = ''; 
+  district: string = '';
   thana: string = '';
   paymentMethod: string = '';
   username: any;
@@ -38,26 +38,26 @@ export class OrderComponent implements OnInit {
   paidFrom: any;
   Paid: any;
 
-  public products : any = [];
+  public products: any = [];
   public grandTotal !: number;
   public grandDiscount !: number;
   constructor(
     private fb: FormBuilder,
-    private apiService: ApiService, 
-    private cartService : CartService, 
+    private apiService: ApiService,
+    private cartService: CartService,
     private router: Router,
     private snackBar: MatSnackBar,
-    ) { 
-      this.authForm = this.fb.group({
-      });
-    }
-  ngOnInit(): void {
-    
-  const searchBarElement = document.getElementById('searchBar');
-
-  if (searchBarElement) {
-    searchBarElement.style.display = 'none';
+  ) {
+    this.authForm = this.fb.group({
+    });
   }
+  ngOnInit(): void {
+
+    const searchBarElement = document.getElementById('searchBar');
+
+    if (searchBarElement) {
+      searchBarElement.style.display = 'none';
+    }
     document.addEventListener('contextmenu', function (event) {
       event.preventDefault();
     });
@@ -70,7 +70,7 @@ export class OrderComponent implements OnInit {
       village: ['', [Validators.required, Validators.maxLength(255)]],
       trxid: ['', [Validators.required, Validators.maxLength(31)]],
       paymentMethod: ['', [Validators.required, Validators.maxLength(31)]],
-      paidFrom:['', [Validators.required, Validators.maxLength(17)]],
+      paidFrom: ['', [Validators.required, Validators.maxLength(17)]],
       altMobileNo: ['', [Validators.required, Validators.maxLength(11)]],
       username: ['', [Validators.required, Validators.maxLength(11)]],
     });
@@ -89,32 +89,32 @@ export class OrderComponent implements OnInit {
       this.divisions = divisions;
     });
     this.cartService.getCartProducts()
-    .subscribe((res: any)=>{
-      this.products = res;
-      this.grandTotal = this.cartService.grandTotal();
-      this.grandDiscount = this.cartService.grandDiscount();
-      this.jsonData.orderDetails = this.products.map((product: any, index: number) => {
-        return {
-          SN: index + 1,
-          Name: `${product.name} - ${product.code} (${product.bangla_name})`,
-          Image: product.image,
-          Weight: `${product.weight}`,
-          Price: `${this.productPrice(product)}`,
-          Quantity: product.quantity,
-          Discount: this.savedPrice(product),
-          Total: this.totalPrice(product),
-          GrandTotal: `${this.cartService.grandTotal()}`,
-          Paid: `1`,
-          Due: `1`,
-        };
+      .subscribe((res: any) => {
+        this.products = res;
+        this.grandTotal = this.cartService.grandTotal();
+        this.grandDiscount = this.cartService.grandDiscount();
+        this.jsonData.orderDetails = this.products.map((product: any, index: number) => {
+          return {
+            SN: index + 1,
+            Name: `${product.name} - ${product.code} (${product.bangla_name})`,
+            Image: product.image,
+            Weight: `${product.weight}`,
+            Price: `${this.productPrice(product)}`,
+            Quantity: product.quantity,
+            Discount: this.savedPrice(product),
+            Total: this.totalPrice(product),
+            GrandTotal: `${this.cartService.grandTotal()}`,
+            Paid: `1`,
+            Due: `1`,
+          };
+        });
       });
-    });
-    
+
   }
-  removeCartItem(item: any){
+  removeCartItem(item: any) {
     this.cartService.removeCartItem(item);
   }
-  emptycart(){
+  emptycart() {
     this.cartService.removeAllCart();
   }
   increaseQuantity(item: any) {
@@ -133,7 +133,7 @@ export class OrderComponent implements OnInit {
   savedPrice(item: any): number {
     return Math.ceil(item.quantity * (item.weight * item.price * 100 / (100 - item.discount) - (item.weight * item.price)));
   }
-  
+
   totalPrice(item: any): number {
     return Math.ceil(item.weight * item.quantity * item.price);
   }
@@ -143,11 +143,11 @@ export class OrderComponent implements OnInit {
   productPrice2(item: any): number {
     return Math.ceil(item.price * 100 / (100 - item.discount));
   }
- 
+
   onDivisionChange(): void {
     this.apiService.getDistricts(this.jsonData.division).subscribe(districts => {
       this.districts = districts;
-      this.district = ''; 
+      this.district = '';
     });
   }
 
@@ -160,7 +160,7 @@ export class OrderComponent implements OnInit {
   fetchDivisions() {
     this.apiService.getDivisions().subscribe(
       (data: string[]) => {
-        this.divisions = data; 
+        this.divisions = data;
       },
       error => {
         console.error('Error fetching divisions:', error);
@@ -179,7 +179,7 @@ export class OrderComponent implements OnInit {
       );
     }
   }
-  
+
   fetchThanas() {
     if (this.division && this.district) {
       this.apiService.getThanas(this.division, this.district).subscribe(
@@ -193,33 +193,36 @@ export class OrderComponent implements OnInit {
     }
   }
 
-hasEmptyFields() {
-  const formControls = this.authForm.controls;
-  for (const key in formControls) {
-    if (formControls[key].value === '') {
-      return true; 
+  hasEmptyFields() {
+    const formControls = this.authForm.controls;
+    for (const key in formControls) {
+      if (formControls[key].value === '') {
+        return true;
+      }
     }
+    return false;
   }
-  return false; 
-}
   saveJsonData() {
     this.authForm.markAllAsTouched();
-    if(this.hasEmptyFields()){
+    if (this.hasEmptyFields()) {
       this.handleResponse("Please Fillup the Red-Marked Fields!");
     }
-    else{
+    else if (this.authForm.valid) {
       const jsonDataString = JSON.stringify(this.jsonData);
-    localStorage.setItem(this.username, jsonDataString);
-    this.apiService.saveJsonData(jsonDataString).subscribe(
-      (response) => {
-        // console.log(response);
-        this.handleResponse(response);
-      },
-      (error) => {
-        // console.error(error);
-        this.handleResponse(error);
-      }
-    );
+      localStorage.setItem(this.username, jsonDataString);
+      this.apiService.saveJsonData(jsonDataString).subscribe(
+        (response) => {
+          this.handleResponse(response);
+          this.router.navigate(['/myorder']);
+        },
+        (error) => {
+          this.handleResponse(error);
+        }
+      );
+    }
+    else {
+      this.handleResponse("You have Invalid Data! Please Correct!");
+      this.authForm.markAllAsTouched();
     }
   }
 
@@ -241,7 +244,7 @@ hasEmptyFields() {
   // Function to format the response message
   formatResponseMessage(response: any): string {
     let formattedMessage = JSON.stringify(response);
-    
+
     // Remove curly braces {}
     formattedMessage = formattedMessage.replace(/[{()}]/g, '');
 
@@ -251,7 +254,7 @@ hasEmptyFields() {
 
     // Trim leading and trailing whitespace
     formattedMessage = formattedMessage.trim();
-    if (formattedMessage.includes("Order Created Successfully")){
+    if (formattedMessage.includes("Order Created Successfully")) {
       this.snackBar.open('Order Created Successfully!', 'Close', {
         duration: 3000,
         panelClass: ['success-snackbar'],

@@ -52,7 +52,7 @@ export class ApiService {
           localStorage.setItem('village', response.village);
           localStorage.setItem('gender', response.gender);
           localStorage.setItem('isLoggedIn', 'true');
-          localStorage.setItem('authToken', response)
+          localStorage.setItem('authToken', response);
           localStorage.setItem('formData', JSON.stringify(loginData));
         }
       }),
@@ -80,6 +80,38 @@ export class ApiService {
     );
   }
 
+  update(username: string, password: string, fullName: string, gender: string, division: string, district: string, thana: string, union: string, village: string): Observable<any> {
+    const signupData = { username, password, fullName, gender, division, district, thana, union, village };
+    return this.http.post(`${this.baseUrl}/profile_update/`, signupData).pipe(
+      tap((response: any) => {
+        if (response.token) {
+          this.setToken(response.token);
+          localStorage.setItem('isLoggedIn', 'true');
+          localStorage.setItem('authToken', response.token)
+          localStorage.setItem('formData', JSON.stringify(signupData));
+        }
+      }),
+      catchError((error) => {
+        throw error;
+      })
+    );
+  }
+  updatePassword(username: string, password: string, newpassword: string): Observable<any> {
+    const signupData = { username, password, newpassword };
+    return this.http.post(`${this.baseUrl}/password_update/`, signupData).pipe(
+      tap((response: any) => {
+        if (response.token) {
+          this.setToken(response.token);
+          localStorage.setItem('isLoggedIn', 'true');
+          localStorage.setItem('authToken', response.token)
+          localStorage.setItem('formData', JSON.stringify(signupData));
+        }
+      }),
+      catchError((error) => {
+        throw error;
+      })
+    );
+  }
 
   private setToken(token: string): void {
     localStorage.setItem('authToken', token);

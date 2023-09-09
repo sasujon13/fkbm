@@ -72,10 +72,10 @@
       [ngClass]="{ 'is-invalid': authForm.get('village')?.touched && authForm.get('village')?.invalid }"
       placeholder="Enter Your Village, Para/Moholla, Road No, Block No, Quarter No, Floor No etc....."></textarea>
 
-    <button type="submit">Signup</button>
+    <button type="submit" class="signupButton">Signup</button>
   </form>
 
-  <p>Already have an account</p>
+  <p>Already have an account?</p>
   <a [routerLink]="['/login']" routerLinkActive="login" style="text-decoration: none;"><button class="switchButton">
       Login
     </button></a>

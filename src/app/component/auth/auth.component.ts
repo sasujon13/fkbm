@@ -35,6 +35,11 @@ export class AuthComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    const searchBarElement = document.getElementById('searchBar');
+  
+    if (searchBarElement) {
+      searchBarElement.style.display = 'none';
+    }
     this.fetchDivisions();
     const savedAuthFormData = localStorage.getItem('authFormData');
     if (savedAuthFormData) {
@@ -109,12 +114,14 @@ export class AuthComponent implements OnInit {
       localStorage.setItem('formData', JSON.stringify(formData));
       this.apiService.signup(username, password, fullName, gender, division, district, thana, union, village).subscribe(
         (response) => {
-          this.snackBar.open('Signup successful! Now you are in Order page...', 'Close', {
+          this.snackBar.open('Signup Successful!', 'Close', {
             duration: 3000,
             panelClass: ['success-snackbar'],
           });
           this.logout();
-          this.router.navigate(['/order']);
+          const returnUrl = localStorage.getItem('returnUrl') || ''; // Default to root if returnUrl is not set
+          this.router.navigate([returnUrl]);
+          localStorage.setItem('returnUrl', '');
           localStorage.setItem('username', username);
           localStorage.setItem('fullName', fullName);
           localStorage.setItem('union', union);

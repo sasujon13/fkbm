@@ -2,7 +2,7 @@ import { Component, ElementRef, HostListener, OnInit, ViewChild } from '@angular
 import { trigger, state, style, transition, animate } from '@angular/animations';
 import { CartService } from 'src/app/service/cart.service';
 import { ChoiceService } from 'src/app/service/choice.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 
 @Component({
@@ -43,7 +43,7 @@ export class HeaderComponent implements OnInit {
   item1: any;
 
 
-  constructor(private cartService: CartService, private choiceService: ChoiceService, private route: ActivatedRoute) { }
+  constructor(private cartService: CartService, private choiceService: ChoiceService, private route: ActivatedRoute, private router: Router) { }
 
   ngOnInit(): void {
     localStorage.getItem('isLoggedIn');
@@ -185,6 +185,7 @@ export class HeaderComponent implements OnInit {
         profileMenu.style.display = 'none';
 
       }
+    this.router.navigate(['']);
   }
 
 }

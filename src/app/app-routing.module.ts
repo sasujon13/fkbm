@@ -15,6 +15,7 @@ import { AuthComponent } from './component/auth/auth.component';
 import { AdminComponent } from './component/admin/admin.component';
 import { ProfileComponent } from './component/profile/profile.component';
 import { MyorderComponent } from './component/myorder/myorder.component';
+import { PasswordComponent } from './component/password/password.component';
 
 const routes: Routes = [
   {path:'', redirectTo:'products',pathMatch:'full'},
@@ -31,8 +32,9 @@ const routes: Routes = [
   {path:'auth/login', redirectTo:'login',pathMatch:'full'},
   {path:'login/auth', redirectTo:'auth',pathMatch:'full'},
   {path: 'admin', component: AdminComponent},
-  {path: 'myorder', component: MyorderComponent},
-  {path: 'profile', component: ProfileComponent},
+  {path: 'myorder', component: MyorderComponent, canActivate: [AuthGuard]},
+  {path: 'profile', component: ProfileComponent, canActivate: [AuthGuard]},
+  {path: 'password', component: PasswordComponent, canActivate: [AuthGuard]},
 ];
 
 @NgModule({

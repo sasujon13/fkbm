@@ -1,5 +1,5 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, ValidatorFn, AbstractControl } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ApiService } from 'src/app/service/api.service';
 import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
@@ -9,32 +9,21 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-auth',
-  templateUrl: './profile.component.html',
-  styleUrls: ['./profile.component.css']
+  templateUrl: './password.component.html',
+  styleUrls: ['./password.component.css']
 })
 
-export class ProfileComponent implements OnInit {
+export class PasswordComponent implements OnInit {
   @ViewChild('consoleOutput') consoleOutput: ElementRef | undefined;
   authForm: FormGroup;
   isPasswordMismatch = false;
+  isPasswordMismatch3 = false;
   isMobileNumberRegistered = false;
   isPasswordLength = false;
+  isPasswordLength2 = false;
   showPassword: boolean = false;
-  jsonData: any = {
-    division: '',
-    district: '',
-    thana: '',
-    paymentMethod: ''
-  };
-
-  divisions: string[] = [];
-  districts: string[] = [];
-  thanas: string[] = [];
-  username: any;
-  fullName: any;
-  gender: any;
-  union: any;
-  village: any;
+  jsonData: any;
+  username: any = '';
 
   constructor(
     private fb: FormBuilder,
@@ -45,15 +34,17 @@ export class ProfileComponent implements OnInit {
     this.authForm = this.fb.group({
       // ... form controls ...
     });
+
+    this.username = localStorage.getItem('username');
   }
 
   ngOnInit(): void {
     const searchBarElement = document.getElementById('searchBar');
-  
+
     if (searchBarElement) {
       searchBarElement.style.display = 'none';
     }
-    this.fetchDivisions();
+
     const savedAuthFormData = localStorage.getItem('authFormData');
     if (savedAuthFormData) {
       const authData = JSON.parse(savedAuthFormData);
@@ -62,26 +53,9 @@ export class ProfileComponent implements OnInit {
     this.authForm = this.fb.group({
       username: ['', [Validators.required, Validators.minLength(11), Validators.maxLength(11)]],
       password: ['', [Validators.required, Validators.minLength(6), Validators.maxLength(14)]],
-      fullName: ['', [Validators.required, Validators.maxLength(31)]],
-      gender: ['Male', [Validators.required, Validators.maxLength(6)]],
-      division: ['', [Validators.required, Validators.maxLength(31)]],
-      district: ['', [Validators.required, Validators.maxLength(31)]],
-      thana: ['', [Validators.required, Validators.maxLength(31)]],
-      union: ['', [Validators.required, Validators.maxLength(31)]],
-      village: ['', [Validators.required, Validators.maxLength(255)]]
+      newpassword: ['', [Validators.required, Validators.minLength(6), Validators.maxLength(14)]],
+      confirmpassword: ['', [Validators.required, Validators.minLength(6), Validators.maxLength(14), this.confirmPasswordValidator()]],
     });
-
-    this.username = localStorage.getItem('username');
-    this.jsonData.username = this.username;
-    this.fullName = localStorage.getItem('fullName');
-    this.jsonData.fullName = this.fullName;
-    this.gender = localStorage.getItem('gender');
-    this.jsonData.gender = this.gender;
-    this.union = localStorage.getItem('union');
-    this.jsonData.union = this.union;
-    this.village = localStorage.getItem('village');
-    this.jsonData.village = this.village;
-
     this.authForm.get('username')?.valueChanges
       .pipe(
         debounceTime(300),
@@ -105,7 +79,7 @@ export class ProfileComponent implements OnInit {
         }
       });
 
-    this.authForm.get('password')?.valueChanges
+      this.authForm.get('password')?.valueChanges
       .pipe(
         debounceTime(300),
         distinctUntilChanged(),
@@ -132,6 +106,51 @@ export class ProfileComponent implements OnInit {
             this.isPasswordMismatch = false;
         }
       });
+      
+    this.authForm.get('newpassword')?.valueChanges
+      .pipe(
+        debounceTime(300),
+        distinctUntilChanged(),
+        switchMap((password) => {
+          const username = this.authForm.get('username')?.value;
+          if (password.length > 5 && password.length < 15) {
+            this.isPasswordLength2 = false;
+
+          }
+          else{
+            this.isPasswordLength2 = true;
+          }
+          return of(false);
+        })
+      )
+      .subscribe((response: any) => {
+        if (!response) {}
+        else  { }
+      });
+
+    this.authForm.get('confirmpassword')?.valueChanges
+      .pipe(
+        debounceTime(300),
+        distinctUntilChanged(),
+        switchMap((password) => {
+          const username = this.authForm.get('username')?.value;
+          if (password.length > 5 && password.length < 15) {
+            const newpassword = this.authForm.get('newpassword')?.value;
+            const confirmpassword = this.authForm.get('confirmpassword')?.value;
+            if (newpassword === confirmpassword) {
+              this.isPasswordMismatch3 = false;
+            } else {
+              this.isPasswordMismatch3 = true;
+            }
+
+          }
+          return of(false);
+        })
+      )
+      .subscribe((response: any) => {
+        if (!response) { }
+        else { }
+      });
 
   }
   hasEmptyFields() {
@@ -149,21 +168,15 @@ export class ProfileComponent implements OnInit {
       this.handleResponse("Please Fillup the Red-Marked Fields!");
     }
     else {
-      if (this.authForm.valid && this.isPasswordMismatch === false) {
+      if (this.authForm.valid) {
         const username = this.authForm.value.username;
         const password = this.authForm.value.password;
-        const fullName = this.authForm.value.fullName;
-        const gender = this.authForm.value.gender;
-        const division = this.authForm.value.division;
-        const district = this.authForm.value.district;
-        const thana = this.authForm.value.thana;
-        const union = this.authForm.value.union;
-        const village = this.authForm.value.village;
+        const newpassword = this.authForm.value.newpassword;
         const formData = this.authForm.value;
         localStorage.setItem('formData', JSON.stringify(formData));
-        this.apiService.update(username, password, fullName, gender, division, district, thana, union, village).subscribe(
+        this.apiService.updatePassword(username, password, newpassword).subscribe(
           (response) => {
-            this.snackBar.open('Profile Update Successful!', 'Close', {
+            this.snackBar.open('Password Update Successful!', 'Close', {
               duration: 3000,
               panelClass: ['success-snackbar'],
             });
@@ -172,8 +185,6 @@ export class ProfileComponent implements OnInit {
             this.router.navigate([returnUrl]);
             localStorage.setItem('returnUrl', '');
             localStorage.setItem('username', username);
-            localStorage.setItem('fullName', fullName);
-            localStorage.setItem('union', union);
             localStorage.setItem('isLoggedIn', 'true');
             localStorage.setItem('authToken', response)
             localStorage.setItem('formData', JSON.stringify(formData));
@@ -187,36 +198,6 @@ export class ProfileComponent implements OnInit {
         this.authForm.markAllAsTouched();
       }
     }
-  }
-
-  onDivisionChange(): void {
-    const selectedDivision = this.authForm.get('division')?.value;
-    if (selectedDivision) {
-      this.apiService.getDistricts(selectedDivision).subscribe(districts => {
-        this.districts = districts;
-      });
-    }
-  }
-
-  onDistrictChange(): void {
-    const selectedDivision = this.authForm.get('division')?.value;
-    const selectedDistrict = this.authForm.get('district')?.value;
-    if (selectedDivision && selectedDistrict) {
-      this.apiService.getThanas(selectedDivision, selectedDistrict).subscribe(thanas => {
-        this.thanas = thanas;
-      });
-    }
-  }
-
-  fetchDivisions() {
-    this.apiService.getDivisions().subscribe(
-      (data: string[]) => {
-        this.divisions = data;
-      },
-      error => {
-        console.error('Error fetching divisions:', error);
-      }
-    );
   }
 
   togglePasswordVisibility(): void {
@@ -271,5 +252,18 @@ export class ProfileComponent implements OnInit {
       this.router.navigate(['/products']);
     }
     return formattedMessage;
+  }
+
+  confirmPasswordValidator(): ValidatorFn {
+    return (control: AbstractControl): { [key: string]: any } | null => {
+      const newpassword = this.authForm.get('newpassword')?.value;
+      const confirmpassword = control.value;
+
+      if (newpassword === confirmpassword) {
+        return null; // Validation passes, passwords match
+      } else {
+        return { 'passwordMismatch3': true }; // Validation fails, passwords do not match
+      }
+    };
   }
 }

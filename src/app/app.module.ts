@@ -23,6 +23,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { AdminComponent } from './component/admin/admin.component';
 import { ProfileComponent } from './component/profile/profile.component';
 import { MyorderComponent } from './component/myorder/myorder.component';
+import { PasswordComponent } from './component/password/password.component';
 
 @NgModule({
   declarations: [
@@ -42,6 +43,7 @@ import { MyorderComponent } from './component/myorder/myorder.component';
     AdminComponent,
     ProfileComponent,
     MyorderComponent,
+    PasswordComponent,
   ],
   imports: [
     BrowserModule,

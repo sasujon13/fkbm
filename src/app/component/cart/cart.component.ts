@@ -14,7 +14,7 @@ export class CartComponent implements OnInit {
   constructor(private cartService : CartService) { }
 
   ngOnInit(): void {
-    const searchBarElement = document.getElementById('searchBar');
+  const searchBarElement = document.getElementById('searchBar');
 
   if (searchBarElement) {
     searchBarElement.style.display = 'none';

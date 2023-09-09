@@ -31,6 +31,11 @@ export class LoginComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    const searchBarElement = document.getElementById('searchBar');
+  
+    if (searchBarElement) {
+      searchBarElement.style.display = 'none';
+    }
     
     localStorage.getItem('isLoggedIn'); 
     localStorage.getItem('authToken');
@@ -108,12 +113,14 @@ export class LoginComponent implements OnInit {
       if (this.isPasswordMismatch === false) {
         this.apiService.login(username, password).subscribe(
           (response) => {
-            this.snackBar.open('Signin successful! Now you are in Order page...', 'Close', {
+            this.snackBar.open('Signin Successful!', 'Close', {
               duration: 3000,
               panelClass: ['success-snackbar'],
             });
             this.logout();
-            this.router.navigate(['/order']);
+            const returnUrl = localStorage.getItem('returnUrl') || ''; // Default to root if returnUrl is not set
+            this.router.navigate([returnUrl]);
+            localStorage.setItem('returnUrl', '');
             localStorage.setItem('isLoggedIn', 'true');
             localStorage.setItem('authToken', response)
             localStorage.setItem('formData', JSON.stringify(formData));

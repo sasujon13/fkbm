@@ -132,7 +132,7 @@ select.address {
   margin-top: -35px;
   margin-bottom: 24px;
   padding: 7px;
-  color: #333
+  color: #333;
 }
 
 option {
@@ -164,13 +164,18 @@ select.form-control {
   font-size: 12px;
   margin-top: 5px;
   transition: opacity 0.5s;
+  text-align: justify;
 }
 
 div.errormessage {
   margin-left: 100px;
   margin-top: -15px;
   margin-bottom: 15px;
-  width: 72%;
+  width: 250px;
+}
+.signupButton{
+    margin: 24px auto 0 auto !important;
+    width: 250px;
 }
 
 span.input-group-text {
