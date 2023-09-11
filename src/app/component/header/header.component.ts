@@ -2,7 +2,7 @@ import { Component, ElementRef, HostListener, OnInit, ViewChild } from '@angular
 import { trigger, state, style, transition, animate } from '@angular/animations';
 import { CartService } from 'src/app/service/cart.service';
 import { ChoiceService } from 'src/app/service/choice.service';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 
 
 @Component({
@@ -24,6 +24,28 @@ import { ActivatedRoute, Router } from '@angular/router';
   ]
 })
 export class HeaderComponent implements OnInit {
+  isCopyrightVisible = false;
+  shouldDisplayCopyrightDiv = false; 
+
+  @HostListener('window:scroll', ['$event'])
+  @HostListener('window:resize', ['$event'])
+  onScroll(event: any) {
+    this.checkVisibility();
+  }
+
+  checkVisibility() {
+    const copyrightDiv = document.getElementById('copyright');
+    if (copyrightDiv) {
+      const contentHeight = document.body.scrollHeight;
+      const screenHeight = window.innerHeight;
+      const scrollTop = window.scrollY;
+      const lastScrollPosition = contentHeight - screenHeight;
+      this.shouldDisplayCopyrightDiv =
+        contentHeight <= screenHeight ||
+        (scrollTop >= lastScrollPosition && contentHeight > screenHeight);
+    }
+  }
+
   isDropdownOpen = false;
   toggleDropdown() {
     this.isDropdownOpen = !this.isDropdownOpen;
@@ -46,6 +68,14 @@ export class HeaderComponent implements OnInit {
   constructor(private cartService: CartService, private choiceService: ChoiceService, private route: ActivatedRoute, private router: Router) { }
 
   ngOnInit(): void {
+    this.router.events.subscribe((event) => {
+      if (event instanceof NavigationEnd) {
+        setTimeout(() => {
+          this.checkVisibility();
+        }, 100);
+      }
+    });
+    this.checkVisibility();
     localStorage.getItem('isLoggedIn');
     localStorage.getItem('authToken');
     localStorage.getItem('formData');
@@ -145,8 +175,8 @@ export class HeaderComponent implements OnInit {
     clearTimeout(this.inactivityTimeout);
     this.inactivityTimeout = setTimeout(() => {
       this.closeMenu();
-      this.closeProfileMenu(); //added
-    }, 7000); // 10 seconds in milliseconds
+      this.closeProfileMenu();
+    }, 7000000);
   }
   @HostListener('document:click', ['$event'])
   onDocumentClick(event: Event) {

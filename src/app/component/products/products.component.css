@@ -108,7 +108,7 @@ h1.msg{
   text-shadow: 0 0 15px teal;
   /* text-shadow: -1px -1px 0 teal; */
   font-size: 28px;
-  margin: 110px 0 -10px 0 !important;
+  margin: 115px 0 -10px 0 !important;
   font-family: roboto regular;
 }
 p.price {
@@ -209,7 +209,7 @@ img.filter{
     margin-top: 39px !important;
   }
   h1.msg {
-    margin-top: 150px !important;
+    margin-top: 155px !important;
 }
 }
 

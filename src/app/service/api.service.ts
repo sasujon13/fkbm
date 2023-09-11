@@ -62,6 +62,14 @@ export class ApiService {
     );
   }
 
+
+  myorder(username: string): Observable<any> {
+    // const loginData = { username };
+    // return this.http.post(`${this.baseUrl}/myorder/`, loginData)
+    return this.http.get(`${this.baseUrl}/myorder/${username}/`);
+  }
+
+
   signup(username: string, password: string, fullName: string, gender: string, division: string, district: string, thana: string, union: string, village: string): Observable<any> {
 
     const signupData = { username, password, fullName, gender, division, district, thana, union, village };

@@ -1,9 +1,8 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { CartService } from 'src/app/service/cart.service';
-import { Router } from '@angular/router';
 import { ApiService } from 'src/app/service/api.service';
-import { MatSnackBar } from '@angular/material/snack-bar';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import * as jspdf from 'jspdf';
+import html2canvas from 'html2canvas';
+
 
 @Component({
   selector: 'app-order',
@@ -11,256 +10,139 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
   styleUrls: ['./myorder.component.css']
 })
 export class MyorderComponent implements OnInit {
-  authForm: FormGroup;
-  @ViewChild('consoleOutput') consoleOutput: ElementRef | undefined;
-  orderDetails: any[] = [];
-  transaction: any[] = [];
-  jsonData: any = {
-    division: '',
-    district: '',
-    thana: '',
-    paymentMethod: ''
-  };
-  divisions: string[] = [];
-  districts: string[] = [];
-  thanas: string[] = [];
-  division: string = '';
-  district: string = ''; 
-  thana: string = '';
-  paymentMethod: string = '';
-  username: any;
-  altMobileNo: any;
-  fullName: any;
-  gender: any;
-  union: any;
-  village: any;
-  trxid: any;
-  paidFrom: any;
-  Paid: any;
-
-  public products : any = [];
-  public grandTotal !: number;
-  public grandDiscount !: number;
-  constructor(
-    private fb: FormBuilder,
-    private apiService: ApiService, 
-    private cartService : CartService, 
-    private router: Router,
-    private snackBar: MatSnackBar,
-    ) { 
-      this.authForm = this.fb.group({
-      });
-    }
+  orders: any[] = []; // Replace with your array of orders
+  displayedOrders: any[] = [];
+  displayOrderCount = 10; // Initial number of orders to display
+  showMoreButton = false;
+  username: any
+  fullName: any
+  constructor(private apiService: ApiService,) { }
   ngOnInit(): void {
-    
-  const searchBarElement = document.getElementById('searchBar');
-
-  if (searchBarElement) {
-    searchBarElement.style.display = 'none';
-  }
+    this.username = localStorage.getItem('username');
+    this.fullName = localStorage.getItem('fullName');
+    this.loadData();
+    this.updateDisplayedOrders();
+    const searchBarElement = document.getElementById('searchBar');
+    if (searchBarElement) {
+      searchBarElement.style.display = 'none';
+    }
     document.addEventListener('contextmenu', function (event) {
       event.preventDefault();
     });
-    this.authForm = this.fb.group({
-      fullName: ['', [Validators.required, Validators.maxLength(31)]],
-      division: ['', [Validators.required, Validators.maxLength(31)]],
-      district: ['', [Validators.required, Validators.maxLength(31)]],
-      thana: ['', [Validators.required, Validators.maxLength(31)]],
-      union: ['', [Validators.required, Validators.maxLength(31)]],
-      village: ['', [Validators.required, Validators.maxLength(255)]],
-      trxid: ['', [Validators.required, Validators.maxLength(31)]],
-      paymentMethod: ['', [Validators.required, Validators.maxLength(31)]],
-      paidFrom:['', [Validators.required, Validators.maxLength(17)]],
-      altMobileNo: ['', [Validators.required, Validators.maxLength(11)]],
-      username: ['', [Validators.required, Validators.maxLength(11)]],
-    });
-    this.username = localStorage.getItem('username');
-    this.jsonData.username = this.username;
-    this.fullName = localStorage.getItem('fullName');
-    this.jsonData.fullName = this.fullName;
-    this.gender = localStorage.getItem('gender');
-    this.jsonData.gender = this.gender;
-    this.union = localStorage.getItem('union');
-    this.jsonData.union = this.union;
-    this.village = localStorage.getItem('village');
-    this.jsonData.village = this.village;
-    this.fetchDivisions();
-    this.apiService.getDivisions().subscribe(divisions => {
-      this.divisions = divisions;
-    });
-    this.cartService.getCartProducts()
-    .subscribe((res: any)=>{
-      this.products = res;
-      this.grandTotal = this.cartService.grandTotal();
-      this.grandDiscount = this.cartService.grandDiscount();
-      this.jsonData.orderDetails = this.products.map((product: any, index: number) => {
-        return {
-          SN: index + 1,
-          Name: `${product.name} - ${product.code} (${product.bangla_name})`,
-          Image: product.image,
-          Weight: `${product.weight}`,
-          Price: `${this.productPrice(product)}`,
-          Quantity: product.quantity,
-          Discount: this.savedPrice(product),
-          Total: this.totalPrice(product),
-          GrandTotal: `${this.cartService.grandTotal()}`,
-          Paid: `1`,
-          Due: `1`,
-        };
-      });
-    });
-    
   }
-  removeCartItem(item: any){
-    this.cartService.removeCartItem(item);
-  }
-  emptycart(){
-    this.cartService.removeAllCart();
-  }
-  increaseQuantity(item: any) {
-    this.cartService.changeQuantity(item.id, 1);
-    this.grandTotal = this.cartService.grandTotal();
-    this.grandDiscount = this.cartService.grandDiscount();
-  }
-
-  decreaseQuantity(item: any) {
-    if (item.quantity > 1) {
-      this.cartService.changeQuantity(item.id, -1);
-      this.grandTotal = this.cartService.grandTotal();
-      this.grandDiscount = this.cartService.grandDiscount();
-    }
-  }
-  savedPrice(item: any): number {
-    return Math.ceil(item.quantity * (item.weight * item.price * 100 / (100 - item.discount) - (item.weight * item.price)));
-  }
-  
-  totalPrice(item: any): number {
-    return Math.ceil(item.weight * item.quantity * item.price);
-  }
-  productPrice(item: any): number {
-    return Math.ceil(item.weight * item.price * 100 / (100 - item.discount));
-  }
-  productPrice2(item: any): number {
-    return Math.ceil(item.price * 100 / (100 - item.discount));
-  }
- 
-  onDivisionChange(): void {
-    this.apiService.getDistricts(this.jsonData.division).subscribe(districts => {
-      this.districts = districts;
-      this.district = ''; 
-    });
-  }
-
-  onDistrictChange(): void {
-    this.apiService.getThanas(this.jsonData.division, this.jsonData.district).subscribe(thanas => {
-      this.thanas = thanas;
-    });
-  }
-
-  fetchDivisions() {
-    this.apiService.getDivisions().subscribe(
-      (data: string[]) => {
-        this.divisions = data; 
-      },
-      error => {
-        console.error('Error fetching divisions:', error);
-      }
-    );
-  }
-  fetchDistricts() {
-    if (this.division) {
-      this.apiService.getDistricts(this.division).subscribe(
-        (data: string[]) => {
-          this.districts = data;
-        },
-        error => {
-          console.error('Error fetching districts:', error);
-        }
-      );
-    }
-  }
-  
-  fetchThanas() {
-    if (this.division && this.district) {
-      this.apiService.getThanas(this.division, this.district).subscribe(
-        (data: string[]) => {
-          this.thanas = data;
-        },
-        error => {
-          console.error('Error fetching thanas:', error);
-        }
-      );
-    }
-  }
-
-hasEmptyFields() {
-  const formControls = this.authForm.controls;
-  for (const key in formControls) {
-    if (formControls[key].value === '') {
-      return true; 
-    }
-  }
-  return false; 
-}
-  saveJsonData() {
-    this.authForm.markAllAsTouched();
-    if(this.hasEmptyFields()){
-      this.handleResponse("Please Fillup the Red-Marked Fields!");
-    }
-    else if (this.authForm.valid){
-      const jsonDataString = JSON.stringify(this.jsonData);
-    localStorage.setItem(this.username, jsonDataString);
-    this.apiService.saveJsonData(jsonDataString).subscribe(
+  loadData() {
+    this.apiService.myorder(this.username).subscribe(
       (response) => {
-        this.handleResponse(response);
+        this.orders = response;
       },
       (error) => {
-        this.handleResponse(error);
       }
     );
-    }
-    else{
-      this.handleResponse("You have Invalid Data! Please Correct!");
-      this.authForm.markAllAsTouched();
-    }
+    this.updateDisplayedOrders();
   }
 
-  handleResponse(response: any) {
+  updateDisplayedOrders() {
+    // Slice the 'orders' array to get a portion of orders to display
+    this.displayedOrders = this.orders.slice(0, this.displayOrderCount);
 
-    if (this.consoleOutput) {
-      const consoleOutputDiv = this.consoleOutput.nativeElement;
-      consoleOutputDiv.textContent = '';
-    }
-    const formattedMessage = this.formatResponseMessage(response);
-
-    // Append the formatted console output message
-    if (this.consoleOutput) {
-      const consoleOutputDiv = this.consoleOutput.nativeElement;
-      consoleOutputDiv.textContent = formattedMessage;
-    }
+    // Show the "Show More" button if there are more orders to display
+    this.showMoreButton = this.displayOrderCount < this.orders.length;
   }
 
-  // Function to format the response message
-  formatResponseMessage(response: any): string {
-    let formattedMessage = JSON.stringify(response);
+  showMoreOrders() {
+    // Increase the number of displayed orders by 10 or the remaining orders if less than 10
+    this.displayOrderCount += 10;
+    if (this.displayOrderCount > this.orders.length) {
+      this.displayOrderCount = this.orders.length;
+    }
+    this.updateDisplayedOrders();
+  }
+  fullName2(){
+    const name = this.fullName;
+    return name;
+  }
+  getTotalOrderCount(): number {
+    return this.orders.length;
+  }
+  calculateSubTotal(order: any) {
+    let subTotal = 0;
+    let price = 0;
+    let quantity = 0;
+    let total = 0;
+    for (const od of order.orderDetails) {
+      price = Number(od.Price);
+      quantity = Number(od.Quantity);
+      total = price * quantity
+      subTotal += total
+    }
+    return subTotal;
+  }
+  calculateDiscount(order: any) {
+    let discount = 0;
+    for (const od of order.orderDetails) {
+      discount += Number(od.Discount);
+    }
+    return discount;
+  }
+  calculateDue(order: any) {
+    let TotalProductPrice = 0;
+    let shipingCost = 0;
+    let grandTotal = 0;
+    let due = 0;
+    let paid = 0;
+    for (const od of order.orderDetails) {
+      TotalProductPrice = Number(od.GrandTotal);
+      // shipingCost = Number(od.ShipingCost);
+      shipingCost = Number('100');
+      paid = Number(od.Paid);
+    }
+    grandTotal = TotalProductPrice + shipingCost
+    due = grandTotal - paid
+    return due;
+  }
+  parseAndSum(value1: any, value2: any) {
+    // Convert the values to numbers and sum them
+    const num1 = parseFloat(value1);
+    const num2 = parseFloat(value2);
+    return num1 + num2;
+  }
+  downloadAllAsPDF() {
+    const element = document.getElementById('your-table-id'); // Replace with the actual ID of your HTML content
     
-    // Remove curly braces {}
-    formattedMessage = formattedMessage.replace(/[{()}]/g, '');
-
-    // Remove "error:" and "message:"
-    formattedMessage = formattedMessage.replace(/"error":/g, '');
-    formattedMessage = formattedMessage.replace(/"message":/g, '');
-
-    // Trim leading and trailing whitespace
-    formattedMessage = formattedMessage.trim();
-    if (formattedMessage.includes("Order Created Successfully")){
-      this.snackBar.open('Order Created Successfully!', 'Close', {
-        duration: 3000,
-        panelClass: ['success-snackbar'],
+    if (element) {
+      const pdf = new jspdf.jsPDF();
+  
+      html2canvas(element).then((canvas) => {
+        const imgData = canvas.toDataURL('image/png');
+        const imgWidth = 210; // Width of the PDF in mm (A4 size)
+        const imgHeight = (canvas.height * imgWidth) / canvas.width;
+  
+        pdf.addImage(imgData, 'PNG', 0, 0, imgWidth, imgHeight);
+        pdf.save('table.pdf');
       });
-      this.router.navigate(['/products']);
+    } else {
+      console.error('Element not found'); // Handle the case where the element is not found
     }
-    return formattedMessage;
   }
 
+downloadAsPDF(i: Number) {
+  const element = document.querySelector(`#order-${i}`) as HTMLElement;
+  console.log('element:',element);
+
+  if (element) {
+    const pdf = new jspdf.jsPDF();
+
+    html2canvas(element).then((canvas) => {
+      const imgData = canvas.toDataURL('image/png');
+      const imgWidth = 210; // Width of the PDF in mm (A4 size)
+      const imgHeight = (canvas.height * imgWidth) / canvas.width;
+      const filename = `Order${Number(i) + 1}.pdf`;
+
+      pdf.addImage(imgData, 'PNG', 0, 0, imgWidth, imgHeight);
+      pdf.save(filename); // Save the PDF with the dynamically generated filename
+    });
+  } else {
+    console.error('Element not found'); // Handle the case where the element is not found
+  }
+}
 }

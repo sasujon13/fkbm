@@ -10,7 +10,7 @@
     </div>
     <ul class="menu" [class.active]="menuActive" [@flyInOut] (click)="closeMenu()">
         <li class="menu_item"><a [routerLink]="['']" routerLinkActive=""><i class="fa fa-home"></i>Products</a></li>
-        <li class="menu_item"><a [routerLink]="['/blog']" routerLinkActive="blog"><i class="fa fa-pencil-square-o"></i><div class="caution-box">
+        <li class="menu_item"><a [routerLink]="['/blog']" routerLinkActive="blog"><i class="fa pencil fa-pencil-square-o"></i><div class="caution-box writingbox">
           <i class="fa fa-exclamation-circle"></i>
         </div></a></li>
         <li class="menu_item"><a [routerLink]="['/faqs']" routerLinkActive="faqs"><i class="fa fa-question-circle"></i>FAQs</a></li>
@@ -35,5 +35,14 @@
           </ul>
         </li>
       </ul>
+</div>
+
+<div id="copyright" class="copyright">
+  <ng-container *ngIf="shouldDisplayCopyrightDiv">
+    <div class="scaleBeforeCopyright"></div>
+    <div class="beforeCopyright"></div>
+    &copy;All rights reserved by cheradip.com
+    <div class="afterCopyright"></div>
+  </ng-container>
 </div>
 </header>
