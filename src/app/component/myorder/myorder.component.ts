@@ -10,9 +10,9 @@ import html2canvas from 'html2canvas';
   styleUrls: ['./myorder.component.css']
 })
 export class MyorderComponent implements OnInit {
-  orders: any[] = []; // Replace with your array of orders
+  orders: any[] = [];
   displayedOrders: any[] = [];
-  displayOrderCount = 10; // Initial number of orders to display
+  displayOrderCount = 10;
   showMoreButton = false;
   username: any
   fullName: any
@@ -42,22 +42,19 @@ export class MyorderComponent implements OnInit {
   }
 
   updateDisplayedOrders() {
-    // Slice the 'orders' array to get a portion of orders to display
     this.displayedOrders = this.orders.slice(0, this.displayOrderCount);
 
-    // Show the "Show More" button if there are more orders to display
     this.showMoreButton = this.displayOrderCount < this.orders.length;
   }
 
   showMoreOrders() {
-    // Increase the number of displayed orders by 10 or the remaining orders if less than 10
     this.displayOrderCount += 10;
     if (this.displayOrderCount > this.orders.length) {
       this.displayOrderCount = this.orders.length;
     }
     this.updateDisplayedOrders();
   }
-  fullName2(){
+  fullName2() {
     const name = this.fullName;
     return name;
   }
@@ -92,8 +89,7 @@ export class MyorderComponent implements OnInit {
     let paid = 0;
     for (const od of order.orderDetails) {
       TotalProductPrice = Number(od.GrandTotal);
-      // shipingCost = Number(od.ShipingCost);
-      shipingCost = Number('100');
+      shipingCost = Number(od.ShipingCost);
       paid = Number(od.Paid);
     }
     grandTotal = TotalProductPrice + shipingCost
@@ -101,48 +97,112 @@ export class MyorderComponent implements OnInit {
     return due;
   }
   parseAndSum(value1: any, value2: any) {
-    // Convert the values to numbers and sum them
     const num1 = parseFloat(value1);
     const num2 = parseFloat(value2);
     return num1 + num2;
   }
   downloadAllAsPDF() {
-    const element = document.getElementById('your-table-id'); // Replace with the actual ID of your HTML content
-    
+    let maxI = -1;
+    const orders = this.orders;
+    orders.forEach((order, i) => {
+      if (i > maxI) {
+        maxI = i;
+      }
+    });
+    const element = document.querySelector(`#allOrder`) as HTMLElement;
+    const btnSM = document.querySelector(`#btnSM`) as HTMLElement;
+    const btnAll = document.querySelector(`#btnAll`) as HTMLElement;
+    const btnsToHide: HTMLElement[] = [btnSM, btnAll];
+    for (let j = 0; j <= Number(maxI); j++) {
+      const btnI = document.querySelector(`#btn${j}`) as HTMLElement;
+      if (btnI) {
+        btnsToHide.push(btnI);
+      }
+    }
+    for (const btn of btnsToHide) {
+      if (btn) {
+        btn.style.display = 'none';
+      }
+    }
     if (element) {
+      document.body.style.width = '1200px';
+      document.body.style.marginLeft = 'auto';
+      document.body.style.marginRight = 'auto';
       const pdf = new jspdf.jsPDF();
-  
-      html2canvas(element).then((canvas) => {
-        const imgData = canvas.toDataURL('image/png');
-        const imgWidth = 210; // Width of the PDF in mm (A4 size)
-        const imgHeight = (canvas.height * imgWidth) / canvas.width;
-  
-        pdf.addImage(imgData, 'PNG', 0, 0, imgWidth, imgHeight);
-        pdf.save('table.pdf');
-      });
+
+      const img = new Image();
+      img.src = 'http://localhost:4200/assets/images/logo.jpg';
+      img.onload = () => {
+        const imgWidth1 = 96;
+        const imgHeight1 = 36;
+        const topMargin = 10;
+        const leftMargin = (pdf.internal.pageSize.getWidth() - imgWidth1) / 2;
+        const imgWidth = 210;
+        const imgHeight = (img.height * imgWidth) / img.width;
+        const pageContentHeight = (element.clientHeight * imgWidth) / element.clientWidth;
+
+        pdf.addImage(img.src, 'JPEG', leftMargin, topMargin, imgWidth1, imgHeight1);
+
+        html2canvas(element).then((canvas) => {
+          const imgData = canvas.toDataURL('image/png');
+          const imgWidth = 210; // Width of the PDF in mm (A4 size)
+          const imgHeight = (canvas.height * imgWidth) / canvas.width;
+          const pageImgData = canvas.toDataURL('image/png');
+          const pageImgHeight = (canvas.height * imgWidth) / canvas.width;
+          pdf.addImage(pageImgData, 'PNG', 0, imgHeight - 105, imgWidth, pageImgHeight);
+          pdf.save('Order.pdf');
+        });
+      }
+      setTimeout(() => {
+        for (const btn2 of btnsToHide) {
+          if (btn2) {
+            btn2.style.display = 'block';
+            document.body.style.width = '100%';
+          }
+        }
+      }, 1000);
     } else {
-      console.error('Element not found'); // Handle the case where the element is not found
+      console.error('Element not found');
     }
   }
 
-downloadAsPDF(i: Number) {
-  const element = document.querySelector(`#order-${i}`) as HTMLElement;
-  console.log('element:',element);
+  downloadAsPDF(i: number) {
+    const element = document.querySelector(`#order-${i}`) as HTMLElement;
+    const btn = document.querySelector(`#btn${i}`) as HTMLElement;
+    btn.style.display = 'none';
 
-  if (element) {
-    const pdf = new jspdf.jsPDF();
+    if (element) {
+      document.body.style.width = '1200px';
+      document.body.style.marginLeft = 'auto';
+      document.body.style.marginRight = 'auto';
+      const pdf = new jspdf.jsPDF();
 
-    html2canvas(element).then((canvas) => {
-      const imgData = canvas.toDataURL('image/png');
-      const imgWidth = 210; // Width of the PDF in mm (A4 size)
-      const imgHeight = (canvas.height * imgWidth) / canvas.width;
-      const filename = `Order${Number(i) + 1}.pdf`;
+      const img = new Image();
+      img.src = 'http://localhost:4200/assets/images/logo.jpg';
 
-      pdf.addImage(imgData, 'PNG', 0, 0, imgWidth, imgHeight);
-      pdf.save(filename); // Save the PDF with the dynamically generated filename
-    });
-  } else {
-    console.error('Element not found'); // Handle the case where the element is not found
+      img.onload = () => {
+        const imgWidth1 = 96;
+        const imgHeight1 = 36;
+        const topMargin = 10;
+        const leftMargin = (pdf.internal.pageSize.getWidth() - imgWidth1) / 2;
+        const imgWidth = 210;
+        const imgHeight = (img.height * imgWidth) / img.width;
+        const pageContentHeight = (element.clientHeight * imgWidth) / element.clientWidth;
+
+        pdf.addImage(img.src, 'JPEG', leftMargin, topMargin, imgWidth1, imgHeight1);
+        html2canvas(element).then((canvas) => {
+          const pageImgData = canvas.toDataURL('image/png');
+          const pageImgHeight = (canvas.height * imgWidth) / canvas.width;
+          pdf.addImage(pageImgData, 'PNG', 0, imgHeight - 30, imgWidth, pageImgHeight);
+
+          const filename = `Order${Number(i) + 1}.pdf`;
+          pdf.save(filename);
+          btn.style.display = 'block';
+          document.body.style.width = '100%';
+        });
+      };
+    } else {
+      console.error('Element not found');
+    }
   }
-}
 }

@@ -1,13 +1,14 @@
 <div class="greeting-container">
-    <h3 class="greeting">Hi {{ fullName2() }}, You have Total {{ getTotalOrderCount() }} Orders</h3>
-  </div>
-  <div id="allOrder">
-<div *ngFor="let order of orders; let i = index" class="order-container" [id]="'order-' + i">
-    
-  <table>
+  <h3 class="greeting">Hi {{ fullName2() }}, You have Total {{ getTotalOrderCount() }} Orders</h3>
+</div>
+<div id="allOrder">
+  <div *ngFor="let order of orders; let i = index" class="order-container" [id]="'order-' + i">
+
+    <table>
       <thead>
         <tr>
-          <h4>Order {{ i + 1 }}</h4></tr>
+          <h4>Order {{ i + 1 }}</h4>
+        </tr>
         <tr>
           <th class="leftAlign">UserInfo</th>
           <th class="leftAlign" style="width: 40%;">Address</th>
@@ -24,20 +25,23 @@
             {{ order.village }}</td>
           <td class="leftAlign">
             <span *ngFor="let transaction of order.transaction">
-            {{ order.paymentMethod }}: {{ transaction.paidFrom }} - {{ transaction.trxid }} </span>
+              {{ order.paymentMethod }}: {{ transaction.paidFrom }} - {{ transaction.trxid }} </span>
             <span *ngFor="let od of order.orderDetails; let i = index">
               <ng-container *ngIf="i === 0"><br>
-              Total: {{ calculateSubTotal(order) }}tk + {{ od.ShipingCost }}tk<sub>(Shipping)</sub> <br> Discount: {{ calculateDiscount(order) }}tk <br>
-              Paid: {{ od.Paid }}tk &nbsp; Due: {{ calculateDue(order) }}tk </ng-container> </span> <br></td>
+                Total: {{ calculateSubTotal(order) }}tk + {{ od.ShipingCost }}tk<sub>(Shipping)</sub> <br> Discount: {{
+                calculateDiscount(order) }}tk <br>
+                Paid: {{ od.Paid }}tk &nbsp; Due: {{ calculateDue(order) }}tk </ng-container> </span> <br>
+          </td>
         </tr>
       </tbody>
     </table>
-  
+
     <!-- Display Order Details -->
     <table>
       <thead>
         <tr>
-          <h5>Order Details</h5></tr>
+          <h5>Order Details</h5>
+        </tr>
         <tr>
           <th class="leftAlign">Name</th>
           <th>Price</th>
@@ -57,17 +61,16 @@
           <td>{{ orderDetail.Total }}</td>
         </tr>
       </tbody>
-    </table> <div class="downloadButtonDiv">
-    <button class="downloadButton btn btn-primary" (click)="downloadAsPDF(i)">Download Order {{ i + 1 }}</button>
-  </div>
+    </table>
+    <div [attr.id]="'btn' + i" class="downloadButtonDiv">
+      <button class="downloadButton btn btn-primary" (click)="downloadAsPDF(i)">Download Order {{ i + 1 }}</button>
+    </div>
     <div class="gap"></div>
   </div>
 </div>
-  <button (click)="showMoreOrders()" *ngIf="showMoreButton" class="show-more-button">
-    Show More
-  </button>
-  <div class="downloadAllButtonDiv">
-    <button class="downloadAllButton btn btn-primary" (click)="downloadAllAsPDF()">Download All Order</button>
-  </div>
-  
+<button id="btnSM" (click)="showMoreOrders()" *ngIf="showMoreButton" class="show-more-button">Show More</button>
+<div id="btnAll" class="downloadAllButtonDiv">
+  <button class="downloadAllButton btn btn-primary" (click)="downloadAllAsPDF()">Download All Order</button>
+</div>
+
 <div class="gap" style="height: 100px; background-color: white;"></div>

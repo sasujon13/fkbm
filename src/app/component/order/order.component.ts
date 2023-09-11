@@ -52,9 +52,7 @@ export class OrderComponent implements OnInit {
     });
   }
   ngOnInit(): void {
-
     const searchBarElement = document.getElementById('searchBar');
-
     if (searchBarElement) {
       searchBarElement.style.display = 'none';
     }
@@ -74,6 +72,7 @@ export class OrderComponent implements OnInit {
       altMobileNo: ['', [Validators.required, Validators.maxLength(11)]],
       username: ['', [Validators.required, Validators.maxLength(11)]],
     });
+    this.jsonData.username = this.ShipingCost;
     this.username = localStorage.getItem('username');
     this.jsonData.username = this.username;
     this.fullName = localStorage.getItem('fullName');
@@ -103,6 +102,7 @@ export class OrderComponent implements OnInit {
             Quantity: product.quantity,
             Discount: this.savedPrice(product),
             Total: this.totalPrice(product),
+            ShipingCost: this.ShipingCost(product),
             GrandTotal: `${this.cartService.grandTotal()}`,
             Paid: `1`,
             Due: `1`,
@@ -139,6 +139,9 @@ export class OrderComponent implements OnInit {
   }
   productPrice(item: any): number {
     return Math.ceil(item.weight * item.price * 100 / (100 - item.discount));
+  }
+  ShipingCost(item: any): number {
+    return 120;
   }
   productPrice2(item: any): number {
     return Math.ceil(item.price * 100 / (100 - item.discount));

@@ -16,15 +16,14 @@ th {
 }
 
 .order-container {
-    border: 1px solid #ccc;
     margin-bottom: 20px;
     padding: 10px;
   }
   
   /* Style the order number */
   .order-container h4 {
-    background-color: teal; /* Adjust the background color as needed */
-    color: #fff;
+    background-color: rgba(105,185,185,0.5); /* Adjust the background color as needed */
+    color: #333;
     padding: 5px;
     margin-top: 0;
     text-align: center;
@@ -64,7 +63,7 @@ th {
 
 /* Style the "Show More" button */
 .show-more-button {
-    background-color: teal; /* Background color */
+    background-color: rgb(105, 185, 185);
     color: #fff; /* Text color */
     padding: 5px; /* Padding */
     margin-top: 10px; /* Top margin */
@@ -84,17 +83,18 @@ th {
     color: #fff; /* Text color */
     padding: 10px; /* Padding */
     text-align: center; /* Center-align text */
-    margin-top: 65px;
+    margin-top: 60px;
   }
   .downloadButton{
     padding: 5px 10px 5px 10px;
     display: block;
     margin: 10px 0 0 auto;
-    background-color: teal;
+    border: none;
+    background-color: rgb(105, 185, 185);
   }
   .gap{
-    height: 21px;
-    background-color: rgb(105, 185, 185);
+    height: 36px;
+    /* background-color: rgb(105, 185, 185); */
     width: 100vw;
     padding: 0;
     margin: 40px 0px -31px -18px;
@@ -114,12 +114,13 @@ th {
     margin: 50px auto 0 auto;
     font-size: 18px;
     border-radius: 7px;
+    background-color: teal;
 }
 .downloadAllButtonDiv{
   margin: 0 auto !important;
   text-align: center !important;
 }
-table, tr, td, thead, h2, h3, h4, h5, img, div{
+table, tr, td, th, tbody, thead, h2, h3, h4, h5, img{
   user-select: none;
   pointer-events: none;
 }
