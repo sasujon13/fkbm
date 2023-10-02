@@ -16,6 +16,7 @@ import { AdminComponent } from './component/admin/admin.component';
 import { ProfileComponent } from './component/profile/profile.component';
 import { MyorderComponent } from './component/myorder/myorder.component';
 import { PasswordComponent } from './component/password/password.component';
+import { IndexComponent } from './component/index/index.component';
 
 const routes: Routes = [
   {path:'', redirectTo:'products',pathMatch:'full'},
@@ -27,6 +28,7 @@ const routes: Routes = [
   {path:'choice', component: ChoiceComponent},
   {path:'order', component: OrderComponent, canActivate: [AuthGuard]},
   {path:'cart', component: CartComponent},
+  {path:'index', component: IndexComponent},
   {path:'login', component: LoginComponent},
   {path:'auth', component: AuthComponent},
   {path:'auth/login', redirectTo:'login',pathMatch:'full'},

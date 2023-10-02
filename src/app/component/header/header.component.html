@@ -2,7 +2,7 @@
 <header>
   <div class="navbar">
     <div class="menu-toggle" #menuToggle (click)="toggleMenu()">
-        <i class="fa fa-bars"></i><img src="./assets/images/cheradip.svg" class="logo">
+        <i class="fa fa-bars"></i> <a [routerLink]="['/index']" routerLinkActive="index"><img src="./assets/images/cheradip.svg" class="logo"></a>
     </div>
     <div class="search-bar" id="searchBar">
       <input type="text" class="form-control" name="searchTerm" id="searchTerm" [(ngModel)]="searchTerm" (keyup)="search($event)" placeholder="Fish Name or Code">

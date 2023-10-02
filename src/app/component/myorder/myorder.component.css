@@ -33,7 +33,7 @@ th {
   .order-container table {
     width: 100%;
     border-collapse: collapse;
-    margin: 10px auto 0 auto;
+    margin: 30px auto 0 auto;
     max-width: 1000px;
   }
   
@@ -81,9 +81,11 @@ th {
   .greeting-container {
     background-color: rgb(105, 185, 185);
     color: #fff; /* Text color */
-    padding: 10px; /* Padding */
+    padding: 15px 10px 5px 10px; /* Padding */
     text-align: center; /* Center-align text */
     margin-top: 60px;
+    font-weight: 600;
+    font-family: Roboto thin;
   }
   .downloadButton{
     padding: 5px 10px 5px 10px;
@@ -93,7 +95,7 @@ th {
     background-color: rgb(105, 185, 185);
   }
   .gap{
-    height: 36px;
+    height: 10px;
     /* background-color: rgb(105, 185, 185); */
     width: 100vw;
     padding: 0;

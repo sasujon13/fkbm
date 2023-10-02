@@ -24,6 +24,7 @@ import { AdminComponent } from './component/admin/admin.component';
 import { ProfileComponent } from './component/profile/profile.component';
 import { MyorderComponent } from './component/myorder/myorder.component';
 import { PasswordComponent } from './component/password/password.component';
+import { IndexComponent } from './component/index/index.component';
 
 @NgModule({
   declarations: [
@@ -44,6 +45,7 @@ import { PasswordComponent } from './component/password/password.component';
     ProfileComponent,
     MyorderComponent,
     PasswordComponent,
+    IndexComponent,
   ],
   imports: [
     BrowserModule,

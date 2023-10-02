@@ -95,7 +95,7 @@ export class OrderComponent implements OnInit {
         this.jsonData.orderDetails = this.products.map((product: any, index: number) => {
           return {
             SN: index + 1,
-            Name: `${product.name} - ${product.code} (${product.bangla_name})`,
+            Name: `${product.name}-${product.code} (${product.bangla_name})`,
             Image: product.image,
             Weight: `${product.weight}`,
             Price: `${this.productPrice(product)}`,

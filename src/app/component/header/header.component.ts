@@ -79,6 +79,10 @@ export class HeaderComponent implements OnInit {
     localStorage.getItem('isLoggedIn');
     localStorage.getItem('authToken');
     localStorage.getItem('formData');
+    sessionStorage.getItem('sessionCartItems'); //added later
+    localStorage.getItem(`cartState_`); //added later
+    sessionStorage.getItem('sessionChoiceItems'); //added later
+    localStorage.getItem(`choiceState_`); //added later
     const menu_item0 = document.getElementById('menu_item0');
     const menu_item1 = document.getElementById('menu_item1');
     const menu_item2 = document.getElementById('menu_item2');

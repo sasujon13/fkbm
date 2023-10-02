@@ -8,9 +8,12 @@ import { Observable } from 'rxjs';
 })
 export class ApiService {
 
-  private djangoAdminUrl = 'http://127.0.0.1:8000/api/admin/';
+  // private djangoAdminUrl = 'http://127.0.0.1:8000/api/admin/';
 
-  private baseUrl = 'http://127.0.0.1:8000/api';
+  // private baseUrl = 'http://127.0.0.1:8000/api';
+  private djangoAdminUrl = 'http://127.0.0.1:8000/admin/';
+
+  private baseUrl = 'http://127.0.0.1:8000';
   userData: any;
 
   constructor(private http: HttpClient) { }

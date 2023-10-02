@@ -2,6 +2,7 @@
   <h3 class="greeting">Hi {{ fullName2() }}, You have Total {{ getTotalOrderCount() }} Orders</h3>
 </div>
 <div id="allOrder">
+  <div *ngIf="orders && orders.length > 0">
   <div *ngFor="let order of orders; let i = index" class="order-container" [id]="'order-' + i">
 
     <table>
@@ -44,9 +45,9 @@
         </tr>
         <tr>
           <th class="leftAlign">Name</th>
-          <th>Price</th>
+          <th>Rate</th>
           <th>Quantity</th>
-          <th>Sub-Total</th>
+          <th>Price</th>
           <th>Discount</th>
           <th>Total</th>
         </tr>
@@ -54,11 +55,11 @@
       <tbody>
         <tr *ngFor="let orderDetail of order.orderDetails">
           <td class="leftAlign">{{ orderDetail.Name }}</td>
-          <td>{{ orderDetail.Price }}</td>
-          <td>{{ orderDetail.Quantity }}</td>
-          <td>{{ parseAndSum(orderDetail.Total, orderDetail.Discount) }}</td>
-          <td>{{ orderDetail.Discount }}</td>
-          <td>{{ orderDetail.Total }}</td>
+          <td>{{ orderDetail.Price }}/kg</td>
+          <td>{{ orderDetail.Quantity }} pc</td>
+          <td>{{ parseAndSum(orderDetail.Total, orderDetail.Discount) }}/=</td>
+          <td>{{ orderDetail.Discount }}/=</td>
+          <td>{{ orderDetail.Total }}/=</td>
         </tr>
       </tbody>
     </table>
@@ -68,8 +69,9 @@
     <div class="gap"></div>
   </div>
 </div>
+</div>
 <button id="btnSM" (click)="showMoreOrders()" *ngIf="showMoreButton" class="show-more-button">Show More</button>
-<div id="btnAll" class="downloadAllButtonDiv">
+<div id="btnAll" class="downloadAllButtonDiv" style="display: none">
   <button class="downloadAllButton btn btn-primary" (click)="downloadAllAsPDF()">Download All Order</button>
 </div>
 

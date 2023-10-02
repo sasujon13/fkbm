@@ -33,7 +33,16 @@ export class MyorderComponent implements OnInit {
   loadData() {
     this.apiService.myorder(this.username).subscribe(
       (response) => {
-        this.orders = response;
+        if (response === "0 orders") {
+          this.orders = [];
+        } else {
+          this.orders = response || [];
+          if (this.orders.length > 0) {
+            const element = document.querySelector(`#btnAll`) as HTMLElement;
+            element.style.display = "block";
+          }
+          this.updateDisplayedOrders();
+        }
       },
       (error) => {
       }
@@ -59,7 +68,7 @@ export class MyorderComponent implements OnInit {
     return name;
   }
   getTotalOrderCount(): number {
-    return this.orders.length;
+    return this.orders.length || 0;
   }
   calculateSubTotal(order: any) {
     let subTotal = 0;
@@ -125,6 +134,8 @@ export class MyorderComponent implements OnInit {
       }
     }
     if (element) {
+      const container = document.querySelector(`#allOrder`) as HTMLElement;
+      container.style.paddingLeft = '90px'; 
       document.body.style.width = '1200px';
       document.body.style.marginLeft = 'auto';
       document.body.style.marginRight = 'auto';
@@ -149,7 +160,7 @@ export class MyorderComponent implements OnInit {
           const imgHeight = (canvas.height * imgWidth) / canvas.width;
           const pageImgData = canvas.toDataURL('image/png');
           const pageImgHeight = (canvas.height * imgWidth) / canvas.width;
-          pdf.addImage(pageImgData, 'PNG', 0, imgHeight - 105, imgWidth, pageImgHeight);
+          pdf.addImage(pageImgData, 'PNG', 0, imgHeight - 114.5, imgWidth, pageImgHeight);
           pdf.save('Order.pdf');
         });
       }
@@ -172,6 +183,8 @@ export class MyorderComponent implements OnInit {
     btn.style.display = 'none';
 
     if (element) {
+      const container = document.querySelector(`#order-${i}`) as HTMLElement;
+      container.style.paddingLeft = '100px'; 
       document.body.style.width = '1200px';
       document.body.style.marginLeft = 'auto';
       document.body.style.marginRight = 'auto';

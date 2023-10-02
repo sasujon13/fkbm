@@ -65,15 +65,15 @@
 <ul class="item-list">
   <li *ngFor="let item of filterCategory | filter:searchKey:['name', 'bangla_name', 'code']" class="item">
     <div class="image-container">
-      <img *ngIf="item.image" [src]="item.image" alt="{{ item.name }}" class="itemImage">
+      <img *ngIf="item.image" [src]="item.image" alt="{{ item.name }}" class="itemImage" [style.opacity]="item.in_stock < 1 ? 0.34 : 1">
       <h3 class="title">{{ item.name }} ({{ item.bangla_name }}) - {{ item.weight }} kg<br>{{ item.size }}-{{ item.code }}</h3>
       <p class="price">{{ item.price }} tk / 1 kg<sub> @<del> {{ productPrice(item) }}</del> tk</sub>
       </p>
       <p class="footer">
-        <a class="item_footer" *ngIf="item.availability">
+        <a class="item_footer" *ngIf="item.in_stock > 0">
           <i class="fa fa-check-circle"></i>In Stock
         </a>
-        <a class="item_footer outofstock" *ngIf="!item.availability">
+        <a class="item_footer outofstock" *ngIf="item.in_stock < 1">
           <i class="fa fa-exclamation-circle outofstock"></i>Out of Stock
         </a>
         <a class="item_footer choice" *ngIf="item.love" (click)="removeChoiceItem(item)">

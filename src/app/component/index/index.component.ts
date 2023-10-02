@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'app-about-us',
-  templateUrl: './about-us.component.html',
-  styleUrls: ['./about-us.component.css']
+  selector: 'app-index',
+  templateUrl: './index.component.html',
+  styleUrls: ['./index.component.css']
 })
-export class AboutUsComponent  implements OnInit{
+export class IndexComponent implements OnInit{
   ngOnInit(): void {
     const searchBarElement = document.getElementById('searchBar');
     if (searchBarElement) {
@@ -14,4 +14,3 @@ export class AboutUsComponent  implements OnInit{
   }
 
 }
-

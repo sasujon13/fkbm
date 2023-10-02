@@ -10,14 +10,14 @@ export class LocationService {
   constructor(private http: HttpClient) {}
 
   getDivisions(): Observable<string[]> {
-    return this.http.get<string[]>('/api/divisions/');
+    return this.http.get<string[]>('/divisions/');
   }
 
   getDistricts(division: string): Observable<string[]> {
-    return this.http.get<string[]>(`/api/districts/?division=${division}`);
+    return this.http.get<string[]>(`/districts/?division=${division}`);
   }
 
   getThanas(division: string, district: string): Observable<string[]> {
-    return this.http.get<string[]>(`/api/thanas/?division=${division}&district=${district}`);
+    return this.http.get<string[]>(`/thanas/?division=${division}&district=${district}`);
   }
 }

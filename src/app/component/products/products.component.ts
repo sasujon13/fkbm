@@ -40,6 +40,10 @@ export class ProductsComponent implements OnInit {
   constructor(private api: ApiService, private cartService: CartService, private choiceService: ChoiceService) { }
 
   ngOnInit(): void {
+    const searchBarElement = document.getElementById('searchBar');
+    if (searchBarElement) {
+      searchBarElement.style.display = 'block';
+    }
     document.addEventListener('contextmenu', function (event) {
       event.preventDefault();
     });
@@ -81,6 +85,9 @@ export class ProductsComponent implements OnInit {
     });
   }
   addtocart(item: any) {
+    if (item.in_stock < 1) {
+    return;
+  }
     const sessionCartItems = JSON.parse(sessionStorage.getItem('sessionCartItems') || '[]');
 
     if (!sessionCartItems.find((storedItem: any) => storedItem.id === item.id)) {

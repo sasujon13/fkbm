@@ -43,7 +43,7 @@
       <ul class="item-list">
           <li *ngFor="let item of filterCategory | filter:searchKey:['name', 'bangla_name', 'code']" class="item">
                   <div class="image-container">
-                        <img *ngIf="item.image" [src]="item.image" alt="{{ item.name }}" class="itemImage">
+                        <img *ngIf="item.image" [src]="item.image" alt="{{ item.name }}" class="itemImage" [style.opacity]="item.in_stock < 1 ? 0.34 : 1">
                         <h3 class="title">{{ item.name }} ({{ item.bangla_name }})<br>{{ item.size }}-{{ item.code }}</h3>
                         <p class="price">{{ item.price }} tk / {{ item.weight }} kg<sub> @<del> {{ item.price*1.25 }}</del> tk</sub></p>
                         <p class="footer">
