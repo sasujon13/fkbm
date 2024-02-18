@@ -40,10 +40,6 @@ export class ProductsComponent implements OnInit {
   constructor(private api: ApiService, private cartService: CartService, private choiceService: ChoiceService) { }
 
   ngOnInit(): void {
-    const searchBarElement = document.getElementById('searchBar');
-    if (searchBarElement) {
-      searchBarElement.style.display = 'block';
-    }
     document.addEventListener('contextmenu', function (event) {
       event.preventDefault();
     });

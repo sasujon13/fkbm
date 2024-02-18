@@ -48,11 +48,6 @@ export class ProfileComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    const searchBarElement = document.getElementById('searchBar');
-  
-    if (searchBarElement) {
-      searchBarElement.style.display = 'none';
-    }
     this.fetchDivisions();
     const savedAuthFormData = localStorage.getItem('authFormData');
     if (savedAuthFormData) {

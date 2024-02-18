@@ -7,10 +7,6 @@ import { Component, OnInit } from '@angular/core';
 })
 export class FaqsComponent implements OnInit{
   ngOnInit(): void {
-    const searchBarElement = document.getElementById('searchBar');
-    if (searchBarElement) {
-      searchBarElement.style.display = 'none';
-    }
   }
 
 }

@@ -35,11 +35,6 @@ export class AuthComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    const searchBarElement = document.getElementById('searchBar');
-  
-    if (searchBarElement) {
-      searchBarElement.style.display = 'none';
-    }
     this.fetchDivisions();
     const savedAuthFormData = localStorage.getItem('authFormData');
     if (savedAuthFormData) {
@@ -118,7 +113,7 @@ export class AuthComponent implements OnInit {
             duration: 3000,
             panelClass: ['success-snackbar'],
           });
-          this.logout();
+          this.signUp();
           const returnUrl = localStorage.getItem('returnUrl') || ''; // Default to root if returnUrl is not set
           this.router.navigate([returnUrl]);
           localStorage.setItem('returnUrl', '');
@@ -171,18 +166,20 @@ export class AuthComponent implements OnInit {
   togglePasswordVisibility(): void {
     this.showPassword = !this.showPassword;
   }
-  logout(): void {
+  signUp(): void {
     const menu_item0 = document.getElementById('menu_item0');
     const menu_item1 = document.getElementById('menu_item1');
     const menu_item2 = document.getElementById('menu_item2');
     const profileMenu = document.getElementById('profileMenu');
     const sign_menu = document.getElementById('sign_menu');
-    if (menu_item2 && menu_item1 && menu_item0 && profileMenu && sign_menu) {
+    const edit = document.getElementById('edit');
+    if (menu_item2 && menu_item1 && menu_item0 && profileMenu && sign_menu && edit) {
         menu_item2.style.display = 'block';
+        profileMenu.style.display = 'block';
         menu_item1.style.display = 'none';
         menu_item0.style.display = 'none';
         sign_menu.style.display = 'none';
-        profileMenu.style.display = 'block';
+        edit.style.display = 'block';
       }
   }
 

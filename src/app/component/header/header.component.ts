@@ -24,8 +24,10 @@ import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
   ]
 })
 export class HeaderComponent implements OnInit {
+
   isCopyrightVisible = false;
   shouldDisplayCopyrightDiv = false; 
+  headerHeight: number = 0;
 
   @HostListener('window:scroll', ['$event'])
   @HostListener('window:resize', ['$event'])
@@ -45,12 +47,6 @@ export class HeaderComponent implements OnInit {
         (scrollTop >= lastScrollPosition && contentHeight > screenHeight);
     }
   }
-
-  isDropdownOpen = false;
-  toggleDropdown() {
-    this.isDropdownOpen = !this.isDropdownOpen;
-    this.resetInactivityTimeout();
-  }
   
   public totalCartItem: number = 0;
   public totalChoiceItem: number = 0;
@@ -61,6 +57,7 @@ export class HeaderComponent implements OnInit {
 
   @ViewChild('menuToggle', { static: true }) menuToggle!: ElementRef;
   @ViewChild('menu_item2', { static: true }) menu_item2!: ElementRef; 
+  @ViewChild('academicMenu') academicMenu!: ElementRef;
   item2: any;
   item1: any;
 
@@ -68,6 +65,11 @@ export class HeaderComponent implements OnInit {
   constructor(private cartService: CartService, private choiceService: ChoiceService, private route: ActivatedRoute, private router: Router) { }
 
   ngOnInit(): void {
+
+    const searchBarElement = document.getElementById('searchBar');
+    if (searchBarElement) {
+      searchBarElement.style.display = 'block';
+    }
     this.router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
         setTimeout(() => {
@@ -88,20 +90,22 @@ export class HeaderComponent implements OnInit {
     const menu_item2 = document.getElementById('menu_item2');
     const sign_menu = document.getElementById('sign_menu');
     const profileMenu = document.getElementById('profileMenu');
-    if (menu_item2 && menu_item1 && menu_item0 && sign_menu && profileMenu) {
+    const edit = document.getElementById('edit');
+    if (menu_item2 && menu_item1 && menu_item0 && sign_menu && profileMenu && edit) {
       this.loginStatus = localStorage.getItem('isLoggedIn') === 'true';
       if (this.loginStatus) {
+        profileMenu.style.display = 'block';
         menu_item2.style.display = 'block';
-        menu_item1.style.display = 'none';
-        menu_item0.style.display = 'none';
+        edit.style.display = 'block';
         sign_menu.style.display = 'none';
+        menu_item0.style.display = 'none';
+        menu_item1.style.display = 'none';
       }
       else {
-        profileMenu.style.display = 'none';
-        menu_item2.style.display = 'none';
-        menu_item1.style.display = 'block';
+        edit.style.display = 'none';
+        sign_menu.style.display = 'block';
         menu_item0.style.display = 'block';
-
+        menu_item1.style.display = 'block';
       }
     }
 
@@ -170,17 +174,42 @@ export class HeaderComponent implements OnInit {
   closeMenu() {
     this.menuActive = false;
   }
+  
   closeProfileMenu() {
     this.isDropdownOpen = false;  //added
   }
+  
+  isDropdownOpen = false;
+  toggleDropdown() {
+    this.isDropdownOpen = !this.isDropdownOpen;
+    this.resetInactivityTimeout();
+  }
+  
+  isAcademicDropdownOpen = false;
+  isAdmissionDropdownOpen = false;
+  toggleAcademicDropdown() {
+    this.isAcademicDropdownOpen = !this.isAcademicDropdownOpen;
+    this.resetInactivityTimeout();
+  }
 
+  openAcademicDropdown() {
+    this.isAcademicDropdownOpen = true;
+    this.isAdmissionDropdownOpen = false;
+  }
+  openAdmissionDropdown(){
+    this.isAdmissionDropdownOpen = true;
+    this.isAcademicDropdownOpen = false;
+  }
+  closeAcademicDropdown() {
+  }
 
   resetInactivityTimeout() {
     clearTimeout(this.inactivityTimeout);
     this.inactivityTimeout = setTimeout(() => {
       this.closeMenu();
       this.closeProfileMenu();
-    }, 7000000);
+      this.closeAcademicDropdown();
+    }, 10000);
   }
   @HostListener('document:click', ['$event'])
   onDocumentClick(event: Event) {
@@ -189,6 +218,13 @@ export class HeaderComponent implements OnInit {
     }
     if (!this.menu_item2.nativeElement.contains(event.target)) {
       this.closeProfileMenu(); //added
+    }
+  }
+
+  @HostListener('document:click', ['$event'])
+  handleClickOutside(event: Event) {
+    if (!this.academicMenu.nativeElement.contains(event.target)) {
+      this.closeAcademicDropdown();
     }
   }
 
@@ -211,10 +247,12 @@ export class HeaderComponent implements OnInit {
     const menu_item2 = document.getElementById('menu_item2');
     const profileMenu = document.getElementById('profileMenu');
     const sign_menu = document.getElementById('sign_menu');
-    if (menu_item2 && menu_item1 && menu_item0 && profileMenu && sign_menu) {
+    const edit = document.getElementById('edit');
+    if (menu_item2 && menu_item1 && menu_item0 && profileMenu && sign_menu && edit) {
         sign_menu.style.display = '-webkit-inline-box';
         menu_item0.style.display = 'block';
         menu_item1.style.display = 'block';
+        edit.style.display = 'none';
         menu_item2.style.display = 'none';
         profileMenu.style.display = 'none';
 
