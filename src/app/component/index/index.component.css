@@ -30,8 +30,8 @@ body {
 
   #thumbnails {
     display: flex;
-    transition: transform 0.5s ease;
     margin-top: 20px;
+    overflow-x: hidden;
   }
 
   .thumbnail {
