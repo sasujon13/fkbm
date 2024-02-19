@@ -51,19 +51,12 @@ import { EconomicsComponent } from './component/academic/honours/dept/economics/
 import { AdministrativeComponent } from './component/campus/administrative/administrative.component';
 import { ArtsComponent } from './component/campus/arts/arts.component';
 import { ArahimComponent } from './component/campus/arahim/arahim.component';
-import { BbaComponent } from './component/campus/bba/bba.component';
 import { ScienceComponent } from './component/campus/science/science.component';
 import { HallRoomComponent } from './component/campus/hall-room/hall-room.component';
 import { MujibCornerComponent } from './component/campus/mujib-corner/mujib-corner.component';
 import { LibraryComponent } from './component/campus/library/library.component';
 import { GardensComponent } from './component/campus/gardens/gardens.component';
 import { OthersComponent } from './component/campus/others/others.component';
-import { HscComponent } from './component/admission/hsc/hsc.component';
-import { HscBMComponent } from './component/admission/hsc-bm/hsc-bm.component';
-import { DegreeComponent } from './component/admission/degree/degree.component';
-import { HonoursComponent } from './component/admission/honours/honours.component';
-import { AgricultureComponent } from './component/admission/agriculture/agriculture.component';
-import { OpenUniversityComponent } from './component/admission/open-university/open-university.component';
 import { HscBmComponent } from './component/academic/hsc-bm/hsc-bm.component';
 import { CoCurricularComponent } from './component/academic/co-curricular/co-curricular.component';
 
@@ -113,19 +106,12 @@ import { CoCurricularComponent } from './component/academic/co-curricular/co-cur
     AdministrativeComponent,
     ArtsComponent,
     ArahimComponent,
-    BbaComponent,
     ScienceComponent,
     HallRoomComponent,
     MujibCornerComponent,
     LibraryComponent,
     GardensComponent,
     OthersComponent,
-    HscComponent,
-    HscBMComponent,
-    DegreeComponent,
-    HonoursComponent,
-    AgricultureComponent,
-    OpenUniversityComponent,
     HscBmComponent,
     CoCurricularComponent,
   ],

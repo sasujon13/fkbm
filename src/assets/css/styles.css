@@ -1,6 +1,6 @@
 
 @import url('src/assets/font-awesome-4.7.0/css/font-awesome.min.css');
-
+@import '~@angular/material/prebuilt-themes/deeppurple-amber.css';
 @font-face {
     font-family: 'Roboto Regular';
     src: url('src/assets/fonts/Roboto-Regular.ttf') format('truetype');
@@ -22,12 +22,10 @@
   
   body {
     font-family: 'Roboto', sans-serif;
-    /* background-image: url('../images/bg1.jpg'); */
     background-repeat: no-repeat;
     background-size: cover;
     background-attachment: fixed;
     position: relative;
-    /* animation: shuffleImages 210s infinite; */
     margin: 0;
     padding: 0;
     display: flex;
@@ -53,16 +51,6 @@
     background-color: rgba(1, 128, 128, 1); 
   }
   
-  @keyframes shuffleImages {
-    0% { background-image: url('../images/bg1.jpg'); }
-    14.285% { background-image: url('../images/bg2.jpg'); }
-    28.571% { background-image: url('../images/bg3.jpg'); }
-    42.857% { background-image: url('../images/bg4.jpg'); }
-    57.143% { background-image: url('../images/bg5.jpg'); }
-    71.428% { background-image: url('../images/bg6.jpg'); }
-    85.714% { background-image: url('../images/bg7.jpg'); }
-    100% { background-image: url('../images/bg1.jpg'); }
-  }
   body .cdk-overlay-container {
     background-color: rgba(1,128,128,0.25);
     top: 200px;
@@ -95,3 +83,4 @@ input:disabled {
   user-select: none;
   pointer-events: none;
 }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

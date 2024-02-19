@@ -1,7 +1,7 @@
 <!-- <div  style="margin-top: 120px;">...</div> -->
 
 <div style="margin-top: 115px;">
-  <h3 class="title" style="text-align: center;"><b>কে.বি.এম. কলেজের ওয়েব সাইটে আপনাকে স্বাগতম !</b></h3>
+  <h1 class="title" style="text-align: center;"><b>কে.বি.এম. কলেজের ওয়েব সাইটে আপনাকে স্বাগতম !</b></h1>
 
   <div id="slider-container">
     <div id="slider">
@@ -12,7 +12,7 @@
         </a>
 
         <div class="carousel-inner">
-          <img [src]="'./assets/images/' + images[currentIndex]" class="d-block w-100" alt="Current Image"  [@slideAnimation]="'true'">
+          <img [src]="'./assets/images/' + images[currentIndex]" class="d-block w-100" alt="Current Image">
         </div>
 
         <a class="carousel-control-next" role="button" (click)="nextImage()">
@@ -21,17 +21,15 @@
         </a>
       </div>
     </div>
-    
-    <div id="thumbnails" [ngStyle]="{'width.px': thumbnailContainerWidth}">
+
+    <div id="thumbnails">
       <ng-container *ngFor="let image of images; let i = index">
-        <img class="thumbnail" 
-             [src]="'./assets/images/' + image" 
-             alt="Thumbnail {{ i + 1 }}" 
-             [ngClass]="{ 'current-thumbnail': i === currentIndex, 'center-thumbnail': i === currentIndex }"
-             (click)="currentSlide(i)">
+        <img class="thumbnail" [src]="'./assets/images/' + image" alt="Thumbnail {{ i + 1 }}"
+          [ngClass]="{ 'current-thumbnail': i === currentIndex, 'center-thumbnail': i === currentIndex }"
+          (click)="currentSlide(i)">
       </ng-container>
-    </div> 
-     
+    </div>
+
     <video id="video-player" controls (ended)="playNextVideo()">
       <source src="{{ video }}" type="video/mp4">
       Your browser does not support the video tag.
