@@ -7,17 +7,32 @@
     </li>
     <li [ngClass]="{'selected': selectedType === 'Soft'}" class="item" (click)="filterTypes('Soft')">
       <a>
-        <h6>Soft</h6>
+        <h6>KBMC</h6>
       </a>
     </li>
     <li [ngClass]="{'selected': selectedType === 'Dry'}" class="item" (click)="filterTypes('Dry')">
       <a>
-        <h6>Dry</h6>
+        <h6>HSC</h6>
+      </a>
+    </li>
+    <li [ngClass]="{'selected': selectedType === 'Dry'}" class="item" (click)="filterTypes('Dry')">
+      <a>
+        <h6>Degree</h6>
+      </a>
+    </li>
+    <li [ngClass]="{'selected': selectedType === 'Dry'}" class="item" (click)="filterTypes('Dry')">
+      <a>
+        <h6>Honours</h6>
+      </a>
+    </li>
+    <li [ngClass]="{'selected': selectedType === 'Dry'}" class="item" (click)="filterTypes('Dry')">
+      <a>
+        <h6>Others</h6>
       </a>
     </li>
     <li class="item">
       <a>
-        <h6>Size:</h6>
+        <h6>Date:</h6>
       </a>
       <select class="itemSize" (change)="onSizeChange($event)">
         <option class="itemSize" value="" selected>
@@ -27,32 +42,52 @@
         </option>
       <option class="itemSize" value="XXL">
         <a>
-          <h6>XXL</h6>
+          <h6>Today's Notice</h6>
         </a>
       </option>
       <option class="itemSize" value="XL">
         <a>
-          <h6>XL</h6>
+          <h6>Yesterday's</h6>
         </a>
       </option>
       <option class="itemSize" value="L">
         <a>
-          <h6>L</h6>
+          <h6>Last 3 Days</h6>
         </a>
       </option>
       <option class="itemSize" value="M">
         <a>
-          <h6>M</h6>
+          <h6>Last 7 Days</h6>
         </a>
       </option>
       <option class="itemSize" value="S">
         <a>
-          <h6>S</h6>
+          <h6>Last 15 Days</h6>
         </a>
       </option>
       <option class="itemSize" value="XS">
         <a>
-          <h6>XS</h6>
+          <h6>Last Month's</h6>
+        </a>
+      </option>
+      <option class="itemSize" value="XS">
+        <a>
+          <h6>Last 3 Months</h6>
+        </a>
+      </option>
+      <option class="itemSize" value="XS">
+        <a>
+          <h6>Last 6 Months</h6>
+        </a>
+      </option>
+      <option class="itemSize" value="XS">
+        <a>
+          <h6>Last 1 Year's</h6>
+        </a>
+      </option>
+      <option class="itemSize" value="XS">
+        <a>
+          <h6>Specify Date</h6>
         </a>
       </option>
   </select>
@@ -60,7 +95,7 @@
   </ul>
 </div>
 <img src="../../../assets/images/filter.svg" class="clickable-image filter">
-<h1 class="msg">SignUp and Get 20% flat discount on all Fishes!</h1>
+<h1 class="msg">Kader Boksha Memorial College, Dinajpur</h1>
 
 <ul class="item-list">
   <li *ngFor="let item of filterCategory | filter:searchKey:['name', 'bangla_name', 'code']" class="item">

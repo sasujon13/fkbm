@@ -1,28 +1,50 @@
 
 <header>
-  <div class="navbar">
+  <div class="navbar"> 
+    <a [routerLink]="['/index']" routerLinkActive="index"><img src="./assets/images/kbm_logo.svg" class="logo"></a>
     <div class="menu-toggle" #menuToggle (click)="toggleMenu()">
-        <i class="fa fa-bars"></i> <a [routerLink]="['/index']" routerLinkActive="index"><img src="./assets/images/cheradip.svg" class="logo"></a>
+        <i class="fa fa-bars"></i>
     </div>
     <div class="search-bar" id="searchBar">
-      <input type="text" class="form-control" name="searchTerm" id="searchTerm" [(ngModel)]="searchTerm" (keyup)="search($event)" placeholder="Fish Name or Code">
+      <input type="text" class="form-control" name="searchTerm" id="searchTerm" [(ngModel)]="searchTerm" (keyup)="search($event)" placeholder="Search here .....">
       <i class="fa fa-search"></i>
     </div>
     <ul class="menu" [class.active]="menuActive" [@flyInOut] (click)="closeMenu()">
-        <li class="menu_item"><a [routerLink]="['']" routerLinkActive=""><i class="fa fa-home"></i>Products</a></li>
-        <li class="menu_item"><a [routerLink]="['/blog']" routerLinkActive="blog"><i class="fa pencil fa-pencil-square-o"></i><div class="caution-box writingbox">
-          <i class="fa fa-exclamation-circle"></i>
-        </div></a></li>
-        <li class="menu_item"><a [routerLink]="['/faqs']" routerLinkActive="faqs"><i class="fa fa-question-circle"></i>FAQs</a></li>
-        <li class="menu_item"><a [routerLink]="['/about_us']" routerLinkActive="about_us"><i class="fa fa-info-circle"></i>About Us</a></li>
-        <li class="menu_item"><a [routerLink]="['/contact_us']" routerLinkActive="contact_us"><i class="fa fa-envelope"></i>Contact Us</a></li>
+      
+      <li class="menu_item"><a [routerLink]="['/about_us']" routerLinkActive=""><i class="fa fa-home"></i></a></li>
+      
+      <li class="menu_item" #academicMenu id="academicMenu" (mouseenter)="openAcademicDropdown()" (click)="toggleAcademicDropdown()">
+        <a [routerLink]="['/academic']" routerLinkActive="academic">Academic</a>
+        <ul class="academicDropdown commonDropdown" *ngIf="isAcademicDropdownOpen">
+          <li><a [routerLink]="['/academic/hsc']">HSC</a></li>
+          <li><a [routerLink]="['/academic/hsc-bm']">HSC - BM</a></li>
+          <li><a [routerLink]="['/academic/degree']">Degree</a></li>
+          <li><a [routerLink]="['/academic/honours']">Honours</a></li>
+          <li><a [routerLink]="['/academic/bba']">BBA</a></li>
+          <li><a [routerLink]="['/academic/agriculture']">Diploma in Agri.</a></li>
+          <li><a [routerLink]="['/academic/open-university']">Open University</a></li>
+          <li><a [routerLink]="['/academic/co-curricular']">Co-curricular</a></li>
+          <li><a [routerLink]="['/academic/teachers']">Teachers</a></li>
+          <li><a [routerLink]="['/academic/staff']">Staff</a></li>
+        </ul>
+      </li>
+      
+      <li class="menu_item" (mouseenter)="openAdmissionDropdown()"><a [routerLink]="['/about_us']" routerLinkActive="">Admission</a></li>
+      <li class="menu_item"><a [routerLink]="['/campus']" routerLinkActive="campus">Campus</a></li>
+      <li class="menu_item"><a [routerLink]="['/about_us']" routerLinkActive=""><i class="fa fa-regular fa-registered"></i></a></li>
+      <li class="menu_item"><a [routerLink]="['/about_us']" routerLinkActive=""><i class="fa fa-solid fa-award"></i></a></li>
+      <li class="menu_item"><a [routerLink]="['/faqs']" routerLinkActive="faqs"><i class="fa fa-question-circle"></i></a></li>
+      <li class="menu_item"><a [routerLink]="['/contact_us']" routerLinkActive="contact_us"><i class="fa fa-envelope"></i></a></li>
         
-        <li class="menu_item"><a [routerLink]="['/choice']" routerLinkActive="choice"><i class="fa fa-heart fa-heart2"></i><div class="badge">{{totalChoiceItem}}</div></a></li>
-        <li class="menu_item"><a [routerLink]="['/cart']" routerLinkActive="cart"><div class="badge badge2">{{totalCartItem}}</div><i class="fa fa-shopping-cart"></i>Cart</a></li>
+      <li class="menu_item"><a [routerLink]="['/choice']" routerLinkActive="choice"><i class="fa fa-solid fa-download"></i></a></li>
+      <li class="menu_item"><a [routerLink]="['']" routerLinkActive=""><i class="fa fa-info-circle"></i>Notice</a></li>
+      <li class="menu_item" id="edit" #edit><a [routerLink]="['/blog']" routerLinkActive="blog"><i class="fa pencil fa-pencil-square-o"></i><div class="caution-box writingbox">
+        <i class="fa fa-exclamation-circle"></i>
+      </div></a></li>
       </ul>
       <ul class="menu sign_menu" id="sign_menu" #sign_menu>
-        <li class="menu_item menu_item0" id="menu_item0"><a [routerLink]="['/login']" routerLinkActive="login"><i class="fa fa-sign-in"></i>Login</a></li>
-        <li class="menu_item menu_item1" id="menu_item1"><a [routerLink]="['/auth']" routerLinkActive="auth"><i class="fa fa-user-plus"></i>SignUp</a></li>
+        <li class="menu_item menu_item0" id="menu_item0"><a [routerLink]="['/login']" routerLinkActive="login"><i class="fa fa-sign-in"></i></a></li>
+        <li class="menu_item menu_item1" id="menu_item1"><a [routerLink]="['/auth']" routerLinkActive="auth"><i class="fa fa-user-plus"></i></a></li>
       </ul>
       <ul class="profileMenu" id="profileMenu" #profileMenu>
         <li class="menu_item menu_item2" #menu_item2 id="menu_item2" (click)="toggleDropdown()">
@@ -41,7 +63,7 @@
   <ng-container *ngIf="shouldDisplayCopyrightDiv">
     <div class="scaleBeforeCopyright"></div>
     <div class="beforeCopyright"></div>
-    &copy;All rights reserved by cheradip.com
+    &copy;All rights reserved by kbmcollege.edu.bd
     <div class="afterCopyright"></div>
   </ng-container>
 </div>

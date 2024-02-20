@@ -52,10 +52,6 @@ export class OrderComponent implements OnInit {
     });
   }
   ngOnInit(): void {
-    const searchBarElement = document.getElementById('searchBar');
-    if (searchBarElement) {
-      searchBarElement.style.display = 'none';
-    }
     document.addEventListener('contextmenu', function (event) {
       event.preventDefault();
     });

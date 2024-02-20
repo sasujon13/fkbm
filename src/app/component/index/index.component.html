@@ -1,1 +1,55 @@
-<p>index works!</p>
+<!-- <div  style="margin-top: 120px;">...</div> -->
+
+<div style="margin-top: 115px;">
+  <h1 class="title" style="text-align: center;"><b>কে.বি.এম. কলেজের ওয়েব সাইটে আপনাকে স্বাগতম !</b></h1>
+
+  <div id="slider-container">
+    <div id="slider">
+      <div class="image-slider" #imageSlideContainer>
+        <a class="carousel-control-prev" role="button" (click)="prevImage()">
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span class="sr-only">Previous</span>
+        </a>
+
+        <div class="carousel-inner">
+          <img [src]="'./assets/images/' + images[currentIndex]" class="d-block w-100" alt="Current Image">
+        </div>
+
+        <a class="carousel-control-next" role="button" (click)="nextImage()">
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          <span class="sr-only">Next</span>
+        </a>
+      </div>
+    </div>
+    
+    <div id="thumbnails">
+      <ng-container *ngFor="let image of images; let i = index">
+        <img class="thumbnail" 
+             [src]="'./assets/images/' + image" 
+             alt="Thumbnail {{ i + 1 }}" 
+             [ngClass]="{ 'current-thumbnail': i === currentIndex, 'center-thumbnail': i === currentIndex }"
+             (click)="currentSlide(i)">
+      </ng-container>
+    </div>  
+
+    <video id="video-player" controls (ended)="playNextVideo()">
+      <source src="{{ video }}" type="video/mp4">
+      Your browser does not support the video tag.
+    </video>
+  </div>
+
+  <p style="text-align: justify;">দেশের উত্তরাঞ্চলের সর্ববৃহৎ ও ঐতিহাসিক বেসরকারী ডিগ্রী কলেজ দিনাজপুর শহরের দক্ষিন
+    উপকন্ঠে ঐতিহাসিক রামসাগর দীঘির যাত্রাপাতের ধারে ১৫ একর বিস্তৃত এক মনোরম পরিবেশে অবস্থিত। কোতয়ালী থানার ৬নং আউলিয়াপুর
+    ইউনিয়নের মামুদপুর মৌজায় কলেজের অধিক অংশের অবস্থান। দিনাজপুরের ঐতিহ্যবাহী বেদনা লিচুর উৎপাদন স্থল মাশিমপুর গ্রামের
+    অবস্থান কলেজের পাশগেষে। দিনাজপুর জেলার প্রথম মুসলমান আইনজীবি ও পাকিস্থান আন্দোলনের এই অঞ্চলের পুরধা মরহুম কাদের কক্স
+    এর নামে ১৯৬৮সালে বর্তমান স্থানে কলেজটি চালু হয়।</p>
+  <p style="text-align: justify;">তৎকালীন জেলা প্রশাসক আ কা ম যাকারিয়া কলেজের জন্য ১৫ একর জমি অধিগ্রহণ করে দেন এবং
+    সহযোগিতা দিয়েছিলেন তৎকালীন চেরাডাঙ্গী কলেজের পরিচালক পর্ষদের সদস্যবৃন্দ মরহুম ফজলে হক, মরহুম আলহাজ্জ লতিফর রহমান,
+    মরহুম পশরউদ্দিন, মরহুম আলহাজ্জ তিনকোড় মোহাম্মদ, মরহুম শাহ আজিজার রহমান, মরহুম আব্বাস উদ্দীন আলী, জনাব মঈনউদ্দীন আহমদ
+    চৌধুরী, আলহাজ্জ সফিউদ্দীন আহমদ, জনাব মাকসুদ আলী, জনাব মোঃ আব্দুস সালাম প্রমুখ সহ বিশিষ্ট শিল্পপতি মরহুম আজিজুল হক
+    চৌধুরী এবং জনাব খায়রুল আনম।</p>
+  <p style="text-align: justify;">মরহুম মাহমুদ মোকারক হোসেনের আহবানে সাড়া দিয়ে যেভাবে এগিয়ে এসেছেন, বলিষ্ঠ ভূমিকা
+    রেখেছেন জোর তথা দেশের উত্তরাঞ্চলের শিক্ষা সম্প্রসারণের ইতিহাসে তা এক গৌরবোজ্জ্বল অধ্যায় হয়ে ভাম্বর হয়ে থাকবে</p>
+  &nbsp;
+
+</div>

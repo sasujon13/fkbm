@@ -22,10 +22,6 @@ export class MyorderComponent implements OnInit {
     this.fullName = localStorage.getItem('fullName');
     this.loadData();
     this.updateDisplayedOrders();
-    const searchBarElement = document.getElementById('searchBar');
-    if (searchBarElement) {
-      searchBarElement.style.display = 'none';
-    }
     document.addEventListener('contextmenu', function (event) {
       event.preventDefault();
     });

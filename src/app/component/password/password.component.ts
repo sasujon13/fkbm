@@ -39,11 +39,6 @@ export class PasswordComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    const searchBarElement = document.getElementById('searchBar');
-
-    if (searchBarElement) {
-      searchBarElement.style.display = 'none';
-    }
 
     const savedAuthFormData = localStorage.getItem('authFormData');
     if (savedAuthFormData) {
