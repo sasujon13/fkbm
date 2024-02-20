@@ -13,7 +13,7 @@ export class IndexComponent implements AfterViewInit, OnDestroy {
   currentIndex: number = 0;
   thumbnailContainerWidth: number = 0;
   images: string[] = ['image1.jpg', 'image2.jpg', 'image3.jpg', 'image4.jpg', 'image5.jpg', 'image6.jpg', 'image7.jpg', 'image8.jpg', 'image9.jpg', 'image10.jpg'];
-  video: string = './assets/sample.mp4';
+  video: string = './assets/admission.mp4';
 
   private destroy$: Subject<void> = new Subject<void>();
 
