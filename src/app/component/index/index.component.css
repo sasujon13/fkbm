@@ -259,6 +259,7 @@ button {
   display: flex;
   justify-content: center;
   align-items: center;
+  overflow: auto;
   z-index: 1000;
 }
 
@@ -266,6 +267,7 @@ button {
   position: relative;
   max-width: 90%;
   max-height: 90%;
+  overflow-y: auto;
 }
 
 .full-image {
@@ -292,6 +294,7 @@ button {
 }
 
 
+
 @keyframes gradientTransition {
   0% {
     background-position: 0% 0;
@@ -308,6 +311,9 @@ button {
     height: 100vw;
     overflow: hidden;
   }
+  .remember {
+    height: 60vw;
+  }
 }
 
 @media (min-width: 360px) {
@@ -316,12 +322,18 @@ button {
     height: 70vw;
     overflow: hidden;
   }
+  .remember {
+    height: 50vw;
+  }
 }
 
 @media (min-width: 492px) {
   .profile {
     height: 50vw;
     overflow: hidden;
+  }
+  .remember {
+    height: 40vw;
   }
 }
 
@@ -335,6 +347,9 @@ button {
   .profile {
     height: 40vw;
     overflow: hidden;
+  }
+  .remember {
+    height: 30vw;
   }
 }
 
@@ -360,6 +375,9 @@ button {
   .profile-title3{
     margin-top: 20px;
   }
+  .remember {
+    height: 25vw;
+  }
 }
 
 @media (min-width: 992px) {
@@ -382,6 +400,9 @@ button {
   .profile-head {
     margin-top: 0;
   }
+  .remember {
+    height: 21vw;
+  }
 }
 
 @media (min-width: 1200px) {
@@ -403,7 +424,7 @@ button {
   }
 
   .remember {
-    height: 24vw;
+    height: 18vw;
   }
 }
 
@@ -427,7 +448,7 @@ button {
   }
 
   .remember {
-    height: 21vw;
+    height: 15vw;
   }
 }
 

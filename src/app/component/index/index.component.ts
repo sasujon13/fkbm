@@ -1,6 +1,7 @@
 import { Component, ElementRef, AfterViewInit, ViewChild, OnDestroy } from '@angular/core';
 import { interval, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
+import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-index',
@@ -9,8 +10,11 @@ import { takeUntil } from 'rxjs/operators';
 })
 export class IndexComponent implements AfterViewInit, OnDestroy {
   observer!: IntersectionObserver;
-  isModalOpen: boolean = false;
+  isImageModalOpen: boolean = false;
+  isProfileModalOpen: boolean = false;
   fullImageSrc: string = '';
+  fullProfileText: SafeHtml | undefined;
+  ;
   zoomLevel: number = 1; 
   isDragging: boolean = false;
   startX: number = 0;
@@ -28,7 +32,7 @@ export class IndexComponent implements AfterViewInit, OnDestroy {
   currentMonthIndex: number = new Date().getMonth() - 1;
   months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
   currentYear: number = new Date().getFullYear();
-  constructor() { }
+  constructor(private sanitizer: DomSanitizer) {}
   currentSlideIndex: number = 0;
   currentVideoSlideIndex: number = 0;
   currentIndex: number = 0;
@@ -279,15 +283,39 @@ export class IndexComponent implements AfterViewInit, OnDestroy {
     table += '</tr></table>';
     return table;
   }
+  
   openModal() {
     this.fullImageSrc = "./assets/images/Collegemap.jpg";
-    this.isModalOpen = true;
+    this.isImageModalOpen = true;
     this.zoomLevel = 1; 
     this.resetPosition();
   }
 
+  openModal2(event: Event): void {
+    const element = event.currentTarget as HTMLElement;
+    let profileDiv = element.previousElementSibling?.previousElementSibling;
+  
+    if (profileDiv && profileDiv.classList.contains('profile')) {
+      const paragraph = profileDiv.querySelector('.profile-text');
+  
+      if (paragraph && paragraph.innerHTML) {
+        this.fullProfileText = this.sanitizer.bypassSecurityTrustHtml(paragraph.innerHTML);
+        this.isProfileModalOpen = true;
+      } else {
+        console.warn('No paragraph found inside profile-text');
+      }
+    } else {
+      console.warn('Could not find profile container');
+    }
+  }
+  
+  
+
   closeModal() {
-    this.isModalOpen = false;
+    this.isImageModalOpen = false;
+  }
+  closeModal2() {
+    this.isProfileModalOpen = false;
   }
   zoomImage(event: WheelEvent) {
     event.preventDefault();
