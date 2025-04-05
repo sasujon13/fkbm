@@ -3,6 +3,7 @@ import { trigger, state, style, transition, animate } from '@angular/animations'
 import { CartService } from 'src/app/service/cart.service';
 import { ChoiceService } from 'src/app/service/choice.service';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
+import { RouterModule } from '@angular/router';
 
 
 @Component({
@@ -43,8 +44,7 @@ export class HeaderComponent implements OnInit {
       const scrollTop = window.scrollY;
       const lastScrollPosition = contentHeight - screenHeight;
       this.shouldDisplayCopyrightDiv =
-        contentHeight <= screenHeight ||
-        (scrollTop >= lastScrollPosition && contentHeight > screenHeight);
+        contentHeight <= screenHeight || (scrollTop >= lastScrollPosition && contentHeight > screenHeight);
     }
   }
   
@@ -209,7 +209,7 @@ export class HeaderComponent implements OnInit {
       this.closeMenu();
       this.closeProfileMenu();
       this.closeAcademicDropdown();
-    }, 10000);
+    }, 3000);
   }
   @HostListener('document:click', ['$event'])
   onDocumentClick(event: Event) {

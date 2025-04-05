@@ -1,0 +1,4 @@
+<div class="iframe-container">
+    <h1 *ngIf="isLoading" style="text-align: center; margin-top:150px">Loading Administration Page... ..</h1>
+      <iframe (load)="onIframeLoad()" [src]="iframeSrc" id="iframeContent"></iframe>
+    </div>

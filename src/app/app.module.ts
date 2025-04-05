@@ -4,33 +4,19 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './component/header/header.component';
-import { CartComponent } from './component/cart/cart.component';
 import { ContactUsComponent } from './component/contact-us/contact-us.component';
-import { AboutUsComponent } from './component/about-us/about-us.component';
 import { FaqsComponent } from './component/faqs/faqs.component';
-import { OrderComponent } from './component/order/order.component';
-import { ProductsComponent } from './component/products/products.component';
 import { HttpClientModule } from '@angular/common/http';
 import { FilterPipe } from './shared/filter.pipe';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { ChoiceComponent } from './component/choice/choice.component';
-import { AuthComponent } from './component/auth/auth.component';
-import { LoginComponent } from './component/login/login.component';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { AdminComponent } from './component/admin/admin.component';
-import { ProfileComponent } from './component/profile/profile.component';
-import { MyorderComponent } from './component/myorder/myorder.component';
-import { PasswordComponent } from './component/password/password.component';
 import { IndexComponent } from './component/index/index.component';
 import { AcademicComponent } from './component/academic/academic.component';
-import { ResultComponent } from './component/result/result.component';
 import { NoticeComponent } from './component/notice/notice.component';
-import { AwardComponent } from './component/award/award.component';
 import { AdmissionComponent } from './component/admission/admission.component';
-import { CampusComponent } from './component/campus/campus.component';
-import { DownloadComponent } from './component/download/download.component';
+import { AdministrationComponent } from './component/administration/administration.component';
 import { TeachersComponent } from './component/academic/teachers/teachers.component';
 import { StaffComponent } from './component/academic/staff/staff.component';
 import { DeptComponent } from './component/academic/honours/dept/dept.component';
@@ -48,44 +34,27 @@ import { AccountingComponent } from './component/academic/honours/dept/accountin
 import { SociologyComponent } from './component/academic/honours/dept/sociology/sociology.component';
 import { HistoryComponent } from './component/academic/honours/dept/history/history.component';
 import { EconomicsComponent } from './component/academic/honours/dept/economics/economics.component';
-import { AdministrativeComponent } from './component/campus/administrative/administrative.component';
-import { ArtsComponent } from './component/campus/arts/arts.component';
-import { ArahimComponent } from './component/campus/arahim/arahim.component';
-import { ScienceComponent } from './component/campus/science/science.component';
-import { HallRoomComponent } from './component/campus/hall-room/hall-room.component';
-import { MujibCornerComponent } from './component/campus/mujib-corner/mujib-corner.component';
-import { LibraryComponent } from './component/campus/library/library.component';
-import { GardensComponent } from './component/campus/gardens/gardens.component';
-import { OthersComponent } from './component/campus/others/others.component';
 import { HscBmComponent } from './component/academic/hsc-bm/hsc-bm.component';
 import { CoCurricularComponent } from './component/academic/co-curricular/co-curricular.component';
+import { DetailsComponent } from './component/details/details.component';
+import { SafeUrlPipe } from './component/header/safe-url.pipe';
+import { RoutineComponent } from './component/academic/routine/routine.component';
 
 @NgModule({
   declarations: [
     AppComponent,
+    SafeUrlPipe,
+    AppComponent,
     HeaderComponent,
-    CartComponent,
+    IctComponent,
     ContactUsComponent,
-    AboutUsComponent,
     FaqsComponent,
-    OrderComponent,
-    ProductsComponent,
-    ChoiceComponent,
     FilterPipe,
-    AuthComponent,
-    LoginComponent,
-    AdminComponent,
-    ProfileComponent,
-    MyorderComponent,
-    PasswordComponent,
     IndexComponent,
     AcademicComponent,
-    ResultComponent,
     NoticeComponent,
-    AwardComponent,
     AdmissionComponent,
-    CampusComponent,
-    DownloadComponent,
+    AdministrationComponent,
     TeachersComponent,
     StaffComponent,
     DeptComponent,
@@ -103,17 +72,12 @@ import { CoCurricularComponent } from './component/academic/co-curricular/co-cur
     SociologyComponent,
     HistoryComponent,
     EconomicsComponent,
-    AdministrativeComponent,
-    ArtsComponent,
-    ArahimComponent,
-    ScienceComponent,
-    HallRoomComponent,
-    MujibCornerComponent,
-    LibraryComponent,
-    GardensComponent,
-    OthersComponent,
+    MathComponent,
+    FinanceComponent,
     HscBmComponent,
     CoCurricularComponent,
+    DetailsComponent,
+    RoutineComponent,
   ],
   imports: [
     BrowserModule,

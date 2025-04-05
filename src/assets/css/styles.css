@@ -15,6 +15,24 @@
     font-family: 'Noto Serif Bengali';
     src: url('src/assets/fonts/NotoSerifBengali-Regular.ttf') format('truetype');
   }
+
+  :root {
+    /* Primary colors */
+    --primary-light: #00B4B4;
+    --primary-color: #008080;
+    --primary-dark: #005555;
+  
+    /* Secondary colors */
+    --secondary-light: #FFEC8B;
+    --secondary-color: #FFD700;
+    --secondary-dark: #B8860B;
+  
+    /* Additional colors */
+    --success-color: #28a745;
+    --danger-color: #dc3545;
+    --warning-color: #ffc107;
+    --info-color: #17a2b8;
+  }
   
   .bengali-text {
     font-family: 'Bengali Serif', sans-serif;
