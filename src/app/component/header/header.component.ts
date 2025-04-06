@@ -4,6 +4,7 @@ import { CartService } from 'src/app/service/cart.service';
 import { ChoiceService } from 'src/app/service/choice.service';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { RouterModule } from '@angular/router';
+import { ApiService } from '..//../service/api.service';
 
 
 @Component({
@@ -25,6 +26,9 @@ import { RouterModule } from '@angular/router';
   ]
 })
 export class HeaderComponent implements OnInit {
+  @ViewChild('marquee', { static: true }) marqueeElement!: ElementRef;
+  public notifications: any[] = [];
+  private currentIndex = 0;
 
   isCopyrightVisible = false;
   shouldDisplayCopyrightDiv = false; 
@@ -62,7 +66,12 @@ export class HeaderComponent implements OnInit {
   item1: any;
 
 
-  constructor(private cartService: CartService, private choiceService: ChoiceService, private route: ActivatedRoute, private router: Router) { }
+  constructor(
+    private cartService: CartService, 
+    private choiceService: ChoiceService, 
+    private route: ActivatedRoute, 
+    private router: Router,
+    private apiService: ApiService) { }
 
   ngOnInit(): void {
 
@@ -259,5 +268,104 @@ export class HeaderComponent implements OnInit {
       }
     this.router.navigate(['']);
   }
+
+  
+
+  loadNotifications() {
+    this.apiService.getNotifications().subscribe(
+      data => {
+        this.notifications = data;
+        this.startMarquee();
+      },
+      error => {
+        console.error('Error fetching notifications!');
+      }
+    );
+  }
+
+  startMarquee() {
+    if (this.notifications.length > 0) {
+      this.updateMarqueeMessage();
+      this.marqueeElement.nativeElement.addEventListener('animationiteration', () => {
+        this.updateMarqueeMessage();
+      });
+    }
+  }
+
+  updateMarqueeMessage() {
+    const messageElement: HTMLElement = this.marqueeElement.nativeElement.querySelector('.msg');
+    
+    let notificationsHTML = '';
+    for (let i = 0; i < this.notifications.length; i++) {
+      const currentIndex = (this.currentIndex + i) % this.notifications.length;
+      const currentNotification = this.notifications[currentIndex];
+      notificationsHTML += `<a href="${currentNotification.link}" class="msg_link" target="_blank">${currentNotification.text}</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`;
+    }
+    
+    messageElement.innerHTML = notificationsHTML;
+    this.addDynamicStyles();
+  
+    const messageWidth = messageElement.scrollWidth;
+    const viewportWidth = window.innerWidth;
+  
+    let increasingTime: number;
+    if (viewportWidth < 576) {
+      increasingTime = 7;
+    } else if (viewportWidth < 768) {
+      increasingTime = 10;
+    } else if (viewportWidth < 992) {
+      increasingTime = 12;
+    } else if (viewportWidth < 1200) {
+      increasingTime = 15;
+    } else {
+      increasingTime = 20;
+    }
+  
+    let animationDuration: number;
+    if (messageWidth <= viewportWidth) {
+      animationDuration = increasingTime;
+    } else {
+      const numberOfWidths = Math.ceil(messageWidth / viewportWidth);
+      animationDuration = increasingTime + numberOfWidths * increasingTime;
+    }
+  
+    const keyframes = `
+      @keyframes scrollLeft {
+        0% {
+          transform: translateX(100vw);
+        }
+        100% {
+          transform: translateX(-${messageWidth}px);
+        }
+      }
+    `;
+    
+    const style = document.createElement('style');
+    style.type = 'text/css';
+    style.innerHTML = `
+      .marquee .msg {
+        animation: scrollLeft ${animationDuration}s linear infinite;
+      }
+      ${keyframes}
+    `;
+    document.head.appendChild(style);
+  
+    this.currentIndex = (this.currentIndex + 1) % this.notifications.length;
+  }
+  
+  addDynamicStyles() {
+    const style = document.createElement('style');
+    style.type = 'text/css';
+    style.innerHTML = `
+      .msg_link {
+        text-decoration: none;
+        color: teal;
+      }
+      .msg_link:hover {
+        color: yellowgreen;
+      }
+    `;
+    document.head.appendChild(style);
+  } 
 
 }

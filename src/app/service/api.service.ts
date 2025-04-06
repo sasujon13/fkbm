@@ -185,4 +185,9 @@ export class ApiService {
     const url = `${this.baseUrl}/nonMpoStaff`;
     return this.http.get<string[]>(url);
   }
+
+  getNotifications(): Observable<any> {
+    const url = `${this.baseUrl}/notification`;
+    return this.http.get<string[]>(url);
+  }
 }
