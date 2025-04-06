@@ -8,9 +8,9 @@
       <i class="fa fa-search"></i>
     </div>
     <ul class="menu" [class.active]="menuActive" [@flyInOut] (click)="closeMenu()">
-        <!-- <li class="menu_item"><a [routerLink]="['/index']" routerLinkActive="index"><i class="fa fa-home"></i></a></li> -->
+        <li class="menu_item"><a [routerLink]="['/index']" routerLinkActive="index"><i class="fa fa-home"></i></a></li>
         <li class="menu_item"><a [routerLink]="['/academic']" routerLinkActive="academic"><i class="fa pencil fa-pencil-square-o"></i>Academic</a></li>
-        <li class="menu_item"><a [routerLink]="['/teachers_staffs']" routerLinkActive="teachers_staffs"><i class="fa fa-user-tie"></i>Teachers & Staffs</a></li>
+        <li class="menu_item"><a [routerLink]="['/personnel']" routerLinkActive="personnel"><i class="fa fa-user-tie"></i>Personnel</a></li>
         <li class="menu_item"><a [routerLink]="['/admission']" routerLinkActive="admission"><i class="fa fa-university"></i>Admission</a></li>
         <li class="menu_item"><a [routerLink]="['/administration']" routerLinkActive="administration"><i class="fa fa-user-shield"></i></a></li>
         <li class="menu_item"><a [routerLink]="['/contact_us']" routerLinkActive="contact_us"><i class="fa fa-envelope"></i></a></li>

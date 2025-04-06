@@ -150,4 +150,39 @@ export class ApiService {
     window.location.href = `${this.baseUrl}/admin/`;
     return window.location.href;
   }
+
+  getTeachers(): Observable<any[]> {
+    const url = `${this.baseUrl}/teacher`;
+    return this.http.get<string[]>(url);
+  }
+
+  getExTeachers(): Observable<any[]> {
+    const url = `${this.baseUrl}/exTeacher`;
+    return this.http.get<string[]>(url);
+  }
+
+  getStaffs(): Observable<any[]> {
+    const url = `${this.baseUrl}/staff`;
+    return this.http.get<string[]>(url);
+  }
+
+  getExStaffs(): Observable<any[]> {
+    const url = `${this.baseUrl}/exStaff`;
+    return this.http.get<string[]>(url);
+  }
+
+  getOtherPeoples(): Observable<any[]> {
+    const url = `${this.baseUrl}/otherPeople`;
+    return this.http.get<string[]>(url);
+  }
+
+  getTeacherHonours(): Observable<any[]> {
+    const url = `${this.baseUrl}/teacherHonours`;
+    return this.http.get<string[]>(url);
+  }
+
+  getNonMpoStaff(): Observable<any[]> {
+    const url = `${this.baseUrl}/nonMpoStaff`;
+    return this.http.get<string[]>(url);
+  }
 }

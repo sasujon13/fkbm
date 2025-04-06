@@ -17,8 +17,6 @@ import { AcademicComponent } from './component/academic/academic.component';
 import { NoticeComponent } from './component/notice/notice.component';
 import { AdmissionComponent } from './component/admission/admission.component';
 import { AdministrationComponent } from './component/administration/administration.component';
-import { TeachersComponent } from './component/academic/teachers/teachers.component';
-import { StaffComponent } from './component/academic/staff/staff.component';
 import { DeptComponent } from './component/academic/honours/dept/dept.component';
 import { BanglaComponent } from './component/academic/honours/dept/bangla/bangla.component';
 import { EnglishComponent } from './component/academic/honours/dept/english/english.component';
@@ -39,6 +37,7 @@ import { CoCurricularComponent } from './component/academic/co-curricular/co-cur
 import { DetailsComponent } from './component/details/details.component';
 import { SafeUrlPipe } from './component/header/safe-url.pipe';
 import { RoutineComponent } from './component/academic/routine/routine.component';
+import { PersonnelComponent } from './component/personnel/personnel.component';
 
 @NgModule({
   declarations: [
@@ -55,8 +54,6 @@ import { RoutineComponent } from './component/academic/routine/routine.component
     NoticeComponent,
     AdmissionComponent,
     AdministrationComponent,
-    TeachersComponent,
-    StaffComponent,
     DeptComponent,
     BanglaComponent,
     EnglishComponent,
@@ -78,6 +75,7 @@ import { RoutineComponent } from './component/academic/routine/routine.component
     CoCurricularComponent,
     DetailsComponent,
     RoutineComponent,
+    PersonnelComponent,
   ],
   imports: [
     BrowserModule,

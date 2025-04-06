@@ -1,0 +1,148 @@
+.table-wrapper {
+    width: 100%;
+    max-height: 400px;
+    /* adjust as needed */
+    overflow-y: hidden;
+    overflow-x: hidden;
+    display: flex;
+    justify-content: center;
+    border: 1px dotted teal;
+    border-bottom-left-radius: 15px;
+    border-top-right-radius: 15px;
+    margin: 1.5vw;
+    background: #f9f9f9;
+}
+
+table {
+    border: 0;
+    width: auto;
+}
+
+td {
+    padding: 1px 7px 1px 7px;
+}
+
+td.heading,
+td.img {
+    text-align: center;
+}
+
+h3.heading3 {
+    text-align: center;
+    color: white;
+    background-color: teal;
+    outline-style: dotted;
+    border-bottom-left-radius: 15px;
+    border-top-right-radius: 15px;
+    padding: 7px;
+    font-size: 1.5em;
+    margin: 21px auto 21px auto;
+    width: 90vw;
+}
+
+img.profile-picture {
+    height: 92px;
+    width: 80px;
+    border-radius: 10px;
+    border-color: teal;
+    border: 1px solid teal;
+    margin: 7px 5px 5px 5px;
+}
+
+.container,
+.container-lg,
+.container-md,
+.container-sm,
+.container-xl,
+.container-xxl {
+    max-width: 1920px;
+}
+
+td.viewButton {
+    text-align: center;
+}
+
+button.details {
+    border: 0;
+    outline: 1px dotted teal;
+    border-radius: 3px;
+    padding: 3px 12px 3px 12px;
+    margin: 7px;
+}
+
+.modal-backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+}
+
+.modal-container {
+    background: white;
+    padding: 20px;
+    max-width: 90%;
+    max-height: 90%;
+    overflow: auto;
+    border-radius: 8px;
+    box-shadow: 0 0 10px black;
+}
+
+.modal-header {
+    text-align: right;
+}
+
+.close-button {
+    position: absolute;
+    top: 0;
+    right: 0;
+    background: red;
+    color: white;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+    padding: -1px;
+    border-radius: 50%;
+}
+
+
+@media (min-width: 576px) {
+    .col-xs-6 {
+        width: 98%;
+    }
+}
+
+@media (min-width: 768px) {
+    .col-sm-6 {
+        width: 49%;
+    }
+}
+
+@media (min-width: 992px) {
+    .col-md-6 {
+        width: 49%;
+    }
+}
+
+@media (min-width: 1200px) {
+    .col-lg-4 {
+        width: 32.333%;
+    }
+}
+
+@media (min-width: 1400px) {
+    .col-xl-4 {
+        width: 32.333%;
+    }
+}
+
+@media (min-width: 1600px) {
+    .col-xxl-3 {
+        width: 24%;
+    }
+}

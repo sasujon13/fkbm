@@ -1,0 +1,416 @@
+<div style="margin-top: 115px; margin-bottom: 80px;">
+    <div class="container">
+        <div class="row">
+            <h3 class="heading3">MPO Teachers</h3>
+            <div *ngFor="let teacher of teachers" class="col-12 col-xs-6 col-sm-6 col-md-6 col-lg-4 col-xl-4 col-xxl-3">
+                <div class="table-wrapper">
+                    <table>
+                        <tr>
+                            <td colspan="4" class="img"><img [src]="teacher.Img || './assets/images/teacher.jpg'"
+                                    class="profile-picture"></td>
+                        </tr>
+                        <tr>
+                            <td colspan="4" class="heading"><b>{{teacher.Name}}</b></td>
+                        </tr>
+                        <tr>
+                            <td colspan="4" class="heading">{{teacher.Designation}}</td>
+                        </tr>
+                        <tr>
+                            <td colspan="4" class="heading">{{teacher.Dept}}</td>
+                        </tr>
+                        <tr>
+                            <td colspan="4" class="heading">............................................................
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Fathers Name</td>
+                            <td>:</td>
+                            <td colspan="2">{{teacher.FName}}</td>
+                        </tr>
+                        <tr>
+                            <td>Mothers Name</td>
+                            <td>:</td>
+                            <td colspan="2">{{teacher.MName}}</td>
+                        </tr>
+                        <tr>
+                            <td>Joining Date</td>
+                            <td>:</td>
+                            <td colspan="2">{{teacher.Joining}}</td>
+                        </tr>
+                        <tr>
+                            <td>Index No.</td>
+                            <td>:</td>
+                            <td colspan="2">{{teacher.Index}}</td>
+                        </tr>
+                        <tr>
+                            <td>Mobile No.</td>
+                            <td>:</td>
+                            <td colspan="2">{{teacher.Mobile}}</td>
+                        </tr>
+                        <tr>
+                            <td>Address</td>
+                            <td>:</td>
+                            <td colspan="2">{{teacher.Address}}</td>
+                        </tr>
+                        <tr>
+                            <td>DOB</td>
+                            <td>:</td>
+                            <td colspan="2">{{teacher.Dob}}</td>
+                        </tr>
+                        <tr>
+                            <td class="viewButton" colspan="4"><button (click)="openModal($event)" class="details"
+                                    id="details">Details</button></td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="row">
+            <h3 class="heading3">Honours Teachers</h3>
+            <div *ngFor="let teacher of teacherHonours"
+                class="col-12 col-xs-6 col-sm-6 col-md-6 col-lg-4 col-xl-4 col-xxl-3">
+                <div class="table-wrapper">
+                    <table>
+                        <tr>
+                            <td colspan="4" class="img"><img [src]="teacher.Img || './assets/images/teacher.jpg'"
+                                    class="profile-picture"></td>
+                        </tr>
+                        <tr>
+                            <td colspan="4" class="heading"><b>{{teacher.Name}}</b></td>
+                        </tr>
+                        <tr>
+                            <td colspan="4" class="heading">{{teacher.Designation}}</td>
+                        </tr>
+                        <tr>
+                            <td colspan="4" class="heading">{{teacher.Dept}}</td>
+                        </tr>
+                        <tr>
+                            <td colspan="4" class="heading">............................................................
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Fathers Name</td>
+                            <td>:</td>
+                            <td colspan="2">{{teacher.FName}}</td>
+                        </tr>
+                        <tr>
+                            <td>Mothers Name</td>
+                            <td>:</td>
+                            <td colspan="2">{{teacher.MName}}</td>
+                        </tr>
+                        <tr>
+                            <td>Joining Date</td>
+                            <td>:</td>
+                            <td colspan="2">{{teacher.Joining}}</td>
+                        </tr>
+                        <tr>
+                            <td>Index No.</td>
+                            <td>:</td>
+                            <td colspan="2">{{teacher.Index}}</td>
+                        </tr>
+                        <tr>
+                            <td>Mobile No.</td>
+                            <td>:</td>
+                            <td colspan="2">{{teacher.Mobile}}</td>
+                        </tr>
+                        <tr>
+                            <td>Address</td>
+                            <td>:</td>
+                            <td colspan="2">{{teacher.Address}}</td>
+                        </tr>
+                        <tr>
+                            <td>DOB</td>
+                            <td>:</td>
+                            <td colspan="2">{{teacher.Dob}}</td>
+                        </tr>
+                        <tr>
+                            <td class="viewButton" colspan="4"><button (click)="openModal($event)" class="details"
+                                    id="details">Details</button></td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="row">
+            <h3 class="heading3">MPO Staffs</h3>
+            <div *ngFor="let teacher of staffs" class="col-12 col-xs-6 col-sm-6 col-md-6 col-lg-4 col-xl-4 col-xxl-3">
+                <div class="table-wrapper">
+                    <table>
+                        <tr>
+                            <td colspan="4" class="img"><img src="./assets/images/employee.jpg" class="profile-picture">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="4" class="heading"><b>{{teacher.Name}}</b></td>
+                        </tr>
+                        <tr>
+                            <td colspan="4" class="heading">{{teacher.Designation}}</td>
+                        </tr>
+                        <tr>
+                            <td colspan="4" class="heading">{{teacher.Dept}}</td>
+                        </tr>
+                        <tr>
+                            <td colspan="4" class="heading">............................................................
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Fathers Name</td>
+                            <td>:</td>
+                            <td colspan="2">{{teacher.FName}}</td>
+                        </tr>
+                        <tr>
+                            <td>Mothers Name</td>
+                            <td>:</td>
+                            <td colspan="2">{{teacher.MName}}</td>
+                        </tr>
+                        <tr>
+                            <td>Joining Date</td>
+                            <td>:</td>
+                            <td colspan="2">{{teacher.Joining}}</td>
+                        </tr>
+                        <tr>
+                            <td>Index No.</td>
+                            <td>:</td>
+                            <td colspan="2">{{teacher.Index}}</td>
+                        </tr>
+                        <tr>
+                            <td>Mobile No.</td>
+                            <td>:</td>
+                            <td colspan="2">{{teacher.Mobile}}</td>
+                        </tr>
+                        <tr>
+                            <td>Address</td>
+                            <td>:</td>
+                            <td colspan="2">{{teacher.Address}}</td>
+                        </tr>
+                        <tr>
+                            <td>DOB</td>
+                            <td>:</td>
+                            <td colspan="2">{{teacher.Dob}}</td>
+                        </tr>
+                        <tr>
+                            <td class="viewButton" colspan="4"><button (click)="openModal($event)" class="details"
+                                    id="details">Details</button></td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="row">
+            <h3 class="heading3">Non-MPO Staffs</h3>
+            <div *ngFor="let teacher of nonMpoStaffs"
+                class="col-12 col-xs-6 col-sm-6 col-md-6 col-lg-4 col-xl-4 col-xxl-3">
+                <div class="table-wrapper">
+                    <table>
+                        <tr>
+                            <td colspan="4" class="img"><img src="./assets/images/employee.jpg" class="profile-picture">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="4" class="heading"><b>{{teacher.Name}}</b></td>
+                        </tr>
+                        <tr>
+                            <td colspan="4" class="heading">{{teacher.Designation}}</td>
+                        </tr>
+                        <tr>
+                            <td colspan="4" class="heading">{{teacher.Dept}}</td>
+                        </tr>
+                        <tr>
+                            <td colspan="4" class="heading">............................................................
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Fathers Name</td>
+                            <td>:</td>
+                            <td colspan="2">{{teacher.FName}}</td>
+                        </tr>
+                        <tr>
+                            <td>Mothers Name</td>
+                            <td>:</td>
+                            <td colspan="2">{{teacher.MName}}</td>
+                        </tr>
+                        <tr>
+                            <td>Joining Date</td>
+                            <td>:</td>
+                            <td colspan="2">{{teacher.Joining}}</td>
+                        </tr>
+                        <tr>
+                            <td>Index No.</td>
+                            <td>:</td>
+                            <td colspan="2">{{teacher.Index}}</td>
+                        </tr>
+                        <tr>
+                            <td>Mobile No.</td>
+                            <td>:</td>
+                            <td colspan="2">{{teacher.Mobile}}</td>
+                        </tr>
+                        <tr>
+                            <td>Address</td>
+                            <td>:</td>
+                            <td colspan="2">{{teacher.Address}}</td>
+                        </tr>
+                        <tr>
+                            <td>DOB</td>
+                            <td>:</td>
+                            <td colspan="2">{{teacher.Dob}}</td>
+                        </tr>
+                        <tr>
+                            <td class="viewButton" colspan="4"><button (click)="openModal($event)" class="details"
+                                    id="details">Details</button></td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="row">
+            <h3 class="heading3">Ex Teachers</h3>
+            <div *ngFor="let teacher of exTeachers"
+                class="col-12 col-xs-6 col-sm-6 col-md-6 col-lg-4 col-xl-4 col-xxl-3">
+                <div class="table-wrapper">
+                    <table>
+                        <tr>
+                            <td colspan="4" class="img"><img src="./assets/images/teacher.jpg" class="profile-picture">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="4" class="heading"><b>{{teacher.Name}}</b></td>
+                        </tr>
+                        <tr>
+                            <td colspan="4" class="heading">{{teacher.Designation}}</td>
+                        </tr>
+                        <tr>
+                            <td colspan="4" class="heading">{{teacher.Dept}}</td>
+                        </tr>
+                        <tr>
+                            <td colspan="4" class="heading">............................................................
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Fathers Name</td>
+                            <td>:</td>
+                            <td colspan="2">{{teacher.FName}}</td>
+                        </tr>
+                        <tr>
+                            <td>Mothers Name</td>
+                            <td>:</td>
+                            <td colspan="2">{{teacher.MName}}</td>
+                        </tr>
+                        <tr>
+                            <td>Joining Date</td>
+                            <td>:</td>
+                            <td colspan="2">{{teacher.Joining}}</td>
+                        </tr>
+                        <tr>
+                            <td>Index No.</td>
+                            <td>:</td>
+                            <td colspan="2">{{teacher.Index}}</td>
+                        </tr>
+                        <tr>
+                            <td>Mobile No.</td>
+                            <td>:</td>
+                            <td colspan="2">{{teacher.Mobile}}</td>
+                        </tr>
+                        <tr>
+                            <td>Address</td>
+                            <td>:</td>
+                            <td colspan="2">{{teacher.Address}}</td>
+                        </tr>
+                        <tr>
+                            <td>DOB</td>
+                            <td>:</td>
+                            <td colspan="2">{{teacher.Dob}}</td>
+                        </tr>
+                        <tr>
+                            <td class="viewButton" colspan="4"><button (click)="openModal($event)" class="details"
+                                    id="details">Details</button></td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="row">
+            <h3 class="heading3">Ex Staffs</h3>
+            <div *ngFor="let teacher of exStaffs" class="col-12 col-xs-6 col-sm-6 col-md-6 col-lg-4 col-xl-4 col-xxl-3">
+                <div class="table-wrapper">
+                    <table>
+                        <tr>
+                            <td colspan="4" class="img"><img src="./assets/images/employee.jpg" class="profile-picture">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="4" class="heading"><b>{{teacher.Name}}</b></td>
+                        </tr>
+                        <tr>
+                            <td colspan="4" class="heading">{{teacher.Designation}}</td>
+                        </tr>
+                        <tr>
+                            <td colspan="4" class="heading">{{teacher.Dept}}</td>
+                        </tr>
+                        <tr>
+                            <td colspan="4" class="heading">............................................................
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Fathers Name</td>
+                            <td>:</td>
+                            <td colspan="2">{{teacher.FName}}</td>
+                        </tr>
+                        <tr>
+                            <td>Mothers Name</td>
+                            <td>:</td>
+                            <td colspan="2">{{teacher.MName}}</td>
+                        </tr>
+                        <tr>
+                            <td>Joining Date</td>
+                            <td>:</td>
+                            <td colspan="2">{{teacher.Joining}}</td>
+                        </tr>
+                        <tr>
+                            <td>Index No.</td>
+                            <td>:</td>
+                            <td colspan="2">{{teacher.Index}}</td>
+                        </tr>
+                        <tr>
+                            <td>Mobile No.</td>
+                            <td>:</td>
+                            <td colspan="2">{{teacher.Mobile}}</td>
+                        </tr>
+                        <tr>
+                            <td>Address</td>
+                            <td>:</td>
+                            <td colspan="2">{{teacher.Address}}</td>
+                        </tr>
+                        <tr>
+                            <td>DOB</td>
+                            <td>:</td>
+                            <td colspan="2">{{teacher.Dob}}</td>
+                        </tr>
+                        <tr>
+                            <td class="viewButton" colspan="4"><button (click)="openModal($event)" class="details"
+                                    id="details">Details</button></td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div *ngIf="isProfileModalOpen" class="modal-backdrop">
+        <div class="modal-container">
+            <div class="modal-content">
+                <div class="modal-body" [innerHTML]="fullProfileText"></div>
+                <button class="close-button" (click)="closeModal()">&#10006;</button>
+            </div>
+        </div>
+    </div>
+</div>
