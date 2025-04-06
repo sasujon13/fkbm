@@ -682,12 +682,13 @@ background-color: rgb(105,185,185);
 text-align: center;
 font-size: 12px;
 padding: 0;
-margin-bottom: 0px;
+margin: auto auto 0 auto;
 display: block;
 -webkit-user-select: none;
 user-select: none;
 pointer-events: none;
-z-index: 999;
+max-width: 1920px;
+z-index: 9999;
 }
 
 .scaleBeforeCopyright{

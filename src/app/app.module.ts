@@ -38,6 +38,7 @@ import { DetailsComponent } from './component/details/details.component';
 import { SafeUrlPipe } from './component/header/safe-url.pipe';
 import { RoutineComponent } from './component/academic/routine/routine.component';
 import { PersonnelComponent } from './component/personnel/personnel.component';
+import { DjangoComponent } from './component/django/django.component';
 
 @NgModule({
   declarations: [
@@ -76,6 +77,7 @@ import { PersonnelComponent } from './component/personnel/personnel.component';
     DetailsComponent,
     RoutineComponent,
     PersonnelComponent,
+    DjangoComponent,
   ],
   imports: [
     BrowserModule,

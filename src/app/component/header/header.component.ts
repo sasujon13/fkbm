@@ -48,7 +48,9 @@ export class HeaderComponent implements OnInit {
       const scrollTop = window.scrollY;
       const lastScrollPosition = contentHeight - screenHeight;
       this.shouldDisplayCopyrightDiv =
-        contentHeight <= screenHeight || (scrollTop >= lastScrollPosition && contentHeight > screenHeight);
+        // contentHeight <= screenHeight || (scrollTop >= lastScrollPosition && contentHeight > screenHeight);
+        contentHeight <= (screenHeight + 100) || (scrollTop >= (lastScrollPosition - 100) && contentHeight > (screenHeight - 100));
+
     }
   }
   

@@ -1,4 +1,9 @@
+
+<!-- <div class="django" *ngIf="showDjango">
+  <a [routerLink]="['/admin']" routerLinkActive="admin" class="admin"><button class="django">KBM Admin2</button></a>
+</div> -->
+
 <div class="iframe-container">
-    <h1 *ngIf="isLoading" style="text-align: center; margin-top:150px">Loading Administration Page... ..</h1>
-      <iframe (load)="onIframeLoad()" [src]="iframeSrc" id="iframeContent"></iframe>
-    </div>
+  <h1 *ngIf="isLoading" style="text-align: center; margin-top:150px">Loading Administration Page... ..</h1>
+  <iframe (load)="onIframeLoad()" (click)="iframeClicked()" [src]="iframeSrc" id="iframeContent"></iframe>
+</div>

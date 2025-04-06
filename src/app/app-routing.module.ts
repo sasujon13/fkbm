@@ -18,6 +18,7 @@ import { DetailsComponent } from './component/details/details.component';
 import { NoticeComponent } from './component/notice/notice.component';
 import { AdmissionComponent } from './component/admission/admission.component';
 import { AdministrationComponent } from './component/administration/administration.component';
+import { DjangoComponent } from './component/django/django.component';
 
 const routes: Routes = [
   {path:'', redirectTo:'index',pathMatch:'full'},
@@ -38,6 +39,7 @@ const routes: Routes = [
   {path: 'details', component: DetailsComponent},
   {path: 'admission', component: AdmissionComponent},
   {path: 'administration', component: AdministrationComponent},
+  {path: 'admin', component: DjangoComponent},
 ];
 
 @NgModule({

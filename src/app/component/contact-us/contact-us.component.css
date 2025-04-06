@@ -1,0 +1,79 @@
+.contact-container {
+  max-width: 1920px;
+  margin: 100px auto 30px auto;
+  padding: 20px;
+  background: #fff;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+h2 {
+  text-align: center;
+  margin-bottom: 25px;
+  color: white;
+  background: rgba(0, 128, 128, 0.75);
+  border-radius: 5px;
+  padding: 5px;
+}
+
+.phone-list button {
+  margin: 5px 10px 5px 10px;
+    padding: 10px 20px;
+    border: 1px dotted teal;
+    background-color: #fff;
+    color: #000;
+    border-radius: 7px;
+    cursor: pointer;
+    transition: 0.3s ease;
+    box-shadow: 0 0 5px rgba(0, 128, 128, 0.25);
+}
+
+.phone-list button:hover {
+  background-color: teal;
+}
+
+.container {
+  border-radius: 12px;
+  border: 1px dotted teal;
+  margin: 30px auto;
+  padding: 20px;
+  text-align: center;
+  width: 48%;
+  max-width: 800px;
+  box-shadow: 0 0 10px rgba(0, 128, 128, 0.50);
+}
+.row {
+  column-gap: 20px;
+}
+
+h3 {
+  color: white;
+  background: rgba(0, 128, 128, 0.75);
+  padding: 3px;
+  border-radius: 7px;
+}
+
+div.order{
+  margin-top: 25px;
+}
+
+.alert {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: teal;
+  padding: 5px 25px;
+  font-size: 16px;
+  text-align: center;
+  z-index: 99999;
+  border-radius: 7px;
+  border: 1px dotted teal;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  background: white;
+}
+
+
+@media screen and (max-width: 620px) {
+  .container {
+  width: 90%;
+    }}

@@ -1,14 +1,48 @@
 
 .iframe-container {
-    margin-top: 12px;
+    margin-top: 60px;
     position: relative;
     width: 100%;
     height: 90vh; /* Adjust the height as needed */
   }
   
   .iframe-container iframe {
-    margin-top: 50px;
+    margin-top: 0;
     width: 100%;
     height: 90vh;
     border: none;
   }
+  
+  div.django{    
+    z-index: 9998;
+    font-size: 24px;
+    margin: 780px auto -840px 410px;
+    /* margin: 130px auto -190px auto; */
+    text-align: center;
+  }
+
+  button.django{  
+    z-index: 99 !important;
+    font-size: 24px;
+    position: relative;
+    padding: 18px 36px 18px 36px;
+    border: 1px dotted teal;
+    border-radius: 43px;
+    background: #01c080;
+    color: white;
+  }
+
+  a.admin{
+    text-decoration: none;
+  }
+  
+  button.django:hover,
+  button.django:active {
+    background-color: teal;
+  }
+
+  
+@media screen and (max-width: 990px) {
+  div.django{    
+    margin: 760px auto -820px 0;
+  }}

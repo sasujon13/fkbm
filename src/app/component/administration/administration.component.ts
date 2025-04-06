@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ElementRef, HostListener, OnInit, Renderer2, ViewChild } from '@angular/core';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 
 @Component({
@@ -7,8 +7,10 @@ import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
   styleUrls: ['./administration.component.css']
 })
 export class AdministrationComponent {
+  @ViewChild('djangoDiv') djangoDiv!: ElementRef;
   iframeSrc: SafeResourceUrl;
   isLoading = true;
+  showDjango = true;
 
 
   ngOnInit() {
@@ -22,7 +24,20 @@ export class AdministrationComponent {
   onIframeLoad() {
     this.isLoading = false;
   }
-  constructor(private sanitizer: DomSanitizer) {
+  
+  iframeClicked() {
+    this.showDjango = false;
+  }
+  
+  constructor(private sanitizer: DomSanitizer, private renderer: Renderer2) {
     this.iframeSrc = this.sanitizer.bypassSecurityTrustResourceUrl('https://school.shebashikkha.com/login');
+  }
+
+  @HostListener('document:click', ['$event'])
+  onClickOutside(event: MouseEvent) {
+    const clickedInside = this.djangoDiv?.nativeElement.contains(event.target);
+    if (!clickedInside) {
+      this.showDjango = false;
+    }
   }
 }
