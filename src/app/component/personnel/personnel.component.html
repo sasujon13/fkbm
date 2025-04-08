@@ -33,6 +33,11 @@
                             <td colspan="2">{{teacher.MName}}</td>
                         </tr>
                         <tr>
+                            <td>Gender</td>
+                            <td>:</td>
+                            <td colspan="2">{{teacher.Gender}}</td>
+                        </tr>
+                        <tr>
                             <td>Joining Date</td>
                             <td>:</td>
                             <td colspan="2">{{teacher.Joining}}</td>
@@ -48,15 +53,69 @@
                             <td colspan="2">{{teacher.Mobile}}</td>
                         </tr>
                         <tr>
-                            <td>Address</td>
+                            <td>Email</td>
                             <td>:</td>
-                            <td colspan="2">{{teacher.Address}}</td>
+                            <td colspan="2">{{teacher.Email}}</td>
                         </tr>
-                        <tr>
-                            <td>DOB</td>
-                            <td>:</td>
-                            <td colspan="2">{{teacher.Dob}}</td>
-                        </tr>
+                        <div class="showHide" style="visibility:hidden">
+                            <tr>
+                                <td>Permanent Address</td>
+                                <td>:</td>
+                                <td colspan="2">{{teacher.PerAddress}}</td>
+                            </tr>
+                            <tr>
+                                <td>DOB</td>
+                                <td>:</td>
+                                <td colspan="2">{{teacher.DOB}}</td>
+                            </tr>
+                            <tr>
+                                <td>Present Address</td>
+                                <td>:</td>
+                                <td colspan="2">{{teacher.PreAddress}}</td>
+                            </tr>
+                            <tr>
+                                <td colspan="4">
+                                    <h4>Academic Details</h4>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>Exam</th>
+                                <th>Year</th>
+                                <th>Result</th>
+                                <th>Board / Univarsity</th>
+                            </tr>
+                            <div *ngFor="let ed of teacher">
+                                <tr>
+                                    <td>{{ed.Exam}}</td>
+                                    <td>{{ed.Year}}</td>
+                                    <td>{{ed.Result}}</td>
+                                    <td>{{ed.Board_Uni}}</td>
+                                </tr>
+                            </div>
+                            <tr>
+                                <td colspan="4">
+                                    <h4>teacher</h4>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>Title</th>
+                                <th>Year</th>
+                                <th>Description</th>
+                                <th>Comment</th>
+                            </tr>
+                            <div *ngFor="let ex of teacher">
+                                <tr>
+                                    <td>{{ex.Title}}</td>
+                                    <td>{{ex.Year}}</td>
+                                    <td>{{ex.Description}}</td>
+                                    <td>{{ex.Comment}}</td>
+                                </tr>
+                            </div>
+                            <tr>
+                                <td colspan="3">Probable Retirement Date : </td>
+                                <td>{{teacher.Retirement}}</td>
+                            </tr>
+                        </div>
                         <tr>
                             <td class="viewButton" colspan="4"><button (click)="openModal($event)" class="details"
                                     id="details">Details</button></td>
@@ -101,6 +160,11 @@
                             <td colspan="2">{{teacher.MName}}</td>
                         </tr>
                         <tr>
+                            <td>Gender</td>
+                            <td>:</td>
+                            <td colspan="2">{{teacher.Gender}}</td>
+                        </tr>
+                        <tr>
                             <td>Joining Date</td>
                             <td>:</td>
                             <td colspan="2">{{teacher.Joining}}</td>
@@ -116,15 +180,69 @@
                             <td colspan="2">{{teacher.Mobile}}</td>
                         </tr>
                         <tr>
-                            <td>Address</td>
+                            <td>Email</td>
                             <td>:</td>
-                            <td colspan="2">{{teacher.Address}}</td>
+                            <td colspan="2">{{teacher.Email}}</td>
                         </tr>
-                        <tr>
-                            <td>DOB</td>
-                            <td>:</td>
-                            <td colspan="2">{{teacher.Dob}}</td>
-                        </tr>
+                        <div class="showHide" style="visibility:hidden">
+                            <tr>
+                                <td>Permanent Address</td>
+                                <td>:</td>
+                                <td colspan="2">{{teacher.PerAddress}}</td>
+                            </tr>
+                            <tr>
+                                <td>DOB</td>
+                                <td>:</td>
+                                <td colspan="2">{{teacher.DOB}}</td>
+                            </tr>
+                            <tr>
+                                <td>Present Address</td>
+                                <td>:</td>
+                                <td colspan="2">{{teacher.PreAddress}}</td>
+                            </tr>
+                            <tr>
+                                <td colspan="4">
+                                    <h4>Academic Details</h4>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>Exam</th>
+                                <th>Year</th>
+                                <th>Result</th>
+                                <th>Board / Univarsity</th>
+                            </tr>
+                            <div *ngFor="let ed of teacher">
+                                <tr>
+                                    <td>{{ed.Exam}}</td>
+                                    <td>{{ed.Year}}</td>
+                                    <td>{{ed.Result}}</td>
+                                    <td>{{ed.Board_Uni}}</td>
+                                </tr>
+                            </div>
+                            <tr>
+                                <td colspan="4">
+                                    <h4>teacher</h4>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>Title</th>
+                                <th>Year</th>
+                                <th>Description</th>
+                                <th>Comment</th>
+                            </tr>
+                            <div *ngFor="let ex of teacher">
+                                <tr>
+                                    <td>{{ex.Title}}</td>
+                                    <td>{{ex.Year}}</td>
+                                    <td>{{ex.Description}}</td>
+                                    <td>{{ex.Comment}}</td>
+                                </tr>
+                            </div>
+                            <tr>
+                                <td colspan="3">Probable Retirement Date : </td>
+                                <td>{{teacher.Retirement}}</td>
+                            </tr>
+                        </div>
                         <tr>
                             <td class="viewButton" colspan="4"><button (click)="openModal($event)" class="details"
                                     id="details">Details</button></td>
@@ -168,6 +286,11 @@
                             <td colspan="2">{{teacher.MName}}</td>
                         </tr>
                         <tr>
+                            <td>Gender</td>
+                            <td>:</td>
+                            <td colspan="2">{{teacher.Gender}}</td>
+                        </tr>
+                        <tr>
                             <td>Joining Date</td>
                             <td>:</td>
                             <td colspan="2">{{teacher.Joining}}</td>
@@ -183,15 +306,69 @@
                             <td colspan="2">{{teacher.Mobile}}</td>
                         </tr>
                         <tr>
-                            <td>Address</td>
+                            <td>Email</td>
                             <td>:</td>
-                            <td colspan="2">{{teacher.Address}}</td>
+                            <td colspan="2">{{teacher.Email}}</td>
                         </tr>
-                        <tr>
-                            <td>DOB</td>
-                            <td>:</td>
-                            <td colspan="2">{{teacher.Dob}}</td>
-                        </tr>
+                        <div class="showHide" style="visibility:hidden">
+                            <tr>
+                                <td>Permanent Address</td>
+                                <td>:</td>
+                                <td colspan="2">{{teacher.PerAddress}}</td>
+                            </tr>
+                            <tr>
+                                <td>DOB</td>
+                                <td>:</td>
+                                <td colspan="2">{{teacher.DOB}}</td>
+                            </tr>
+                            <tr>
+                                <td>Present Address</td>
+                                <td>:</td>
+                                <td colspan="2">{{teacher.PreAddress}}</td>
+                            </tr>
+                            <tr>
+                                <td colspan="4">
+                                    <h4>Academic Details</h4>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>Exam</th>
+                                <th>Year</th>
+                                <th>Result</th>
+                                <th>Board / Univarsity</th>
+                            </tr>
+                            <div *ngFor="let ed of teacher">
+                                <tr>
+                                    <td>{{ed.Exam}}</td>
+                                    <td>{{ed.Year}}</td>
+                                    <td>{{ed.Result}}</td>
+                                    <td>{{ed.Board_Uni}}</td>
+                                </tr>
+                            </div>
+                            <tr>
+                                <td colspan="4">
+                                    <h4>teacher</h4>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>Title</th>
+                                <th>Year</th>
+                                <th>Description</th>
+                                <th>Comment</th>
+                            </tr>
+                            <div *ngFor="let ex of teacher">
+                                <tr>
+                                    <td>{{ex.Title}}</td>
+                                    <td>{{ex.Year}}</td>
+                                    <td>{{ex.Description}}</td>
+                                    <td>{{ex.Comment}}</td>
+                                </tr>
+                            </div>
+                            <tr>
+                                <td colspan="3">Probable Retirement Date : </td>
+                                <td>{{teacher.Retirement}}</td>
+                            </tr>
+                        </div>
                         <tr>
                             <td class="viewButton" colspan="4"><button (click)="openModal($event)" class="details"
                                     id="details">Details</button></td>
@@ -236,6 +413,11 @@
                             <td colspan="2">{{teacher.MName}}</td>
                         </tr>
                         <tr>
+                            <td>Gender</td>
+                            <td>:</td>
+                            <td colspan="2">{{teacher.Gender}}</td>
+                        </tr>
+                        <tr>
                             <td>Joining Date</td>
                             <td>:</td>
                             <td colspan="2">{{teacher.Joining}}</td>
@@ -251,15 +433,69 @@
                             <td colspan="2">{{teacher.Mobile}}</td>
                         </tr>
                         <tr>
-                            <td>Address</td>
+                            <td>Email</td>
                             <td>:</td>
-                            <td colspan="2">{{teacher.Address}}</td>
+                            <td colspan="2">{{teacher.Email}}</td>
                         </tr>
-                        <tr>
-                            <td>DOB</td>
-                            <td>:</td>
-                            <td colspan="2">{{teacher.Dob}}</td>
-                        </tr>
+                        <div class="showHide" style="visibility:hidden">
+                            <tr>
+                                <td>Permanent Address</td>
+                                <td>:</td>
+                                <td colspan="2">{{teacher.PerAddress}}</td>
+                            </tr>
+                            <tr>
+                                <td>DOB</td>
+                                <td>:</td>
+                                <td colspan="2">{{teacher.DOB}}</td>
+                            </tr>
+                            <tr>
+                                <td>Present Address</td>
+                                <td>:</td>
+                                <td colspan="2">{{teacher.PreAddress}}</td>
+                            </tr>
+                            <tr>
+                                <td colspan="4">
+                                    <h4>Academic Details</h4>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>Exam</th>
+                                <th>Year</th>
+                                <th>Result</th>
+                                <th>Board / Univarsity</th>
+                            </tr>
+                            <div *ngFor="let ed of teacher">
+                                <tr>
+                                    <td>{{ed.Exam}}</td>
+                                    <td>{{ed.Year}}</td>
+                                    <td>{{ed.Result}}</td>
+                                    <td>{{ed.Board_Uni}}</td>
+                                </tr>
+                            </div>
+                            <tr>
+                                <td colspan="4">
+                                    <h4>teacher</h4>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>Title</th>
+                                <th>Year</th>
+                                <th>Description</th>
+                                <th>Comment</th>
+                            </tr>
+                            <div *ngFor="let ex of teacher">
+                                <tr>
+                                    <td>{{ex.Title}}</td>
+                                    <td>{{ex.Year}}</td>
+                                    <td>{{ex.Description}}</td>
+                                    <td>{{ex.Comment}}</td>
+                                </tr>
+                            </div>
+                            <tr>
+                                <td colspan="3">Probable Retirement Date : </td>
+                                <td>{{teacher.Retirement}}</td>
+                            </tr>
+                        </div>
                         <tr>
                             <td class="viewButton" colspan="4"><button (click)="openModal($event)" class="details"
                                     id="details">Details</button></td>
@@ -304,6 +540,11 @@
                             <td colspan="2">{{teacher.MName}}</td>
                         </tr>
                         <tr>
+                            <td>Gender</td>
+                            <td>:</td>
+                            <td colspan="2">{{teacher.Gender}}</td>
+                        </tr>
+                        <tr>
                             <td>Joining Date</td>
                             <td>:</td>
                             <td colspan="2">{{teacher.Joining}}</td>
@@ -319,15 +560,69 @@
                             <td colspan="2">{{teacher.Mobile}}</td>
                         </tr>
                         <tr>
-                            <td>Address</td>
+                            <td>Email</td>
                             <td>:</td>
-                            <td colspan="2">{{teacher.Address}}</td>
+                            <td colspan="2">{{teacher.Email}}</td>
                         </tr>
-                        <tr>
-                            <td>DOB</td>
-                            <td>:</td>
-                            <td colspan="2">{{teacher.Dob}}</td>
-                        </tr>
+                        <div class="showHide" style="visibility:hidden">
+                            <tr>
+                                <td>Permanent Address</td>
+                                <td>:</td>
+                                <td colspan="2">{{teacher.PerAddress}}</td>
+                            </tr>
+                            <tr>
+                                <td>DOB</td>
+                                <td>:</td>
+                                <td colspan="2">{{teacher.DOB}}</td>
+                            </tr>
+                            <tr>
+                                <td>Present Address</td>
+                                <td>:</td>
+                                <td colspan="2">{{teacher.PreAddress}}</td>
+                            </tr>
+                            <tr>
+                                <td colspan="4">
+                                    <h4>Academic Details</h4>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>Exam</th>
+                                <th>Year</th>
+                                <th>Result</th>
+                                <th>Board / Univarsity</th>
+                            </tr>
+                            <div *ngFor="let ed of teacher">
+                                <tr>
+                                    <td>{{ed.Exam}}</td>
+                                    <td>{{ed.Year}}</td>
+                                    <td>{{ed.Result}}</td>
+                                    <td>{{ed.Board_Uni}}</td>
+                                </tr>
+                            </div>
+                            <tr>
+                                <td colspan="4">
+                                    <h4>teacher</h4>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>Title</th>
+                                <th>Year</th>
+                                <th>Description</th>
+                                <th>Comment</th>
+                            </tr>
+                            <div *ngFor="let ex of teacher">
+                                <tr>
+                                    <td>{{ex.Title}}</td>
+                                    <td>{{ex.Year}}</td>
+                                    <td>{{ex.Description}}</td>
+                                    <td>{{ex.Comment}}</td>
+                                </tr>
+                            </div>
+                            <tr>
+                                <td colspan="3">Probable Retirement Date : </td>
+                                <td>{{teacher.Retirement}}</td>
+                            </tr>
+                        </div>
                         <tr>
                             <td class="viewButton" colspan="4"><button (click)="openModal($event)" class="details"
                                     id="details">Details</button></td>
@@ -371,6 +666,11 @@
                             <td colspan="2">{{teacher.MName}}</td>
                         </tr>
                         <tr>
+                            <td>Gender</td>
+                            <td>:</td>
+                            <td colspan="2">{{teacher.Gender}}</td>
+                        </tr>
+                        <tr>
                             <td>Joining Date</td>
                             <td>:</td>
                             <td colspan="2">{{teacher.Joining}}</td>
@@ -386,15 +686,69 @@
                             <td colspan="2">{{teacher.Mobile}}</td>
                         </tr>
                         <tr>
-                            <td>Address</td>
+                            <td>Email</td>
                             <td>:</td>
-                            <td colspan="2">{{teacher.Address}}</td>
+                            <td colspan="2">{{teacher.Email}}</td>
                         </tr>
-                        <tr>
-                            <td>DOB</td>
-                            <td>:</td>
-                            <td colspan="2">{{teacher.Dob}}</td>
-                        </tr>
+                        <div class="showHide" style="visibility:hidden">
+                            <tr>
+                                <td>Permanent Address</td>
+                                <td>:</td>
+                                <td colspan="2">{{teacher.PerAddress}}</td>
+                            </tr>
+                            <tr>
+                                <td>DOB</td>
+                                <td>:</td>
+                                <td colspan="2">{{teacher.DOB}}</td>
+                            </tr>
+                            <tr>
+                                <td>Present Address</td>
+                                <td>:</td>
+                                <td colspan="2">{{teacher.PreAddress}}</td>
+                            </tr>
+                            <tr>
+                                <td colspan="4">
+                                    <h4>Academic Details</h4>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>Exam</th>
+                                <th>Year</th>
+                                <th>Result</th>
+                                <th>Board / Univarsity</th>
+                            </tr>
+                            <div *ngFor="let ed of teacher">
+                                <tr>
+                                    <td>{{ed.Exam}}</td>
+                                    <td>{{ed.Year}}</td>
+                                    <td>{{ed.Result}}</td>
+                                    <td>{{ed.Board_Uni}}</td>
+                                </tr>
+                            </div>
+                            <tr>
+                                <td colspan="4">
+                                    <h4>teacher</h4>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>Title</th>
+                                <th>Year</th>
+                                <th>Description</th>
+                                <th>Comment</th>
+                            </tr>
+                            <div *ngFor="let ex of teacher">
+                                <tr>
+                                    <td>{{ex.Title}}</td>
+                                    <td>{{ex.Year}}</td>
+                                    <td>{{ex.Description}}</td>
+                                    <td>{{ex.Comment}}</td>
+                                </tr>
+                            </div>
+                            <tr>
+                                <td colspan="3">Probable Retirement Date : </td>
+                                <td>{{teacher.Retirement}}</td>
+                            </tr>
+                        </div>
                         <tr>
                             <td class="viewButton" colspan="4"><button (click)="openModal($event)" class="details"
                                     id="details">Details</button></td>
