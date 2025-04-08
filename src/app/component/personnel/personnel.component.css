@@ -1,6 +1,6 @@
 .table-wrapper {
     width: 100%;
-    max-height: 400px;
+    max-height: 224px;
     /* adjust as needed */
     overflow-y: hidden;
     overflow-x: hidden;
@@ -11,6 +11,7 @@
     border-top-right-radius: 15px;
     margin: 1.5vw;
     background: #f9f9f9;
+    box-shadow: 0 0 10px rgba(0, 128, 128, 0.50);
 }
 
 table {
@@ -54,7 +55,7 @@ img.profile-picture {
     border-radius: 10px;
     border-color: teal;
     border: 1px solid teal;
-    margin: 7px 5px 5px 5px;
+    margin: 12px 5px 5px 5px;
 }
 
 .container,
@@ -122,39 +123,45 @@ button.details {
     text-align: center !important;
 }
 
+@media (min-width: 480px) {
+    .col-xs-8 {
+        width: 49%;
+    }
+}
+
 @media (min-width: 576px) {
-    .col-xs-6 {
-        width: 98%;
+    .col-xs-7 {
+        width: 49%;
     }
 }
 
 @media (min-width: 768px) {
     .col-sm-6 {
-        width: 49%;
+        width: 32.33%;
     }
 }
 
 @media (min-width: 992px) {
-    .col-md-6 {
-        width: 49%;
+    .col-md-5 {
+        width: 24.25%;
     }
 }
 
-@media (min-width: 1200px) {
+@media (min-width: 1360px) {
     .col-lg-4 {
-        width: 32.333%;
-    }
-}
-
-@media (min-width: 1400px) {
-    .col-xl-4 {
-        width: 32.333%;
+        width: 19.50%;
     }
 }
 
 @media (min-width: 1600px) {
-    .col-xxl-3 {
-        width: 24%;
+    .col-xl-3 {
+        width: 16.17%;
+    }
+}
+
+@media (min-width: 1920px) {
+    .col-xxl-2 {
+        width: 13.83%;
     }
 }
 

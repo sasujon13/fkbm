@@ -4,19 +4,22 @@ import { Pipe, PipeTransform } from '@angular/core';
   name: 'filter'
 })
 export class FilterPipe implements PipeTransform {
-
   transform(value: any[], filterString: string, propNames: string[]): any[] {
-    if (!value || filterString === '' || propNames.length === 0) {
+    if (!value || !filterString || propNames.length === 0) {
       return value;
     }
 
+    const normalizedFilter = filterString.trim().toLowerCase().normalize("NFD");
+
     return value.filter((item: any) => {
-      for (const propName of propNames) {
-        if (item[propName].trim().toLowerCase().includes(filterString.toLowerCase())) {
-          return true; // Return true if any property matches the filter
+      return propNames.some(propName => {
+        const fieldValue = item[propName];
+        if (fieldValue && typeof fieldValue === 'string') {
+          return fieldValue.trim().toLowerCase().normalize("NFD")
+            .includes(normalizedFilter);
         }
-      }
-      return false; // None of the properties match the filter
+        return false;
+      });
     });
   }
 }

@@ -172,11 +172,6 @@ export class HeaderComponent implements OnInit {
     return foundItem || null;
   }
 
-  search(event: any) {
-    this.searchTerm = (event.target as HTMLInputElement).value;
-    this.cartService.search.next(this.searchTerm);
-    this.choiceService.search.next(this.searchTerm);
-  }
   toggleMenu() {
     this.menuActive = !this.menuActive;
     this.resetInactivityTimeout();
@@ -369,5 +364,21 @@ export class HeaderComponent implements OnInit {
     `;
     document.head.appendChild(style);
   } 
+
+  search(event: any) {
+    this.searchTerm = (event.target as HTMLInputElement).value;
+    this.apiService.search.next(this.searchTerm);
+  }
+
+  search2(event: any) {
+    event.preventDefault();
+    this.searchTerm = '';
+    this.apiService.search.next(this.searchTerm);
+  }
+  
+  searchIconClick() {
+    this.apiService.search.next(this.searchTerm);
+  }
+  
 
 }

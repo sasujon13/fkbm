@@ -5,7 +5,8 @@
     </div>
     <div class="search-bar" id="searchBar">
       <input type="text" class="form-control" name="searchTerm" id="searchTerm" [(ngModel)]="searchTerm" (keyup)="search($event)" placeholder="Search here...">
-      <i class="fa fa-search"></i>
+      <i class="fa fa-search" *ngIf="!searchTerm" (click)="searchIconClick()"></i>
+      <i class="fa fa-times" *ngIf="searchTerm"  (click)="search2($event)"></i>
     </div>
     <ul class="menu" [class.active]="menuActive" [@flyInOut] (click)="closeMenu()">
         <li class="menu_item"><a [routerLink]="['/index']" routerLinkActive="index"><i class="fa fa-home"></i></a></li>

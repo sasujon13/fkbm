@@ -2,7 +2,7 @@
     <div class="container">
         <div class="row">
             <h3 class="heading3">MPO Teachers</h3>
-            <div *ngFor="let member of teachers" class="col-12 col-xs-6 col-sm-6 col-md-6 col-lg-4 col-xl-4 col-xxl-3">
+            <div *ngFor="let member of teachers | filter:searchKey:['Name', 'Designation', 'Dept', 'FName', 'MName', 'Gender', 'Joining', 'Index', 'Mobile', 'Tmis', 'Email', 'DOB', 'PreAddress', 'PerAddress', 'Exam', 'Year', 'Result', 'Board_Uni', 'Title', 'Description', 'Comment', 'Retirement']" class="col-12 col-xs-8 col-xs-7 col-sm-6 col-md-5 col-lg-4 col-xl-3 col-xxl-2">
                 <div class="table-wrapper">
                     <table>
                         <tr>
@@ -19,58 +19,52 @@
                             <td colspan="4" class="heading">{{member.Dept}}</td>
                         </tr>
                         <tr>
+                            <td class="viewButton" colspan="4"><button (click)="openModal($event)" class="details"
+                                    id="details">Details</button></td>
+                        </tr>
+                        <tr class="showHide">
                             <td colspan="4" class="heading">............................................................
                             </td>
                         </tr>
-                        <tr>
+                        <tr class="showHide">
                             <td>Fathers Name</td>
                             <td>:</td>
                             <td colspan="2">{{member.FName}}</td>
                         </tr>
-                        <tr>
+                        <tr class="showHide">
                             <td>Mothers Name</td>
                             <td>:</td>
                             <td colspan="2">{{member.MName}}</td>
                         </tr>
-                        <tr>
+                        <tr class="showHide">
                             <td>Gender</td>
                             <td>:</td>
                             <td colspan="2">{{member.Gender}}</td>
                         </tr>
-                        <tr>
+                        <tr class="showHide">
                             <td>Joining Date</td>
                             <td>:</td>
                             <td colspan="2">{{member.Joining}}</td>
                         </tr>
-                        <tr>
+                        <tr class="showHide">
                             <td>Index No.</td>
                             <td>:</td>
                             <td colspan="2">{{member.Index}}</td>
                         </tr>
-                        <tr>
+                        <tr class="showHide">
                             <td>Mobile No.</td>
                             <td>:</td>
                             <td colspan="2">{{member.Mobile}}</td>
                         </tr>
-                        <tr>
+                        <tr class="showHide">
                             <td>TMIS No.</td>
                             <td>:</td>
                             <td colspan="2">{{member.Tmis}}</td>
                         </tr>
-                        <tr>
-                            <td class="viewButton" colspan="4"><button (click)="openModal($event)" class="details"
-                                    id="details">Details</button></td>
-                        </tr>
-                        <!-- <div class="showHide"  style="visibility:hidden">    *ngIf="showDetails"  -->
                         <tr class="showHide">
                             <td>Email</td>
                             <td>:</td>
                             <td colspan="2">{{member.Email}}</td>
-                        </tr>
-                        <tr class="showHide">
-                            <td>Permanent Address</td>
-                            <td>:</td>
-                            <td colspan="2">{{member.PerAddress}}</td>
                         </tr>
                         <tr class="showHide">
                             <td>DOB</td>
@@ -81,6 +75,11 @@
                             <td>Present Address</td>
                             <td>:</td>
                             <td colspan="2">{{member.PreAddress}}</td>
+                        </tr>
+                        <tr class="showHide">
+                            <td>Permanent Address</td>
+                            <td>:</td>
+                            <td colspan="2">{{member.PerAddress}}</td>
                         </tr>
                         <tr class="showHide">
                             <td colspan="4">
@@ -132,8 +131,7 @@
     <div class="container">
         <div class="row">
             <h3 class="heading3">Honours Teachers</h3>
-            <div *ngFor="let member of teacherHonours"
-                class="col-12 col-xs-6 col-sm-6 col-md-6 col-lg-4 col-xl-4 col-xxl-3">
+            <div *ngFor="let member of teacherHonours | filter:searchKey:['Name', 'Designation', 'Dept', 'FName', 'MName', 'Gender', 'Joining', 'Index', 'Mobile', 'Tmis', 'Email', 'DOB', 'PreAddress', 'PerAddress', 'Exam', 'Year', 'Result', 'Board_Uni', 'Title', 'Description', 'Comment', 'Retirement']" class="col-12 col-xs-8 col-xs-7 col-sm-6 col-md-5 col-lg-4 col-xl-3 col-xxl-2">
                 <div class="table-wrapper">
                     <table>
                         <tr>
@@ -150,35 +148,39 @@
                             <td colspan="4" class="heading">{{member.Dept}}</td>
                         </tr>
                         <tr>
+                            <td class="viewButton" colspan="4"><button (click)="openModal($event)" class="details"
+                                    id="details">Details</button></td>
+                        </tr>
+                        <tr class="showHide">
                             <td colspan="4" class="heading">............................................................
                             </td>
                         </tr>
-                        <tr>
+                        <tr class="showHide">
                             <td>Fathers Name</td>
                             <td>:</td>
                             <td colspan="2">{{member.FName}}</td>
                         </tr>
-                        <tr>
+                        <tr class="showHide">
                             <td>Mothers Name</td>
                             <td>:</td>
                             <td colspan="2">{{member.MName}}</td>
                         </tr>
-                        <tr>
+                        <tr class="showHide">
                             <td>Gender</td>
                             <td>:</td>
                             <td colspan="2">{{member.Gender}}</td>
                         </tr>
-                        <tr>
+                        <tr class="showHide">
                             <td>Joining Date</td>
                             <td>:</td>
                             <td colspan="2">{{member.Joining}}</td>
                         </tr>
-                        <tr>
+                        <tr class="showHide">
                             <td>TMIS No.</td>
                             <td>:</td>
                             <td colspan="2">{{member.Index}}</td>
                         </tr>
-                        <tr>
+                        <tr class="showHide">
                             <td>Mobile No.</td>
                             <td>:</td>
                             <td colspan="2">{{member.Mobile}}</td>
@@ -187,15 +189,6 @@
                             <td>Email</td>
                             <td>:</td>
                             <td colspan="2">{{member.Email}}</td>
-                        </tr>
-                        <tr>
-                            <td class="viewButton" colspan="4"><button (click)="openModal($event)" class="details"
-                                    id="details">Details</button></td>
-                        </tr>
-                        <tr class="showHide">
-                            <td>Permanent Address</td>
-                            <td>:</td>
-                            <td colspan="2">{{member.PerAddress}}</td>
                         </tr>
                         <tr class="showHide">
                             <td>DOB</td>
@@ -206,6 +199,11 @@
                             <td>Present Address</td>
                             <td>:</td>
                             <td colspan="2">{{member.PreAddress}}</td>
+                        </tr>
+                        <tr class="showHide">
+                            <td>Permanent Address</td>
+                            <td>:</td>
+                            <td colspan="2">{{member.PerAddress}}</td>
                         </tr>
                         <tr class="showHide">
                             <td colspan="4">
@@ -257,7 +255,7 @@
     <div class="container">
         <div class="row">
             <h3 class="heading3">MPO Staffs</h3>
-            <div *ngFor="let member of staffs" class="col-12 col-xs-6 col-sm-6 col-md-6 col-lg-4 col-xl-4 col-xxl-3">
+            <div *ngFor="let member of staffs | filter:searchKey:['Name', 'Designation', 'Dept', 'FName', 'MName', 'Gender', 'Joining', 'Index', 'Mobile', 'Tmis', 'Email', 'DOB', 'PreAddress', 'PerAddress', 'Exam', 'Year', 'Result', 'Board_Uni', 'Title', 'Description', 'Comment', 'Retirement']" class="col-12 col-xs-8 col-xs-7 col-sm-6 col-md-5 col-lg-4 col-xl-3 col-xxl-2">
                 <div class="table-wrapper">
                     <table>
                         <tr>
@@ -274,35 +272,39 @@
                             <td colspan="4" class="heading">{{member.Dept}}</td>
                         </tr>
                         <tr>
+                            <td class="viewButton" colspan="4"><button (click)="openModal($event)" class="details"
+                                    id="details">Details</button></td>
+                        </tr>
+                        <tr class="showHide">
                             <td colspan="4" class="heading">............................................................
                             </td>
                         </tr>
-                        <tr>
+                        <tr class="showHide">
                             <td>Fathers Name</td>
                             <td>:</td>
                             <td colspan="2">{{member.FName}}</td>
                         </tr>
-                        <tr>
+                        <tr class="showHide">
                             <td>Mothers Name</td>
                             <td>:</td>
                             <td colspan="2">{{member.MName}}</td>
                         </tr>
-                        <tr>
+                        <tr class="showHide">
                             <td>Gender</td>
                             <td>:</td>
                             <td colspan="2">{{member.Gender}}</td>
                         </tr>
-                        <tr>
+                        <tr class="showHide">
                             <td>Joining Date</td>
                             <td>:</td>
                             <td colspan="2">{{member.Joining}}</td>
                         </tr>
-                        <tr>
+                        <tr class="showHide">
                             <td>Index No.</td>
                             <td>:</td>
                             <td colspan="2">{{member.Index}}</td>
                         </tr>
-                        <tr>
+                        <tr class="showHide">
                             <td>Mobile No.</td>
                             <td>:</td>
                             <td colspan="2">{{member.Mobile}}</td>
@@ -311,15 +313,6 @@
                             <td>Email</td>
                             <td>:</td>
                             <td colspan="2">{{member.Email}}</td>
-                        </tr>
-                        <tr>
-                            <td class="viewButton" colspan="4"><button (click)="openModal($event)" class="details"
-                                    id="details">Details</button></td>
-                        </tr>
-                        <tr class="showHide">
-                            <td>Permanent Address</td>
-                            <td>:</td>
-                            <td colspan="2">{{member.PerAddress}}</td>
                         </tr>
                         <tr class="showHide">
                             <td>DOB</td>
@@ -330,6 +323,11 @@
                             <td>Present Address</td>
                             <td>:</td>
                             <td colspan="2">{{member.PreAddress}}</td>
+                        </tr>
+                        <tr class="showHide">
+                            <td>Permanent Address</td>
+                            <td>:</td>
+                            <td colspan="2">{{member.PerAddress}}</td>
                         </tr>
                         <tr class="showHide">
                             <td colspan="4">
@@ -381,8 +379,7 @@
     <div class="container">
         <div class="row">
             <h3 class="heading3">Non-MPO Staffs</h3>
-            <div *ngFor="let member of nonMpoStaffs"
-                class="col-12 col-xs-6 col-sm-6 col-md-6 col-lg-4 col-xl-4 col-xxl-3">
+            <div *ngFor="let member of nonMpoStaffs | filter:searchKey:['Name', 'Designation', 'Dept', 'FName', 'MName', 'Gender', 'Joining', 'Index', 'Mobile', 'Tmis', 'Email', 'DOB', 'PreAddress', 'PerAddress', 'Exam', 'Year', 'Result', 'Board_Uni', 'Title', 'Description', 'Comment', 'Retirement']" class="col-12 col-xs-8 col-xs-7 col-sm-6 col-md-5 col-lg-4 col-xl-3 col-xxl-2">
                 <div class="table-wrapper">
                     <table>
                         <tr>
@@ -399,30 +396,34 @@
                             <td colspan="4" class="heading">{{member.Dept}}</td>
                         </tr>
                         <tr>
+                            <td class="viewButton" colspan="4"><button (click)="openModal($event)" class="details"
+                                    id="details">Details</button></td>
+                        </tr>
+                        <tr class="showHide">
                             <td colspan="4" class="heading">............................................................
                             </td>
                         </tr>
-                        <tr>
+                        <tr class="showHide">
                             <td>Fathers Name</td>
                             <td>:</td>
                             <td colspan="2">{{member.FName}}</td>
                         </tr>
-                        <tr>
+                        <tr class="showHide">
                             <td>Mothers Name</td>
                             <td>:</td>
                             <td colspan="2">{{member.MName}}</td>
                         </tr>
-                        <tr>
+                        <tr class="showHide">
                             <td>Gender</td>
                             <td>:</td>
                             <td colspan="2">{{member.Gender}}</td>
                         </tr>
-                        <tr>
+                        <tr class="showHide">
                             <td>Joining Date</td>
                             <td>:</td>
                             <td colspan="2">{{member.Joining}}</td>
                         </tr>
-                        <tr>
+                        <tr class="showHide">
                             <td>Mobile No.</td>
                             <td>:</td>
                             <td colspan="2">{{member.Mobile}}</td>
@@ -431,15 +432,6 @@
                             <td>Email</td>
                             <td>:</td>
                             <td colspan="2">{{member.Email}}</td>
-                        </tr>
-                        <tr>
-                            <td class="viewButton" colspan="4"><button (click)="openModal($event)" class="details"
-                                    id="details">Details</button></td>
-                        </tr>
-                        <tr class="showHide">
-                            <td>Permanent Address</td>
-                            <td>:</td>
-                            <td colspan="2">{{member.PerAddress}}</td>
                         </tr>
                         <tr class="showHide">
                             <td>DOB</td>
@@ -450,6 +442,11 @@
                             <td>Present Address</td>
                             <td>:</td>
                             <td colspan="2">{{member.PreAddress}}</td>
+                        </tr>
+                        <tr class="showHide">
+                            <td>Permanent Address</td>
+                            <td>:</td>
+                            <td colspan="2">{{member.PerAddress}}</td>
                         </tr>
                         <tr class="showHide">
                             <td colspan="4">
@@ -501,8 +498,7 @@
     <div class="container">
         <div class="row">
             <h3 class="heading3">Ex Teachers</h3>
-            <div *ngFor="let member of exTeachers"
-                class="col-12 col-xs-6 col-sm-6 col-md-6 col-lg-4 col-xl-4 col-xxl-3">
+            <div *ngFor="let member of exTeachers | filter:searchKey:['Name', 'Designation', 'Dept', 'FName', 'MName', 'Gender', 'Joining', 'Index', 'Mobile', 'Tmis', 'Email', 'DOB', 'PreAddress', 'PerAddress', 'Exam', 'Year', 'Result', 'Board_Uni', 'Title', 'Description', 'Comment', 'Retirement']" class="col-12 col-xs-8 col-xs-7 col-sm-6 col-md-5 col-lg-4 col-xl-3 col-xxl-2">
                 <div class="table-wrapper">
                     <table>
                         <tr>
@@ -519,40 +515,44 @@
                             <td colspan="4" class="heading">{{member.Dept}}</td>
                         </tr>
                         <tr>
+                            <td class="viewButton" colspan="4"><button (click)="openModal($event)" class="details"
+                                    id="details">Details</button></td>
+                        </tr>
+                        <tr class="showHide">
                             <td colspan="4" class="heading">............................................................
                             </td>
                         </tr>
-                        <tr>
+                        <tr class="showHide">
                             <td>Fathers Name</td>
                             <td>:</td>
                             <td colspan="2">{{member.FName}}</td>
                         </tr>
-                        <tr>
+                        <tr class="showHide">
                             <td>Mothers Name</td>
                             <td>:</td>
                             <td colspan="2">{{member.MName}}</td>
                         </tr>
-                        <tr>
+                        <tr class="showHide">
                             <td>Gender</td>
                             <td>:</td>
                             <td colspan="2">{{member.Gender}}</td>
                         </tr>
-                        <tr>
+                        <tr class="showHide">
                             <td>Joining Date</td>
                             <td>:</td>
                             <td colspan="2">{{member.Joining}}</td>
                         </tr>
-                        <tr>
+                        <tr class="showHide">
                             <td>Index No.</td>
                             <td>:</td>
                             <td colspan="2">{{member.Index}}</td>
                         </tr>
-                        <tr>
+                        <tr class="showHide">
                             <td>TMIS No.</td>
                             <td>:</td>
                             <td colspan="2">{{member.Tmis}}</td>
                         </tr>
-                        <tr>
+                        <tr class="showHide">
                             <td>Mobile No.</td>
                             <td>:</td>
                             <td colspan="2">{{member.Mobile}}</td>
@@ -561,15 +561,6 @@
                             <td>Email</td>
                             <td>:</td>
                             <td colspan="2">{{member.Email}}</td>
-                        </tr>
-                        <tr>
-                            <td class="viewButton" colspan="4"><button (click)="openModal($event)" class="details"
-                                    id="details">Details</button></td>
-                        </tr>
-                        <tr class="showHide">
-                            <td>Permanent Address</td>
-                            <td>:</td>
-                            <td colspan="2">{{member.PerAddress}}</td>
                         </tr>
                         <tr class="showHide">
                             <td>DOB</td>
@@ -580,6 +571,11 @@
                             <td>Present Address</td>
                             <td>:</td>
                             <td colspan="2">{{member.PreAddress}}</td>
+                        </tr>
+                        <tr class="showHide">
+                            <td>Permanent Address</td>
+                            <td>:</td>
+                            <td colspan="2">{{member.PerAddress}}</td>
                         </tr>
                         <tr class="showHide">
                             <td colspan="4">
@@ -631,7 +627,7 @@
     <div class="container">
         <div class="row">
             <h3 class="heading3">Ex Staffs</h3>
-            <div *ngFor="let member of exStaffs" class="col-12 col-xs-6 col-sm-6 col-md-6 col-lg-4 col-xl-4 col-xxl-3">
+            <div *ngFor="let member of exStaffs | filter:searchKey:['Name', 'Designation', 'Dept', 'FName', 'MName', 'Gender', 'Joining', 'Index', 'Mobile', 'Tmis', 'Email', 'DOB', 'PreAddress', 'PerAddress', 'Exam', 'Year', 'Result', 'Board_Uni', 'Title', 'Description', 'Comment', 'Retirement']" class="col-12 col-xs-8 col-xs-7 col-sm-6 col-md-5 col-lg-4 col-xl-3 col-xxl-2">
                 <div class="table-wrapper">
                     <table>
                         <tr>
@@ -648,30 +644,34 @@
                             <td colspan="4" class="heading">{{member.Dept}}</td>
                         </tr>
                         <tr>
+                            <td class="viewButton" colspan="4"><button (click)="openModal($event)" class="details"
+                                    id="details">Details</button></td>
+                        </tr>
+                        <tr class="showHide">
                             <td colspan="4" class="heading">............................................................
                             </td>
                         </tr>
-                        <tr>
+                        <tr class="showHide">
                             <td>Fathers Name</td>
                             <td>:</td>
                             <td colspan="2">{{member.FName}}</td>
                         </tr>
-                        <tr>
+                        <tr class="showHide">
                             <td>Mothers Name</td>
                             <td>:</td>
                             <td colspan="2">{{member.MName}}</td>
                         </tr>
-                        <tr>
+                        <tr class="showHide">
                             <td>Gender</td>
                             <td>:</td>
                             <td colspan="2">{{member.Gender}}</td>
                         </tr>
-                        <tr>
+                        <tr class="showHide">
                             <td>Joining Date</td>
                             <td>:</td>
                             <td colspan="2">{{member.Joining}}</td>
                         </tr>
-                        <tr>
+                        <tr class="showHide">
                             <td>Mobile No.</td>
                             <td>:</td>
                             <td colspan="2">{{member.Mobile}}</td>
@@ -680,15 +680,6 @@
                             <td>Email</td>
                             <td>:</td>
                             <td colspan="2">{{member.Email}}</td>
-                        </tr>
-                        <tr>
-                            <td class="viewButton" colspan="4"><button (click)="openModal($event)" class="details"
-                                    id="details">Details</button></td>
-                        </tr>
-                        <tr class="showHide">
-                            <td>Permanent Address</td>
-                            <td>:</td>
-                            <td colspan="2">{{member.PerAddress}}</td>
                         </tr>
                         <tr class="showHide">
                             <td>DOB</td>
@@ -699,6 +690,11 @@
                             <td>Present Address</td>
                             <td>:</td>
                             <td colspan="2">{{member.PreAddress}}</td>
+                        </tr>
+                        <tr class="showHide">
+                            <td>Permanent Address</td>
+                            <td>:</td>
+                            <td colspan="2">{{member.PerAddress}}</td>
                         </tr>
                         <tr class="showHide">
                             <td colspan="4">

@@ -9,23 +9,23 @@
       
   <div class="container col-12 col-xs-6 col-sm-6 col-md-4 col-lg-4 col-xl-4 col-xxl-4">
     <h3>Governing Body</h3>
-    <div *ngFor="let teacher of teachers" class="section">
-      <div class="order" *ngIf="teacher.Order === 1">
-      <h4><b>{{teacher.Name}}</b><br>{{teacher.Designation}}</h4>
+    <div *ngFor="let member of otherPeoples" class="section">
+      <div class="order" *ngIf="member.Order === 1">
+      <h4><b>{{member.Name}}</b><br>{{member.Designation}}</h4>
       <div class="phone-list">
-        <button (click)="copyNumber(teacher.Mobile)">
-          <i class="fas fa-phone"></i> {{ teacher.Mobile }}
+        <button (click)="copyNumber(member.Mobile)">
+          <i class="fas fa-phone"></i> {{ member.Mobile }}
         </button>
-        <button (click)="copyNumber(teacher.Email)"><i class="fas fa-envelope"></i> {{ teacher.Email }}</button>
+        <button (click)="copyNumber(member.Email)"><i class="fas fa-envelope"></i> {{ member.Email }}</button>
       </div>
     </div>
-    <div class="order" *ngIf="teacher.Order === 2">
-    <h4><b>{{teacher.Name}}</b><br>{{teacher.Designation}}</h4>
+    <div class="order" *ngIf="member.Order === 2">
+    <h4><b>{{member.Name}}</b><br>{{member.Designation}}</h4>
     <div class="phone-list">
-      <button (click)="copyNumber(teacher.Mobile); copyNumber(teacher.Mobile)">
-        <i class="fas fa-phone"></i> {{ teacher.Mobile }}
+      <button (click)="copyNumber(member.Mobile); copyNumber(member.Mobile)">
+        <i class="fas fa-phone"></i> {{ member.Mobile }}
       </button>
-      <button (click)="copyNumber(teacher.Email)"><i class="fas fa-envelope"></i> {{ teacher.Email }}</button>
+      <button (click)="copyNumber(member.Email)"><i class="fas fa-envelope"></i> {{ member.Email }}</button>
     </div>
   </div>
   </div>
@@ -33,23 +33,23 @@
 
 <div class="container col-12 col-xs-6 col-sm-6 col-md-4 col-lg-4 col-xl-4 col-xxl-4">
   <h3>Administration</h3>
-  <div *ngFor="let teacher of teachers" class="section">
-    <div class="order" *ngIf="teacher.Order === 1">
-    <h4><b>{{teacher.Name}}</b><br>{{teacher.Designation}}</h4>
+  <div *ngFor="let member of teachers" class="section">
+    <div class="order" *ngIf="member.Order === 1">
+    <h4><b>{{member.Name}}</b><br>{{member.Designation}}</h4>
     <div class="phone-list">
-      <button (click)="copyNumber(teacher.Mobile); copyNumber(teacher.Mobile)">
-        <i class="fas fa-phone"></i> {{ teacher.Mobile }}
+      <button (click)="copyNumber(member.Mobile); copyNumber(member.Mobile)">
+        <i class="fas fa-phone"></i> {{ member.Mobile }}
       </button>
-      <button (click)="copyNumber(teacher.Email)"><i class="fas fa-envelope"></i> {{ teacher.Email }}</button>
+      <button (click)="copyNumber(member.Email)"><i class="fas fa-envelope"></i> {{ member.Email }}</button>
     </div>
   </div>
-  <div class="order" *ngIf="teacher.Order === 2">
-  <h4><b>{{teacher.Name}}</b><br>{{teacher.Designation}}</h4>
+  <div class="order" *ngIf="member.Order === 2">
+  <h4><b>{{member.Name}}</b><br>{{member.Designation}}</h4>
   <div class="phone-list">
-    <button (click)="copyNumber(teacher.Mobile); copyNumber(teacher.Mobile)">
-      <i class="fas fa-phone"></i> {{ teacher.Mobile }}
+    <button (click)="copyNumber(member.Mobile); copyNumber(member.Mobile)">
+      <i class="fas fa-phone"></i> {{ member.Mobile }}
     </button>
-    <button (click)="copyNumber(teacher.Email)"><i class="fas fa-envelope"></i> {{ teacher.Email }}</button>
+    <button (click)="copyNumber(member.Email)"><i class="fas fa-envelope"></i> {{ member.Email }}</button>
   </div>
 </div>
 </div>
@@ -57,65 +57,89 @@
 
 <div class="container col-12 col-xs-6 col-sm-6 col-md-4 col-lg-4 col-xl-4 col-xxl-4">
   <h3>Office</h3>
-  <div *ngFor="let teacher of teachers" class="section">
-    <div class="order" *ngIf="teacher.Order === 1">
-    <h4><b>{{teacher.Name}}</b><br>{{teacher.Designation}}</h4>
+  <div *ngFor="let member of staffs" class="section">
+    <div class="order" *ngIf="member.Order === 1">
+    <h4><b>{{member.Name}}</b><br>{{member.Designation}}</h4>
     <div class="phone-list">
-      <button (click)="copyNumber(teacher.Mobile); copyNumber(teacher.Mobile)">
-        <i class="fas fa-phone"></i> {{ teacher.Mobile }}
+      <button (click)="copyNumber(member.Mobile); copyNumber(member.Mobile)">
+        <i class="fas fa-phone"></i> {{ member.Mobile }}
       </button>
-      <button (click)="copyNumber(teacher.Email)"><i class="fas fa-envelope"></i> {{ teacher.Email }}</button>
+      <button (click)="copyNumber(member.Email)"><i class="fas fa-envelope"></i> {{ member.Email }}</button>
     </div>
   </div>
-  <div class="order" *ngIf="teacher.Order === 2">
-  <h4><b>{{teacher.Name}}</b><br>{{teacher.Designation}}</h4>
+  <div class="order" *ngIf="member.Order === 2">
+  <h4><b>{{member.Name}}</b><br>{{member.Designation}}</h4>
   <div class="phone-list">
-    <button (click)="copyNumber(teacher.Mobile); copyNumber(teacher.Mobile)">
-      <i class="fas fa-phone"></i> {{ teacher.Mobile }}
+    <button (click)="copyNumber(member.Mobile); copyNumber(member.Mobile)">
+      <i class="fas fa-phone"></i> {{ member.Mobile }}
     </button>
-    <button (click)="copyNumber(teacher.Email)"><i class="fas fa-envelope"></i> {{ teacher.Email }}</button>
+    <button (click)="copyNumber(member.Email)"><i class="fas fa-envelope"></i> {{ member.Email }}</button>
   </div>
 </div>
-<div class="order" *ngIf="teacher.Order === 3">
-<h4><b>{{teacher.Name}}</b><br>{{teacher.Designation}}</h4>
+<div class="order" *ngIf="member.Order === 3">
+<h4><b>{{member.Name}}</b><br>{{member.Designation}}</h4>
 <div class="phone-list">
-  <button (click)="copyNumber(teacher.Mobile); copyNumber(teacher.Mobile)">
-    <i class="fas fa-phone"></i> {{ teacher.Mobile }}
+  <button (click)="copyNumber(member.Mobile); copyNumber(member.Mobile)">
+    <i class="fas fa-phone"></i> {{ member.Mobile }}
   </button>
-  <button (click)="copyNumber(teacher.Email)"><i class="fas fa-envelope"></i> {{ teacher.Email }}</button>
-</div>
-</div>
-<div class="order" *ngIf="teacher.Order === 4">
-<h4><b>{{teacher.Name}}</b><br>{{teacher.Designation}}</h4>
-<div class="phone-list">
-  <button (click)="copyNumber(teacher.Mobile); copyNumber(teacher.Mobile)">
-    <i class="fas fa-phone"></i> {{ teacher.Mobile }}
-  </button>
-  <button (click)="copyNumber(teacher.Email)"><i class="fas fa-envelope"></i> {{ teacher.Email }}</button>
+  <button (click)="copyNumber(member.Email)"><i class="fas fa-envelope"></i> {{ member.Email }}</button>
 </div>
 </div>
 </div>
 </div>
 
 <div class="container col-12 col-xs-6 col-sm-6 col-md-4 col-lg-4 col-xl-4 col-xxl-4">
-  <h3>Department</h3>
-  <div *ngFor="let teacher of teachers" class="section">
-    <div class="order" *ngIf="teacher.Order === 1">
-    <h4><b>{{teacher.Name}}</b><br>{{teacher.Designation}}</h4>
+  <h3>Teacher Representatives</h3>
+  <div *ngFor="let member of otherPeoples" class="section">
+    <div class="order" *ngIf="member.Order === 3">
+    <h4><b>{{member.Name}}</b><br>{{member.Designation}}</h4>
     <div class="phone-list">
-      <button (click)="copyNumber(teacher.Mobile); copyNumber(teacher.Mobile)">
-        <i class="fas fa-phone"></i> {{ teacher.Mobile }}
+      <button (click)="copyNumber(member.Mobile); copyNumber(member.Mobile)">
+        <i class="fas fa-phone"></i> {{ member.Mobile }}
       </button>
-      <button (click)="copyNumber(teacher.Email)"><i class="fas fa-envelope"></i> {{ teacher.Email }}</button>
+      <button (click)="copyNumber(member.Email)"><i class="fas fa-envelope"></i> {{ member.Email }}</button>
     </div>
   </div>
-  <div class="order" *ngIf="teacher.Order === 2">
-  <h4><b>{{teacher.Name}}</b><br>{{teacher.Designation}}</h4>
+  <div class="order" *ngIf="member.Order === 4">
+  <h4><b>{{member.Name}}</b><br>{{member.Designation}}</h4>
   <div class="phone-list">
-    <button (click)="copyNumber(teacher.Mobile); copyNumber(teacher.Mobile)">
-      <i class="fas fa-phone"></i> {{ teacher.Mobile }}
+    <button (click)="copyNumber(member.Mobile); copyNumber(member.Mobile)">
+      <i class="fas fa-phone"></i> {{ member.Mobile }}
     </button>
-    <button (click)="copyNumber(teacher.Email)"><i class="fas fa-envelope"></i> {{ teacher.Email }}</button>
+    <button (click)="copyNumber(member.Email)"><i class="fas fa-envelope"></i> {{ member.Email }}</button>
+  </div>
+</div>
+<div class="order" *ngIf="member.Order === 5">
+<h4><b>{{member.Name}}</b><br>{{member.Designation}}</h4>
+<div class="phone-list">
+  <button (click)="copyNumber(member.Mobile); copyNumber(member.Mobile)">
+    <i class="fas fa-phone"></i> {{ member.Mobile }}
+  </button>
+  <button (click)="copyNumber(member.Email)"><i class="fas fa-envelope"></i> {{ member.Email }}</button>
+</div>
+</div>
+</div>
+</div>
+
+<div class="container col-12 col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xxl-12">
+  <h3>Department</h3>
+  <div *ngFor="let member of teachers" class="section">
+    <div class="order" *ngIf="member.Order === 1">
+    <h4><b>{{member.Name}}</b><br>{{member.Designation}}</h4>
+    <div class="phone-list">
+      <button (click)="copyNumber(member.Mobile); copyNumber(member.Mobile)">
+        <i class="fas fa-phone"></i> {{ member.Mobile }}
+      </button>
+      <button (click)="copyNumber(member.Email)"><i class="fas fa-envelope"></i> {{ member.Email }}</button>
+    </div>
+  </div>
+  <div class="order" *ngIf="member.Order === 2">
+  <h4><b>{{member.Name}}</b><br>{{member.Designation}}</h4>
+  <div class="phone-list">
+    <button (click)="copyNumber(member.Mobile); copyNumber(member.Mobile)">
+      <i class="fas fa-phone"></i> {{ member.Mobile }}
+    </button>
+    <button (click)="copyNumber(member.Email)"><i class="fas fa-envelope"></i> {{ member.Email }}</button>
   </div>
 </div>
 </div>

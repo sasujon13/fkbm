@@ -8,11 +8,18 @@ import { ApiService } from '..//../service/api.service';
 })
 export class ContactUsComponent implements OnInit{
   public teachers: any[] = [];
+  public teacherHonours: any[] = [];
+  public otherPeoples: any[] = [];
+  public staffs: any[] = [];
+  public depts: any[] = [];
   alertMessage = '';
-showAlert = false;
+  showAlert = false;
   constructor(private apiService: ApiService){}
   ngOnInit(): void {
     this.getTeachers()
+    this.getTeacherHonours()
+    this.getStaffs()
+    this.getOtherPeoples()
   }
 
   copyNumber(data: string): void {
@@ -31,9 +38,46 @@ showAlert = false;
     this.apiService.getTeachers().subscribe(
       data => {
         this.teachers = data;
+        this.teachers.sort((a, b) => a.Order - b.Order);
       },
       error => {
         console.error('Error fetching teachers!');
+      }
+    );
+  }
+
+  getTeacherHonours() {
+    this.apiService.getTeacherHonours().subscribe(
+      data => {
+        this.teacherHonours = data;
+        this.teacherHonours.sort((a, b) => a.Order - b.Order);
+      },
+      error => {
+        console.error('Error fetching teacherHonours!');
+      }
+    );
+  }
+
+  getStaffs() {
+    this.apiService.getStaffs().subscribe(
+      data => {
+        this.staffs = data;
+        this.staffs.sort((a, b) => a.Order - b.Order);
+      },
+      error => {
+        console.error('Error fetching staffs!');
+      }
+    );
+  }
+
+  getOtherPeoples() {
+    this.apiService.getOtherPeoples().subscribe(
+      data => {
+        this.otherPeoples = data;
+        this.otherPeoples.sort((a, b) => a.Order - b.Order);
+      },
+      error => {
+        console.error('Error fetching otherPeoples!');
       }
     );
   }

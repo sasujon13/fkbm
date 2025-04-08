@@ -17,38 +17,36 @@ export class PersonnelComponent implements OnInit {
   nonMpoStaffs: any[] = [];
   isProfileModalOpen: boolean = false;
   fullProfileText: SafeHtml | undefined;
+  searchKey: string = "";
 
   constructor(
-    private teacherService: ApiService,
-    private exTeacherService: ApiService,
-    private staffService: ApiService,
-    private exStaffService: ApiService,
-    private teacherHonoursService: ApiService,
-    private nonMpostaffService: ApiService,
-    private otherPeopleService: ApiService,
+    private apiService: ApiService,
     private sanitizer: DomSanitizer) { }
 
   ngOnInit(): void {
-    this.teacherService.getTeachers().subscribe(data => {
+    this.apiService.getTeachers().subscribe(data => {
       this.teachers = data;
     });
-    this.exTeacherService.getExTeachers().subscribe(data => {
+    this.apiService.getExTeachers().subscribe(data => {
       this.exTeachers = data;
     });
-    this.staffService.getStaffs().subscribe(data => {
+    this.apiService.getStaffs().subscribe(data => {
       this.staffs = data;
     });
-    this.exStaffService.getExStaffs().subscribe(data => {
+    this.apiService.getExStaffs().subscribe(data => {
       this.exStaffs = data;
     });
-    this.teacherHonoursService.getTeacherHonours().subscribe(data => {
+    this.apiService.getTeacherHonours().subscribe(data => {
       this.teacherHonours = data;
     });
-    this.otherPeopleService.getOtherPeoples().subscribe(data => {
+    this.apiService.getOtherPeoples().subscribe(data => {
       this.otherPeoples = data;
     });
-    this.nonMpostaffService.getNonMpoStaff().subscribe(data => {
+    this.apiService.getNonMpoStaff().subscribe(data => {
       this.nonMpoStaffs = data;
+    });
+    this.apiService.search.subscribe((val: any) => {
+      this.searchKey = val;
     });
   }
 
