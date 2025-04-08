@@ -16,6 +16,7 @@
 table {
     border: 0;
     width: auto;
+    table-layout: auto;
 }
 
 td {
@@ -26,6 +27,13 @@ td.heading,
 td.img {
     text-align: center;
 }
+tr.showHide {
+    visibility: hidden;
+  }
+  tr.showHide.visible {
+    visibility: visible;
+  }
+  
 
 h3.heading3 {
     text-align: center;
@@ -110,6 +118,9 @@ button.details {
     border-radius: 50%;
 }
 
+.colA, .colB, .colC, .colD {
+    text-align: center !important;
+}
 
 @media (min-width: 576px) {
     .col-xs-6 {
@@ -146,3 +157,4 @@ button.details {
         width: 24%;
     }
 }
+

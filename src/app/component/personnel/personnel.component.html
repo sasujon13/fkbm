@@ -2,21 +2,21 @@
     <div class="container">
         <div class="row">
             <h3 class="heading3">MPO Teachers</h3>
-            <div *ngFor="let teacher of teachers" class="col-12 col-xs-6 col-sm-6 col-md-6 col-lg-4 col-xl-4 col-xxl-3">
+            <div *ngFor="let member of teachers" class="col-12 col-xs-6 col-sm-6 col-md-6 col-lg-4 col-xl-4 col-xxl-3">
                 <div class="table-wrapper">
                     <table>
                         <tr>
-                            <td colspan="4" class="img"><img [src]="teacher.Img || './assets/images/teacher.jpg'"
+                            <td colspan="4" class="img"><img [src]="member.Img || './assets/images/teacher.jpg'"
                                     class="profile-picture"></td>
                         </tr>
                         <tr>
-                            <td colspan="4" class="heading"><b>{{teacher.Name}}</b></td>
+                            <td colspan="4" class="heading"><b>{{member.Name}}</b></td>
                         </tr>
                         <tr>
-                            <td colspan="4" class="heading">{{teacher.Designation}}</td>
+                            <td colspan="4" class="heading">{{member.Designation}}</td>
                         </tr>
                         <tr>
-                            <td colspan="4" class="heading">{{teacher.Dept}}</td>
+                            <td colspan="4" class="heading">{{member.Dept}}</td>
                         </tr>
                         <tr>
                             <td colspan="4" class="heading">............................................................
@@ -25,100 +25,104 @@
                         <tr>
                             <td>Fathers Name</td>
                             <td>:</td>
-                            <td colspan="2">{{teacher.FName}}</td>
+                            <td colspan="2">{{member.FName}}</td>
                         </tr>
                         <tr>
                             <td>Mothers Name</td>
                             <td>:</td>
-                            <td colspan="2">{{teacher.MName}}</td>
+                            <td colspan="2">{{member.MName}}</td>
                         </tr>
                         <tr>
                             <td>Gender</td>
                             <td>:</td>
-                            <td colspan="2">{{teacher.Gender}}</td>
+                            <td colspan="2">{{member.Gender}}</td>
                         </tr>
                         <tr>
                             <td>Joining Date</td>
                             <td>:</td>
-                            <td colspan="2">{{teacher.Joining}}</td>
+                            <td colspan="2">{{member.Joining}}</td>
                         </tr>
                         <tr>
                             <td>Index No.</td>
                             <td>:</td>
-                            <td colspan="2">{{teacher.Index}}</td>
+                            <td colspan="2">{{member.Index}}</td>
                         </tr>
                         <tr>
                             <td>Mobile No.</td>
                             <td>:</td>
-                            <td colspan="2">{{teacher.Mobile}}</td>
+                            <td colspan="2">{{member.Mobile}}</td>
                         </tr>
                         <tr>
-                            <td>Email</td>
+                            <td>TMIS No.</td>
                             <td>:</td>
-                            <td colspan="2">{{teacher.Email}}</td>
+                            <td colspan="2">{{member.Tmis}}</td>
                         </tr>
-                        <div class="showHide" style="visibility:hidden">
-                            <tr>
-                                <td>Permanent Address</td>
-                                <td>:</td>
-                                <td colspan="2">{{teacher.PerAddress}}</td>
-                            </tr>
-                            <tr>
-                                <td>DOB</td>
-                                <td>:</td>
-                                <td colspan="2">{{teacher.DOB}}</td>
-                            </tr>
-                            <tr>
-                                <td>Present Address</td>
-                                <td>:</td>
-                                <td colspan="2">{{teacher.PreAddress}}</td>
-                            </tr>
-                            <tr>
-                                <td colspan="4">
-                                    <h4>Academic Details</h4>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th>Exam</th>
-                                <th>Year</th>
-                                <th>Result</th>
-                                <th>Board / Univarsity</th>
-                            </tr>
-                            <div *ngFor="let ed of teacher">
-                                <tr>
-                                    <td>{{ed.Exam}}</td>
-                                    <td>{{ed.Year}}</td>
-                                    <td>{{ed.Result}}</td>
-                                    <td>{{ed.Board_Uni}}</td>
-                                </tr>
-                            </div>
-                            <tr>
-                                <td colspan="4">
-                                    <h4>teacher</h4>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th>Title</th>
-                                <th>Year</th>
-                                <th>Description</th>
-                                <th>Comment</th>
-                            </tr>
-                            <div *ngFor="let ex of teacher">
-                                <tr>
-                                    <td>{{ex.Title}}</td>
-                                    <td>{{ex.Year}}</td>
-                                    <td>{{ex.Description}}</td>
-                                    <td>{{ex.Comment}}</td>
-                                </tr>
-                            </div>
-                            <tr>
-                                <td colspan="3">Probable Retirement Date : </td>
-                                <td>{{teacher.Retirement}}</td>
-                            </tr>
-                        </div>
                         <tr>
                             <td class="viewButton" colspan="4"><button (click)="openModal($event)" class="details"
                                     id="details">Details</button></td>
+                        </tr>
+                        <!-- <div class="showHide"  style="visibility:hidden">    *ngIf="showDetails"  -->
+                        <tr class="showHide">
+                            <td>Email</td>
+                            <td>:</td>
+                            <td colspan="2">{{member.Email}}</td>
+                        </tr>
+                        <tr class="showHide">
+                            <td>Permanent Address</td>
+                            <td>:</td>
+                            <td colspan="2">{{member.PerAddress}}</td>
+                        </tr>
+                        <tr class="showHide">
+                            <td>DOB</td>
+                            <td>:</td>
+                            <td colspan="2">{{member.DOB}}</td>
+                        </tr>
+                        <tr class="showHide">
+                            <td>Present Address</td>
+                            <td>:</td>
+                            <td colspan="2">{{member.PreAddress}}</td>
+                        </tr>
+                        <tr class="showHide">
+                            <td colspan="4">
+                                Academic Details :
+                            </td>
+                        </tr>
+                        <tr class="showHide">
+                            <th class="colA">Exam</th>
+                            <th class="colB">Year</th>
+                            <th class="colC">Result</th>
+                            <th class="colD">Board / Univarsity</th>
+                        </tr>
+                        <div class="education">
+                            <tr *ngFor="let ed of member.educations" class="showHide">
+                                <td class="colA">{{ed.Exam}}</td>
+                                <td class="colB">{{ed.Year}}</td>
+                                <td class="colC">{{ed.Result}}</td>
+                                <td class="colD">{{ed.Board_Uni}}</td>
+                            </tr>
+                        </div>
+                        <tr class="showHide">
+                            <td colspan="4">
+                                <br>Experience :
+                            </td>
+                        </tr>
+                        <tr class="showHide">
+                            <th class="colA">Title</th>
+                            <th class="colB">Year</th>
+                            <th class="colC">Description</th>
+                            <th class="colD">Comment</th>
+                        </tr>
+                        <div *ngFor="let ex of member.experiences" class="experience">
+                            <tr class="showHide">
+                                <td class="colA">{{ex.Title}}</td>
+                                <td class="colB">{{ex.Year}}</td>
+                                <td class="colC">{{ex.Description}}</td>
+                                <td class="colD">{{ex.Comment}}</td>
+                            </tr>
+                        </div>
+                        <tr class="showHide">
+                            <td colspan="3" style="color:darkred"><br>Probable Retirement Date : </td>
+                            <td style="color:darkred">{{member.Retirement}}</td>
                         </tr>
                     </table>
                 </div>
@@ -128,22 +132,22 @@
     <div class="container">
         <div class="row">
             <h3 class="heading3">Honours Teachers</h3>
-            <div *ngFor="let teacher of teacherHonours"
+            <div *ngFor="let member of teacherHonours"
                 class="col-12 col-xs-6 col-sm-6 col-md-6 col-lg-4 col-xl-4 col-xxl-3">
                 <div class="table-wrapper">
                     <table>
                         <tr>
-                            <td colspan="4" class="img"><img [src]="teacher.Img || './assets/images/teacher.jpg'"
+                            <td colspan="4" class="img"><img [src]="member.Img || './assets/images/teacher.jpg'"
                                     class="profile-picture"></td>
                         </tr>
                         <tr>
-                            <td colspan="4" class="heading"><b>{{teacher.Name}}</b></td>
+                            <td colspan="4" class="heading"><b>{{member.Name}}</b></td>
                         </tr>
                         <tr>
-                            <td colspan="4" class="heading">{{teacher.Designation}}</td>
+                            <td colspan="4" class="heading">{{member.Designation}}</td>
                         </tr>
                         <tr>
-                            <td colspan="4" class="heading">{{teacher.Dept}}</td>
+                            <td colspan="4" class="heading">{{member.Dept}}</td>
                         </tr>
                         <tr>
                             <td colspan="4" class="heading">............................................................
@@ -152,100 +156,98 @@
                         <tr>
                             <td>Fathers Name</td>
                             <td>:</td>
-                            <td colspan="2">{{teacher.FName}}</td>
+                            <td colspan="2">{{member.FName}}</td>
                         </tr>
                         <tr>
                             <td>Mothers Name</td>
                             <td>:</td>
-                            <td colspan="2">{{teacher.MName}}</td>
+                            <td colspan="2">{{member.MName}}</td>
                         </tr>
                         <tr>
                             <td>Gender</td>
                             <td>:</td>
-                            <td colspan="2">{{teacher.Gender}}</td>
+                            <td colspan="2">{{member.Gender}}</td>
                         </tr>
                         <tr>
                             <td>Joining Date</td>
                             <td>:</td>
-                            <td colspan="2">{{teacher.Joining}}</td>
+                            <td colspan="2">{{member.Joining}}</td>
                         </tr>
                         <tr>
-                            <td>Index No.</td>
+                            <td>TMIS No.</td>
                             <td>:</td>
-                            <td colspan="2">{{teacher.Index}}</td>
+                            <td colspan="2">{{member.Index}}</td>
                         </tr>
                         <tr>
                             <td>Mobile No.</td>
                             <td>:</td>
-                            <td colspan="2">{{teacher.Mobile}}</td>
+                            <td colspan="2">{{member.Mobile}}</td>
                         </tr>
-                        <tr>
+                        <tr class="showHide">
                             <td>Email</td>
                             <td>:</td>
-                            <td colspan="2">{{teacher.Email}}</td>
+                            <td colspan="2">{{member.Email}}</td>
                         </tr>
-                        <div class="showHide" style="visibility:hidden">
-                            <tr>
-                                <td>Permanent Address</td>
-                                <td>:</td>
-                                <td colspan="2">{{teacher.PerAddress}}</td>
-                            </tr>
-                            <tr>
-                                <td>DOB</td>
-                                <td>:</td>
-                                <td colspan="2">{{teacher.DOB}}</td>
-                            </tr>
-                            <tr>
-                                <td>Present Address</td>
-                                <td>:</td>
-                                <td colspan="2">{{teacher.PreAddress}}</td>
-                            </tr>
-                            <tr>
-                                <td colspan="4">
-                                    <h4>Academic Details</h4>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th>Exam</th>
-                                <th>Year</th>
-                                <th>Result</th>
-                                <th>Board / Univarsity</th>
-                            </tr>
-                            <div *ngFor="let ed of teacher">
-                                <tr>
-                                    <td>{{ed.Exam}}</td>
-                                    <td>{{ed.Year}}</td>
-                                    <td>{{ed.Result}}</td>
-                                    <td>{{ed.Board_Uni}}</td>
-                                </tr>
-                            </div>
-                            <tr>
-                                <td colspan="4">
-                                    <h4>teacher</h4>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th>Title</th>
-                                <th>Year</th>
-                                <th>Description</th>
-                                <th>Comment</th>
-                            </tr>
-                            <div *ngFor="let ex of teacher">
-                                <tr>
-                                    <td>{{ex.Title}}</td>
-                                    <td>{{ex.Year}}</td>
-                                    <td>{{ex.Description}}</td>
-                                    <td>{{ex.Comment}}</td>
-                                </tr>
-                            </div>
-                            <tr>
-                                <td colspan="3">Probable Retirement Date : </td>
-                                <td>{{teacher.Retirement}}</td>
-                            </tr>
-                        </div>
                         <tr>
                             <td class="viewButton" colspan="4"><button (click)="openModal($event)" class="details"
                                     id="details">Details</button></td>
+                        </tr>
+                        <tr class="showHide">
+                            <td>Permanent Address</td>
+                            <td>:</td>
+                            <td colspan="2">{{member.PerAddress}}</td>
+                        </tr>
+                        <tr class="showHide">
+                            <td>DOB</td>
+                            <td>:</td>
+                            <td colspan="2">{{member.DOB}}</td>
+                        </tr>
+                        <tr class="showHide">
+                            <td>Present Address</td>
+                            <td>:</td>
+                            <td colspan="2">{{member.PreAddress}}</td>
+                        </tr>
+                        <tr class="showHide">
+                            <td colspan="4">
+                                Academic Details :
+                            </td>
+                        </tr>
+                        <tr class="showHide">
+                            <th class="colA">Exam</th>
+                            <th class="colB">Year</th>
+                            <th class="colC">Result</th>
+                            <th class="colD">Board / Univarsity</th>
+                        </tr>
+                        <div *ngFor="let ed of member.educations" class="education">
+                            <tr class="showHide">
+                                <td class="colA">{{ed.Exam}}</td>
+                                <td class="colB">{{ed.Year}}</td>
+                                <td class="colC">{{ed.Result}}</td>
+                                <td class="colD">{{ed.Board_Uni}}</td>
+                            </tr>
+                        </div>
+                        <tr class="showHide" style="visibility:hidden">
+                            <td colspan="4">
+                                <br>Experience :
+                            </td>
+                        </tr>
+                        <tr class="showHide">
+                            <th class="colA">Title</th>
+                            <th class="colB">Year</th>
+                            <th class="colC">Description</th>
+                            <th class="colD">Comment</th>
+                        </tr>
+                        <div *ngFor="let ex of member.experiences" class="experience">
+                            <tr class="showHide">
+                                <td class="colA">{{ex.Title}}</td>
+                                <td class="colB">{{ex.Year}}</td>
+                                <td class="colC">{{ex.Description}}</td>
+                                <td class="colD">{{ex.Comment}}</td>
+                            </tr>
+                        </div>
+                        <tr class="showHide">
+                            <td colspan="3" style="color:darkred"><br>Probable Retirement Date : </td>
+                            <td style="color:darkred">{{member.Retirement}}</td>
                         </tr>
                     </table>
                 </div>
@@ -255,7 +257,7 @@
     <div class="container">
         <div class="row">
             <h3 class="heading3">MPO Staffs</h3>
-            <div *ngFor="let teacher of staffs" class="col-12 col-xs-6 col-sm-6 col-md-6 col-lg-4 col-xl-4 col-xxl-3">
+            <div *ngFor="let member of staffs" class="col-12 col-xs-6 col-sm-6 col-md-6 col-lg-4 col-xl-4 col-xxl-3">
                 <div class="table-wrapper">
                     <table>
                         <tr>
@@ -263,13 +265,13 @@
                             </td>
                         </tr>
                         <tr>
-                            <td colspan="4" class="heading"><b>{{teacher.Name}}</b></td>
+                            <td colspan="4" class="heading"><b>{{member.Name}}</b></td>
                         </tr>
                         <tr>
-                            <td colspan="4" class="heading">{{teacher.Designation}}</td>
+                            <td colspan="4" class="heading">{{member.Designation}}</td>
                         </tr>
                         <tr>
-                            <td colspan="4" class="heading">{{teacher.Dept}}</td>
+                            <td colspan="4" class="heading">{{member.Dept}}</td>
                         </tr>
                         <tr>
                             <td colspan="4" class="heading">............................................................
@@ -278,100 +280,98 @@
                         <tr>
                             <td>Fathers Name</td>
                             <td>:</td>
-                            <td colspan="2">{{teacher.FName}}</td>
+                            <td colspan="2">{{member.FName}}</td>
                         </tr>
                         <tr>
                             <td>Mothers Name</td>
                             <td>:</td>
-                            <td colspan="2">{{teacher.MName}}</td>
+                            <td colspan="2">{{member.MName}}</td>
                         </tr>
                         <tr>
                             <td>Gender</td>
                             <td>:</td>
-                            <td colspan="2">{{teacher.Gender}}</td>
+                            <td colspan="2">{{member.Gender}}</td>
                         </tr>
                         <tr>
                             <td>Joining Date</td>
                             <td>:</td>
-                            <td colspan="2">{{teacher.Joining}}</td>
+                            <td colspan="2">{{member.Joining}}</td>
                         </tr>
                         <tr>
                             <td>Index No.</td>
                             <td>:</td>
-                            <td colspan="2">{{teacher.Index}}</td>
+                            <td colspan="2">{{member.Index}}</td>
                         </tr>
                         <tr>
                             <td>Mobile No.</td>
                             <td>:</td>
-                            <td colspan="2">{{teacher.Mobile}}</td>
+                            <td colspan="2">{{member.Mobile}}</td>
                         </tr>
-                        <tr>
+                        <tr class="showHide">
                             <td>Email</td>
                             <td>:</td>
-                            <td colspan="2">{{teacher.Email}}</td>
+                            <td colspan="2">{{member.Email}}</td>
                         </tr>
-                        <div class="showHide" style="visibility:hidden">
-                            <tr>
-                                <td>Permanent Address</td>
-                                <td>:</td>
-                                <td colspan="2">{{teacher.PerAddress}}</td>
-                            </tr>
-                            <tr>
-                                <td>DOB</td>
-                                <td>:</td>
-                                <td colspan="2">{{teacher.DOB}}</td>
-                            </tr>
-                            <tr>
-                                <td>Present Address</td>
-                                <td>:</td>
-                                <td colspan="2">{{teacher.PreAddress}}</td>
-                            </tr>
-                            <tr>
-                                <td colspan="4">
-                                    <h4>Academic Details</h4>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th>Exam</th>
-                                <th>Year</th>
-                                <th>Result</th>
-                                <th>Board / Univarsity</th>
-                            </tr>
-                            <div *ngFor="let ed of teacher">
-                                <tr>
-                                    <td>{{ed.Exam}}</td>
-                                    <td>{{ed.Year}}</td>
-                                    <td>{{ed.Result}}</td>
-                                    <td>{{ed.Board_Uni}}</td>
-                                </tr>
-                            </div>
-                            <tr>
-                                <td colspan="4">
-                                    <h4>teacher</h4>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th>Title</th>
-                                <th>Year</th>
-                                <th>Description</th>
-                                <th>Comment</th>
-                            </tr>
-                            <div *ngFor="let ex of teacher">
-                                <tr>
-                                    <td>{{ex.Title}}</td>
-                                    <td>{{ex.Year}}</td>
-                                    <td>{{ex.Description}}</td>
-                                    <td>{{ex.Comment}}</td>
-                                </tr>
-                            </div>
-                            <tr>
-                                <td colspan="3">Probable Retirement Date : </td>
-                                <td>{{teacher.Retirement}}</td>
-                            </tr>
-                        </div>
                         <tr>
                             <td class="viewButton" colspan="4"><button (click)="openModal($event)" class="details"
                                     id="details">Details</button></td>
+                        </tr>
+                        <tr class="showHide">
+                            <td>Permanent Address</td>
+                            <td>:</td>
+                            <td colspan="2">{{member.PerAddress}}</td>
+                        </tr>
+                        <tr class="showHide">
+                            <td>DOB</td>
+                            <td>:</td>
+                            <td colspan="2">{{member.DOB}}</td>
+                        </tr>
+                        <tr class="showHide">
+                            <td>Present Address</td>
+                            <td>:</td>
+                            <td colspan="2">{{member.PreAddress}}</td>
+                        </tr>
+                        <tr class="showHide">
+                            <td colspan="4">
+                                Academic Details :
+                            </td>
+                        </tr>
+                        <tr class="showHide">
+                            <th class="colA">Exam</th>
+                            <th class="colB">Year</th>
+                            <th class="colC">Result</th>
+                            <th class="colD">Board / Univarsity</th>
+                        </tr>
+                        <div *ngFor="let ed of member.educations" class="education">
+                            <tr class="showHide">
+                                <td class="colA">{{ed.Exam}}</td>
+                                <td class="colB">{{ed.Year}}</td>
+                                <td class="colC">{{ed.Result}}</td>
+                                <td class="colD">{{ed.Board_Uni}}</td>
+                            </tr>
+                        </div>
+                        <tr class="showHide">
+                            <td colspan="4">
+                                <br>Experience :
+                            </td>
+                        </tr>
+                        <tr class="showHide">
+                            <th class="colA">Title</th>
+                            <th class="colB">Year</th>
+                            <th class="colC">Description</th>
+                            <th class="colD">Comment</th>
+                        </tr>
+                        <div *ngFor="let ex of member.experiences" class="experience">
+                            <tr class="showHide">
+                                <td class="colA">{{ex.Title}}</td>
+                                <td class="colB">{{ex.Year}}</td>
+                                <td class="colC">{{ex.Description}}</td>
+                                <td class="colD">{{ex.Comment}}</td>
+                            </tr>
+                        </div>
+                        <tr class="showHide">
+                            <td colspan="3" style="color:darkred"><br>Probable Retirement Date : </td>
+                            <td style="color:darkred">{{member.Retirement}}</td>
                         </tr>
                     </table>
                 </div>
@@ -381,7 +381,7 @@
     <div class="container">
         <div class="row">
             <h3 class="heading3">Non-MPO Staffs</h3>
-            <div *ngFor="let teacher of nonMpoStaffs"
+            <div *ngFor="let member of nonMpoStaffs"
                 class="col-12 col-xs-6 col-sm-6 col-md-6 col-lg-4 col-xl-4 col-xxl-3">
                 <div class="table-wrapper">
                     <table>
@@ -390,13 +390,13 @@
                             </td>
                         </tr>
                         <tr>
-                            <td colspan="4" class="heading"><b>{{teacher.Name}}</b></td>
+                            <td colspan="4" class="heading"><b>{{member.Name}}</b></td>
                         </tr>
                         <tr>
-                            <td colspan="4" class="heading">{{teacher.Designation}}</td>
+                            <td colspan="4" class="heading">{{member.Designation}}</td>
                         </tr>
                         <tr>
-                            <td colspan="4" class="heading">{{teacher.Dept}}</td>
+                            <td colspan="4" class="heading">{{member.Dept}}</td>
                         </tr>
                         <tr>
                             <td colspan="4" class="heading">............................................................
@@ -405,100 +405,93 @@
                         <tr>
                             <td>Fathers Name</td>
                             <td>:</td>
-                            <td colspan="2">{{teacher.FName}}</td>
+                            <td colspan="2">{{member.FName}}</td>
                         </tr>
                         <tr>
                             <td>Mothers Name</td>
                             <td>:</td>
-                            <td colspan="2">{{teacher.MName}}</td>
+                            <td colspan="2">{{member.MName}}</td>
                         </tr>
                         <tr>
                             <td>Gender</td>
                             <td>:</td>
-                            <td colspan="2">{{teacher.Gender}}</td>
+                            <td colspan="2">{{member.Gender}}</td>
                         </tr>
                         <tr>
                             <td>Joining Date</td>
                             <td>:</td>
-                            <td colspan="2">{{teacher.Joining}}</td>
-                        </tr>
-                        <tr>
-                            <td>Index No.</td>
-                            <td>:</td>
-                            <td colspan="2">{{teacher.Index}}</td>
+                            <td colspan="2">{{member.Joining}}</td>
                         </tr>
                         <tr>
                             <td>Mobile No.</td>
                             <td>:</td>
-                            <td colspan="2">{{teacher.Mobile}}</td>
+                            <td colspan="2">{{member.Mobile}}</td>
                         </tr>
-                        <tr>
+                        <tr class="showHide">
                             <td>Email</td>
                             <td>:</td>
-                            <td colspan="2">{{teacher.Email}}</td>
+                            <td colspan="2">{{member.Email}}</td>
                         </tr>
-                        <div class="showHide" style="visibility:hidden">
-                            <tr>
-                                <td>Permanent Address</td>
-                                <td>:</td>
-                                <td colspan="2">{{teacher.PerAddress}}</td>
-                            </tr>
-                            <tr>
-                                <td>DOB</td>
-                                <td>:</td>
-                                <td colspan="2">{{teacher.DOB}}</td>
-                            </tr>
-                            <tr>
-                                <td>Present Address</td>
-                                <td>:</td>
-                                <td colspan="2">{{teacher.PreAddress}}</td>
-                            </tr>
-                            <tr>
-                                <td colspan="4">
-                                    <h4>Academic Details</h4>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th>Exam</th>
-                                <th>Year</th>
-                                <th>Result</th>
-                                <th>Board / Univarsity</th>
-                            </tr>
-                            <div *ngFor="let ed of teacher">
-                                <tr>
-                                    <td>{{ed.Exam}}</td>
-                                    <td>{{ed.Year}}</td>
-                                    <td>{{ed.Result}}</td>
-                                    <td>{{ed.Board_Uni}}</td>
-                                </tr>
-                            </div>
-                            <tr>
-                                <td colspan="4">
-                                    <h4>teacher</h4>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th>Title</th>
-                                <th>Year</th>
-                                <th>Description</th>
-                                <th>Comment</th>
-                            </tr>
-                            <div *ngFor="let ex of teacher">
-                                <tr>
-                                    <td>{{ex.Title}}</td>
-                                    <td>{{ex.Year}}</td>
-                                    <td>{{ex.Description}}</td>
-                                    <td>{{ex.Comment}}</td>
-                                </tr>
-                            </div>
-                            <tr>
-                                <td colspan="3">Probable Retirement Date : </td>
-                                <td>{{teacher.Retirement}}</td>
-                            </tr>
-                        </div>
                         <tr>
                             <td class="viewButton" colspan="4"><button (click)="openModal($event)" class="details"
                                     id="details">Details</button></td>
+                        </tr>
+                        <tr class="showHide">
+                            <td>Permanent Address</td>
+                            <td>:</td>
+                            <td colspan="2">{{member.PerAddress}}</td>
+                        </tr>
+                        <tr class="showHide">
+                            <td>DOB</td>
+                            <td>:</td>
+                            <td colspan="2">{{member.DOB}}</td>
+                        </tr>
+                        <tr class="showHide">
+                            <td>Present Address</td>
+                            <td>:</td>
+                            <td colspan="2">{{member.PreAddress}}</td>
+                        </tr>
+                        <tr class="showHide">
+                            <td colspan="4">
+                                Academic Details :
+                            </td>
+                        </tr>
+                        <tr class="showHide">
+                            <th class="colA">Exam</th>
+                            <th class="colB">Year</th>
+                            <th class="colC">Result</th>
+                            <th class="colD">Board / Univarsity</th>
+                        </tr>
+                        <div *ngFor="let ed of member.educations" class="education">
+                            <tr class="showHide">
+                                <td class="colA">{{ed.Exam}}</td>
+                                <td class="colB">{{ed.Year}}</td>
+                                <td class="colC">{{ed.Result}}</td>
+                                <td class="colD">{{ed.Board_Uni}}</td>
+                            </tr>
+                        </div>
+                        <tr class="showHide">
+                            <td colspan="4">
+                                <br>Experience :
+                            </td>
+                        </tr>
+                        <tr class="showHide">
+                            <th class="colA">Title</th>
+                            <th class="colB">Year</th>
+                            <th class="colC">Description</th>
+                            <th class="colD">Comment</th>
+                        </tr>
+                        <div *ngFor="let ex of member.experiences" class="experience">
+                            <tr class="showHide">
+                                <td class="colA">{{ex.Title}}</td>
+                                <td class="colB">{{ex.Year}}</td>
+                                <td class="colC">{{ex.Description}}</td>
+                                <td class="colD">{{ex.Comment}}</td>
+                            </tr>
+                        </div>
+                        <tr class="showHide">
+                            <td colspan="3" style="color:darkred"><br>Probable Retirement Date : </td>
+                            <td style="color:darkred">{{member.Retirement}}</td>
                         </tr>
                     </table>
                 </div>
@@ -508,7 +501,7 @@
     <div class="container">
         <div class="row">
             <h3 class="heading3">Ex Teachers</h3>
-            <div *ngFor="let teacher of exTeachers"
+            <div *ngFor="let member of exTeachers"
                 class="col-12 col-xs-6 col-sm-6 col-md-6 col-lg-4 col-xl-4 col-xxl-3">
                 <div class="table-wrapper">
                     <table>
@@ -517,13 +510,13 @@
                             </td>
                         </tr>
                         <tr>
-                            <td colspan="4" class="heading"><b>{{teacher.Name}}</b></td>
+                            <td colspan="4" class="heading"><b>{{member.Name}}</b></td>
                         </tr>
                         <tr>
-                            <td colspan="4" class="heading">{{teacher.Designation}}</td>
+                            <td colspan="4" class="heading">{{member.Designation}}</td>
                         </tr>
                         <tr>
-                            <td colspan="4" class="heading">{{teacher.Dept}}</td>
+                            <td colspan="4" class="heading">{{member.Dept}}</td>
                         </tr>
                         <tr>
                             <td colspan="4" class="heading">............................................................
@@ -532,100 +525,103 @@
                         <tr>
                             <td>Fathers Name</td>
                             <td>:</td>
-                            <td colspan="2">{{teacher.FName}}</td>
+                            <td colspan="2">{{member.FName}}</td>
                         </tr>
                         <tr>
                             <td>Mothers Name</td>
                             <td>:</td>
-                            <td colspan="2">{{teacher.MName}}</td>
+                            <td colspan="2">{{member.MName}}</td>
                         </tr>
                         <tr>
                             <td>Gender</td>
                             <td>:</td>
-                            <td colspan="2">{{teacher.Gender}}</td>
+                            <td colspan="2">{{member.Gender}}</td>
                         </tr>
                         <tr>
                             <td>Joining Date</td>
                             <td>:</td>
-                            <td colspan="2">{{teacher.Joining}}</td>
+                            <td colspan="2">{{member.Joining}}</td>
                         </tr>
                         <tr>
                             <td>Index No.</td>
                             <td>:</td>
-                            <td colspan="2">{{teacher.Index}}</td>
+                            <td colspan="2">{{member.Index}}</td>
+                        </tr>
+                        <tr>
+                            <td>TMIS No.</td>
+                            <td>:</td>
+                            <td colspan="2">{{member.Tmis}}</td>
                         </tr>
                         <tr>
                             <td>Mobile No.</td>
                             <td>:</td>
-                            <td colspan="2">{{teacher.Mobile}}</td>
+                            <td colspan="2">{{member.Mobile}}</td>
                         </tr>
-                        <tr>
+                        <tr class="showHide">
                             <td>Email</td>
                             <td>:</td>
-                            <td colspan="2">{{teacher.Email}}</td>
+                            <td colspan="2">{{member.Email}}</td>
                         </tr>
-                        <div class="showHide" style="visibility:hidden">
-                            <tr>
-                                <td>Permanent Address</td>
-                                <td>:</td>
-                                <td colspan="2">{{teacher.PerAddress}}</td>
-                            </tr>
-                            <tr>
-                                <td>DOB</td>
-                                <td>:</td>
-                                <td colspan="2">{{teacher.DOB}}</td>
-                            </tr>
-                            <tr>
-                                <td>Present Address</td>
-                                <td>:</td>
-                                <td colspan="2">{{teacher.PreAddress}}</td>
-                            </tr>
-                            <tr>
-                                <td colspan="4">
-                                    <h4>Academic Details</h4>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th>Exam</th>
-                                <th>Year</th>
-                                <th>Result</th>
-                                <th>Board / Univarsity</th>
-                            </tr>
-                            <div *ngFor="let ed of teacher">
-                                <tr>
-                                    <td>{{ed.Exam}}</td>
-                                    <td>{{ed.Year}}</td>
-                                    <td>{{ed.Result}}</td>
-                                    <td>{{ed.Board_Uni}}</td>
-                                </tr>
-                            </div>
-                            <tr>
-                                <td colspan="4">
-                                    <h4>teacher</h4>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th>Title</th>
-                                <th>Year</th>
-                                <th>Description</th>
-                                <th>Comment</th>
-                            </tr>
-                            <div *ngFor="let ex of teacher">
-                                <tr>
-                                    <td>{{ex.Title}}</td>
-                                    <td>{{ex.Year}}</td>
-                                    <td>{{ex.Description}}</td>
-                                    <td>{{ex.Comment}}</td>
-                                </tr>
-                            </div>
-                            <tr>
-                                <td colspan="3">Probable Retirement Date : </td>
-                                <td>{{teacher.Retirement}}</td>
-                            </tr>
-                        </div>
                         <tr>
                             <td class="viewButton" colspan="4"><button (click)="openModal($event)" class="details"
                                     id="details">Details</button></td>
+                        </tr>
+                        <tr class="showHide">
+                            <td>Permanent Address</td>
+                            <td>:</td>
+                            <td colspan="2">{{member.PerAddress}}</td>
+                        </tr>
+                        <tr class="showHide">
+                            <td>DOB</td>
+                            <td>:</td>
+                            <td colspan="2">{{member.DOB}}</td>
+                        </tr>
+                        <tr class="showHide">
+                            <td>Present Address</td>
+                            <td>:</td>
+                            <td colspan="2">{{member.PreAddress}}</td>
+                        </tr>
+                        <tr class="showHide">
+                            <td colspan="4">
+                                Academic Details :
+                            </td>
+                        </tr>
+                        <tr class="showHide">
+                            <th class="colA">Exam</th>
+                            <th class="colB">Year</th>
+                            <th class="colC">Result</th>
+                            <th class="colD">Board / Univarsity</th>
+                        </tr>
+                        <div *ngFor="let ed of member.educations" class="education">
+                            <tr class="showHide">
+                                <td class="colA">{{ed.Exam}}</td>
+                                <td class="colB">{{ed.Year}}</td>
+                                <td class="colC">{{ed.Result}}</td>
+                                <td class="colD">{{ed.Board_Uni}}</td>
+                            </tr>
+                        </div>
+                        <tr class="showHide">
+                            <td colspan="4">
+                                <br>Experience :
+                            </td>
+                        </tr>
+                        <tr class="showHide">
+                            <th class="colA">Title</th>
+                            <th class="colB">Year</th>
+                            <th class="colC">Description</th>
+                            <th class="colD">Comment</th>
+                        </tr>
+                        <div *ngFor="let ex of member.experiences" class="experience">
+                            <tr class="showHide">
+                                <td class="colA">{{ex.Title}}</td>
+                                <td class="colB">{{ex.Year}}</td>
+                                <td class="colC">{{ex.Description}}</td>
+                                <td class="colD">{{ex.Comment}}</td>
+                            </tr>
+                        </div>
+                        <tr class="showHide">
+                            <td colspan="3" style="color:darkred"><br>Probable Retirement Date : </td>
+                            <td style="color:darkred">{{member.Retirement}}</td>
                         </tr>
                     </table>
                 </div>
@@ -635,7 +631,7 @@
     <div class="container">
         <div class="row">
             <h3 class="heading3">Ex Staffs</h3>
-            <div *ngFor="let teacher of exStaffs" class="col-12 col-xs-6 col-sm-6 col-md-6 col-lg-4 col-xl-4 col-xxl-3">
+            <div *ngFor="let member of exStaffs" class="col-12 col-xs-6 col-sm-6 col-md-6 col-lg-4 col-xl-4 col-xxl-3">
                 <div class="table-wrapper">
                     <table>
                         <tr>
@@ -643,13 +639,13 @@
                             </td>
                         </tr>
                         <tr>
-                            <td colspan="4" class="heading"><b>{{teacher.Name}}</b></td>
+                            <td colspan="4" class="heading"><b>{{member.Name}}</b></td>
                         </tr>
                         <tr>
-                            <td colspan="4" class="heading">{{teacher.Designation}}</td>
+                            <td colspan="4" class="heading">{{member.Designation}}</td>
                         </tr>
                         <tr>
-                            <td colspan="4" class="heading">{{teacher.Dept}}</td>
+                            <td colspan="4" class="heading">{{member.Dept}}</td>
                         </tr>
                         <tr>
                             <td colspan="4" class="heading">............................................................
@@ -658,100 +654,93 @@
                         <tr>
                             <td>Fathers Name</td>
                             <td>:</td>
-                            <td colspan="2">{{teacher.FName}}</td>
+                            <td colspan="2">{{member.FName}}</td>
                         </tr>
                         <tr>
                             <td>Mothers Name</td>
                             <td>:</td>
-                            <td colspan="2">{{teacher.MName}}</td>
+                            <td colspan="2">{{member.MName}}</td>
                         </tr>
                         <tr>
                             <td>Gender</td>
                             <td>:</td>
-                            <td colspan="2">{{teacher.Gender}}</td>
+                            <td colspan="2">{{member.Gender}}</td>
                         </tr>
                         <tr>
                             <td>Joining Date</td>
                             <td>:</td>
-                            <td colspan="2">{{teacher.Joining}}</td>
-                        </tr>
-                        <tr>
-                            <td>Index No.</td>
-                            <td>:</td>
-                            <td colspan="2">{{teacher.Index}}</td>
+                            <td colspan="2">{{member.Joining}}</td>
                         </tr>
                         <tr>
                             <td>Mobile No.</td>
                             <td>:</td>
-                            <td colspan="2">{{teacher.Mobile}}</td>
+                            <td colspan="2">{{member.Mobile}}</td>
                         </tr>
-                        <tr>
+                        <tr class="showHide">
                             <td>Email</td>
                             <td>:</td>
-                            <td colspan="2">{{teacher.Email}}</td>
+                            <td colspan="2">{{member.Email}}</td>
                         </tr>
-                        <div class="showHide" style="visibility:hidden">
-                            <tr>
-                                <td>Permanent Address</td>
-                                <td>:</td>
-                                <td colspan="2">{{teacher.PerAddress}}</td>
-                            </tr>
-                            <tr>
-                                <td>DOB</td>
-                                <td>:</td>
-                                <td colspan="2">{{teacher.DOB}}</td>
-                            </tr>
-                            <tr>
-                                <td>Present Address</td>
-                                <td>:</td>
-                                <td colspan="2">{{teacher.PreAddress}}</td>
-                            </tr>
-                            <tr>
-                                <td colspan="4">
-                                    <h4>Academic Details</h4>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th>Exam</th>
-                                <th>Year</th>
-                                <th>Result</th>
-                                <th>Board / Univarsity</th>
-                            </tr>
-                            <div *ngFor="let ed of teacher">
-                                <tr>
-                                    <td>{{ed.Exam}}</td>
-                                    <td>{{ed.Year}}</td>
-                                    <td>{{ed.Result}}</td>
-                                    <td>{{ed.Board_Uni}}</td>
-                                </tr>
-                            </div>
-                            <tr>
-                                <td colspan="4">
-                                    <h4>teacher</h4>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th>Title</th>
-                                <th>Year</th>
-                                <th>Description</th>
-                                <th>Comment</th>
-                            </tr>
-                            <div *ngFor="let ex of teacher">
-                                <tr>
-                                    <td>{{ex.Title}}</td>
-                                    <td>{{ex.Year}}</td>
-                                    <td>{{ex.Description}}</td>
-                                    <td>{{ex.Comment}}</td>
-                                </tr>
-                            </div>
-                            <tr>
-                                <td colspan="3">Probable Retirement Date : </td>
-                                <td>{{teacher.Retirement}}</td>
-                            </tr>
-                        </div>
                         <tr>
                             <td class="viewButton" colspan="4"><button (click)="openModal($event)" class="details"
                                     id="details">Details</button></td>
+                        </tr>
+                        <tr class="showHide">
+                            <td>Permanent Address</td>
+                            <td>:</td>
+                            <td colspan="2">{{member.PerAddress}}</td>
+                        </tr>
+                        <tr class="showHide">
+                            <td>DOB</td>
+                            <td>:</td>
+                            <td colspan="2">{{member.DOB}}</td>
+                        </tr>
+                        <tr class="showHide">
+                            <td>Present Address</td>
+                            <td>:</td>
+                            <td colspan="2">{{member.PreAddress}}</td>
+                        </tr>
+                        <tr class="showHide">
+                            <td colspan="4">
+                                Academic Details :
+                            </td>
+                        </tr>
+                        <tr class="showHide">
+                            <th class="colA">Exam</th>
+                            <th class="colB">Year</th>
+                            <th class="colC">Result</th>
+                            <th class="colD">Board / Univarsity</th>
+                        </tr>
+                        <div *ngFor="let ed of member.educations" class="education">
+                            <tr class="showHide">
+                                <td class="colA">{{ed.Exam}}</td>
+                                <td class="colB">{{ed.Year}}</td>
+                                <td class="colC">{{ed.Result}}</td>
+                                <td class="colD">{{ed.Board_Uni}}</td>
+                            </tr>
+                        </div>
+                        <tr class="showHide">
+                            <td colspan="4">
+                                <br>Experience :
+                            </td>
+                        </tr>
+                        <tr class="showHide">
+                            <th class="colA">Title</th>
+                            <th class="colB">Year</th>
+                            <th class="colC">Description</th>
+                            <th class="colD">Comment</th>
+                        </tr>
+                        <div *ngFor="let ex of member.experiences" class="experience">
+                            <tr class="showHide">
+                                <td class="colA">{{ex.Title}}</td>
+                                <td class="colB">{{ex.Year}}</td>
+                                <td class="colC">{{ex.Description}}</td>
+                                <td class="colD">{{ex.Comment}}</td>
+                            </tr>
+                        </div>
+                        <tr class="showHide">
+                            <td colspan="3" style="color:darkred"><br>Probable Retirement Date : </td>
+                            <td style="color:darkred">{{member.Retirement}}</td>
                         </tr>
                     </table>
                 </div>

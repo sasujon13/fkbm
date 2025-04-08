@@ -63,6 +63,10 @@ export class PersonnelComponent implements OnInit {
       const detailsButton = wrapper.querySelector('button.details') as HTMLElement;
 
       if (table) {
+        const hiddenRows = wrapper.querySelectorAll('tr.showHide');
+      hiddenRows.forEach(row => {
+        row.classList.add('visible');
+      });
         const clonedTable = table.cloneNode(true) as HTMLElement;
         const buttonRow = clonedTable.querySelector('tr .viewButton')?.parentElement;
         if (buttonRow) {
@@ -70,6 +74,7 @@ export class PersonnelComponent implements OnInit {
         }
         this.fullProfileText = this.sanitizer.bypassSecurityTrustHtml(clonedTable.outerHTML);
         this.isProfileModalOpen = true;
+
         if (detailsButton) {
           detailsButton.style.visibility = 'hidden';
           this.openedButtonElement = detailsButton;
@@ -80,6 +85,10 @@ export class PersonnelComponent implements OnInit {
 
   closeModal(): void {
     this.isProfileModalOpen = false;
+    const visibleRows = document.querySelectorAll('tr.showHide.visible');
+    visibleRows.forEach(row => {
+      row.classList.remove('visible');
+    });
 
     if (this.openedButtonElement) {
       this.openedButtonElement.style.visibility = 'visible';
