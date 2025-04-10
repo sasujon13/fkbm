@@ -29,9 +29,11 @@ export class HeaderComponent implements OnInit {
   @ViewChild('marquee', { static: true }) marqueeElement!: ElementRef;
   public notifications: any[] = [];
   private currentIndex = 0;
+  academicDropdownOpen = false;
+  depts: string[] = [];
 
   isCopyrightVisible = false;
-  shouldDisplayCopyrightDiv = false; 
+  shouldDisplayCopyrightDiv = false;
   headerHeight: number = 0;
 
   @HostListener('window:scroll', ['$event'])
@@ -53,7 +55,7 @@ export class HeaderComponent implements OnInit {
 
     }
   }
-  
+
   public totalCartItem: number = 0;
   public totalChoiceItem: number = 0;
   public searchTerm!: string;
@@ -62,211 +64,95 @@ export class HeaderComponent implements OnInit {
   loginStatus: boolean = false;
 
   @ViewChild('menuToggle', { static: true }) menuToggle!: ElementRef;
-  @ViewChild('menu_item2', { static: true }) menu_item2!: ElementRef; 
+  @ViewChild('menu_item2', { static: true }) menu_item2!: ElementRef;
   @ViewChild('academicMenu') academicMenu!: ElementRef;
   item2: any;
   item1: any;
 
 
   constructor(
-    private cartService: CartService, 
-    private choiceService: ChoiceService, 
-    private route: ActivatedRoute, 
-    private router: Router,
     private apiService: ApiService) { }
 
   ngOnInit(): void {
+    this.apiService.getTeachers().subscribe(data => {
+      this.depts = [...new Set(data.map((t: any) => t.Dept))];
+      console.log("Depts:", this.depts)
+    });
 
     const searchBarElement = document.getElementById('searchBar');
     if (searchBarElement) {
       searchBarElement.style.display = 'block';
     }
-    this.router.events.subscribe((event) => {
-      if (event instanceof NavigationEnd) {
-        setTimeout(() => {
-          this.checkVisibility();
-        }, 100);
-      }
-    });
     this.checkVisibility();
-    localStorage.getItem('isLoggedIn');
-    localStorage.getItem('authToken');
-    localStorage.getItem('formData');
-    sessionStorage.getItem('sessionCartItems'); //added later
-    localStorage.getItem(`cartState_`); //added later
-    sessionStorage.getItem('sessionChoiceItems'); //added later
-    localStorage.getItem(`choiceState_`); //added later
-    const menu_item0 = document.getElementById('menu_item0');
-    const menu_item1 = document.getElementById('menu_item1');
-    const menu_item2 = document.getElementById('menu_item2');
-    const sign_menu = document.getElementById('sign_menu');
-    const profileMenu = document.getElementById('profileMenu');
-    const edit = document.getElementById('edit');
-    if (menu_item2 && menu_item1 && menu_item0 && sign_menu && profileMenu && edit) {
-      this.loginStatus = localStorage.getItem('isLoggedIn') === 'true';
-      if (this.loginStatus) {
-        profileMenu.style.display = 'block';
-        menu_item2.style.display = 'block';
-        edit.style.display = 'block';
-        sign_menu.style.display = 'none';
-        menu_item0.style.display = 'none';
-        menu_item1.style.display = 'none';
-      }
-      else {
-        edit.style.display = 'none';
-        sign_menu.style.display = 'block';
-        menu_item0.style.display = 'block';
-        menu_item1.style.display = 'block';
-      }
-    }
-
-    this.cartService.getCartProducts()
-      .subscribe((res: any[]) => {
-        this.totalCartItem = res.length;
-      });
-
-    this.choiceService.getChoiceProducts()
-      .subscribe((res: any[]) => {
-        this.totalChoiceItem = res.length;
-      });
-
-    this.route.queryParams.subscribe(params => {
-      if (this.route.snapshot.url.length > 0 && this.route.snapshot.url[0].path === 'products' && params['itemId']) {
-        this.added(params['itemId']);
-        this.addedC(params['itemId']);
-      }
-    });
-  }
-
-  added(itemId: any) {
-    const sessionCartItems = JSON.parse(sessionStorage.getItem('sessionCartItems') || '[]');
-
-    if (sessionCartItems.includes(itemId)) {
-      const itemToAdd = this.getProductById(itemId);
-      if (itemToAdd) {
-        itemToAdd.add_to_cart = true;
-        this.cartService.addtocart(itemToAdd);
-      }
-    }
-  }
-
-  addedC(itemId: any) {
-    const sessionChoiceItems = JSON.parse(sessionStorage.getItem('sessionCartItems') || '[]');
-
-    if (sessionChoiceItems.includes(itemId)) {
-      const itemToAdd = this.getProductById(itemId);
-      if (itemToAdd) {
-        itemToAdd.love = true;
-        this.choiceService.addtochoice(itemToAdd);
-      }
-    }
-  }
-
-  getProductById(itemId: any): any {
-    const foundItem = this.cartService.cartItemList.find(item => item.id === itemId);
-    return foundItem || null;
-  }
-
-  getChoiceById(itemId: any): any {
-    const foundItem = this.choiceService.choiceItemList.find(item => item.id === itemId);
-    return foundItem || null;
-  }
-
-  toggleMenu() {
-    this.menuActive = !this.menuActive;
-    this.resetInactivityTimeout();
   }
 
   closeMenu() {
     this.menuActive = false;
+    this.isDropdownOpen = false;
+    this.academicDropdownOpen = false;
   }
-  
-  closeProfileMenu() {
-    this.isDropdownOpen = false;  //added
+
+  toggleMenu() {
+    this.menuActive = !this.menuActive;
   }
-  
+
   isDropdownOpen = false;
   toggleDropdown() {
     this.isDropdownOpen = !this.isDropdownOpen;
-    this.resetInactivityTimeout();
   }
-  
-  isAcademicDropdownOpen = false;
-  isAdmissionDropdownOpen = false;
+
   toggleAcademicDropdown() {
-    this.isAcademicDropdownOpen = !this.isAcademicDropdownOpen;
-    this.resetInactivityTimeout();
+    this.academicDropdownOpen = !this.academicDropdownOpen;
   }
 
-  openAcademicDropdown() {
-    this.isAcademicDropdownOpen = true;
-    this.isAdmissionDropdownOpen = false;
-  }
-  openAdmissionDropdown(){
-    this.isAdmissionDropdownOpen = true;
-    this.isAcademicDropdownOpen = false;
-  }
-  closeAcademicDropdown() {
+  showDropdown() {
+    this.academicDropdownOpen = true;
   }
 
-  resetInactivityTimeout() {
-    clearTimeout(this.inactivityTimeout);
-    this.inactivityTimeout = setTimeout(() => {
-      this.closeMenu();
-      this.closeProfileMenu();
-      this.closeAcademicDropdown();
-    }, 3000);
+  hideDropdown() {
+    this.academicDropdownOpen = false;
   }
+
   @HostListener('document:click', ['$event'])
   onDocumentClick(event: Event) {
     if (!this.menuToggle.nativeElement.contains(event.target)) {
-      this.closeMenu();
+      this.menuActive = true;
+      this.isDropdownOpen = true;
+      this.academicDropdownOpen = true;
     }
-    if (!this.menu_item2.nativeElement.contains(event.target)) {
-      this.closeProfileMenu(); //added
-    }
-  }
-
-  @HostListener('document:click', ['$event'])
-  handleClickOutside(event: Event) {
-    if (!this.academicMenu.nativeElement.contains(event.target)) {
-      this.closeAcademicDropdown();
+    const target = event.target as HTMLElement;
+    if (!target.closest('.dropdown')) {
+      this.academicDropdownOpen = false;
     }
   }
 
   @HostListener('window:mousemove', ['$event'])
-  onWindowMouseMove() {
-    this.resetInactivityTimeout();
+  onWindowMouseMove(event: MouseEvent) {
+    const target = event.target as HTMLElement;
+
+    const insideMenu = target.closest('.navbar');
+
+    if (!insideMenu) {
+      clearTimeout(this.inactivityTimeout);
+      this.inactivityTimeout = setTimeout(() => {
+        this.menuActive = false;
+        this.isDropdownOpen = false;
+        this.academicDropdownOpen = false;
+      }, 300);
+    }
   }
 
-  @HostListener('window:keydown', ['$event'])
-  onWindowKeyDown() {
-    this.resetInactivityTimeout();
+  @HostListener('window:click', ['$event'])
+  onWindowClick(event: MouseEvent) {
+    const target = event.target as HTMLElement;
+    const insideMenu = target.closest('.navbar');
+
+    if (!insideMenu) {
+      this.menuActive = false;
+      this.isDropdownOpen = false;
+      this.academicDropdownOpen = false;
+    }
   }
-
-  logout(): void {
-    localStorage.removeItem('isLoggedIn');
-    localStorage.removeItem('loginStatus');
-    localStorage.removeItem('authToken');
-    const menu_item0 = document.getElementById('menu_item0');
-    const menu_item1 = document.getElementById('menu_item1');
-    const menu_item2 = document.getElementById('menu_item2');
-    const profileMenu = document.getElementById('profileMenu');
-    const sign_menu = document.getElementById('sign_menu');
-    const edit = document.getElementById('edit');
-    if (menu_item2 && menu_item1 && menu_item0 && profileMenu && sign_menu && edit) {
-        sign_menu.style.display = '-webkit-inline-box';
-        menu_item0.style.display = 'block';
-        menu_item1.style.display = 'block';
-        edit.style.display = 'none';
-        menu_item2.style.display = 'none';
-        profileMenu.style.display = 'none';
-
-      }
-    this.router.navigate(['']);
-  }
-
-  
 
   loadNotifications() {
     this.apiService.getNotifications().subscribe(
@@ -291,20 +177,20 @@ export class HeaderComponent implements OnInit {
 
   updateMarqueeMessage() {
     const messageElement: HTMLElement = this.marqueeElement.nativeElement.querySelector('.msg');
-    
+
     let notificationsHTML = '';
     for (let i = 0; i < this.notifications.length; i++) {
       const currentIndex = (this.currentIndex + i) % this.notifications.length;
       const currentNotification = this.notifications[currentIndex];
       notificationsHTML += `<a href="${currentNotification.link}" class="msg_link" target="_blank">${currentNotification.text}</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`;
     }
-    
+
     messageElement.innerHTML = notificationsHTML;
     this.addDynamicStyles();
-  
+
     const messageWidth = messageElement.scrollWidth;
     const viewportWidth = window.innerWidth;
-  
+
     let increasingTime: number;
     if (viewportWidth < 576) {
       increasingTime = 7;
@@ -317,7 +203,7 @@ export class HeaderComponent implements OnInit {
     } else {
       increasingTime = 20;
     }
-  
+
     let animationDuration: number;
     if (messageWidth <= viewportWidth) {
       animationDuration = increasingTime;
@@ -325,7 +211,7 @@ export class HeaderComponent implements OnInit {
       const numberOfWidths = Math.ceil(messageWidth / viewportWidth);
       animationDuration = increasingTime + numberOfWidths * increasingTime;
     }
-  
+
     const keyframes = `
       @keyframes scrollLeft {
         0% {
@@ -336,7 +222,7 @@ export class HeaderComponent implements OnInit {
         }
       }
     `;
-    
+
     const style = document.createElement('style');
     style.type = 'text/css';
     style.innerHTML = `
@@ -346,10 +232,10 @@ export class HeaderComponent implements OnInit {
       ${keyframes}
     `;
     document.head.appendChild(style);
-  
+
     this.currentIndex = (this.currentIndex + 1) % this.notifications.length;
   }
-  
+
   addDynamicStyles() {
     const style = document.createElement('style');
     style.type = 'text/css';
@@ -363,7 +249,7 @@ export class HeaderComponent implements OnInit {
       }
     `;
     document.head.appendChild(style);
-  } 
+  }
 
   search(event: any) {
     this.searchTerm = (event.target as HTMLInputElement).value;
@@ -375,10 +261,10 @@ export class HeaderComponent implements OnInit {
     this.searchTerm = '';
     this.apiService.search.next(this.searchTerm);
   }
-  
+
   searchIconClick() {
     this.apiService.search.next(this.searchTerm);
   }
-  
+
 
 }
