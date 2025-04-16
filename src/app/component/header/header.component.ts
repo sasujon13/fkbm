@@ -29,7 +29,7 @@ export class HeaderComponent implements OnInit {
   @ViewChild('marquee', { static: true }) marqueeElement!: ElementRef;
   public notifications: any[] = [];
   private currentIndex = 0;
-  academicDropdownOpen = false;
+  academicDropdownOpen = true;
   depts: string[] = [];
 
   isCopyrightVisible = false;
@@ -64,8 +64,6 @@ export class HeaderComponent implements OnInit {
   loginStatus: boolean = false;
 
   @ViewChild('menuToggle', { static: true }) menuToggle!: ElementRef;
-  @ViewChild('menu_item2', { static: true }) menu_item2!: ElementRef;
-  @ViewChild('academicMenu') academicMenu!: ElementRef;
   item2: any;
   item1: any;
 
@@ -74,9 +72,8 @@ export class HeaderComponent implements OnInit {
     private apiService: ApiService) { }
 
   ngOnInit(): void {
-    this.apiService.getTeachers().subscribe(data => {
-      this.depts = [...new Set(data.map((t: any) => t.Dept))];
-      console.log("Depts:", this.depts)
+    this.apiService.getDepts().subscribe(data => {
+      this.depts = [...new Set(data.map((t: any) => t.Name))];
     });
 
     const searchBarElement = document.getElementById('searchBar');
@@ -110,19 +107,19 @@ export class HeaderComponent implements OnInit {
   }
 
   hideDropdown() {
-    this.academicDropdownOpen = false;
+    // this.academicDropdownOpen = false;
   }
 
   @HostListener('document:click', ['$event'])
   onDocumentClick(event: Event) {
     if (!this.menuToggle.nativeElement.contains(event.target)) {
-      this.menuActive = true;
-      this.isDropdownOpen = true;
-      this.academicDropdownOpen = true;
+      // this.menuActive = true;
+      // this.isDropdownOpen = true;
+      // this.academicDropdownOpen = true;
     }
     const target = event.target as HTMLElement;
     if (!target.closest('.dropdown')) {
-      this.academicDropdownOpen = false;
+      // this.academicDropdownOpen = false;
     }
   }
 
@@ -135,9 +132,9 @@ export class HeaderComponent implements OnInit {
     if (!insideMenu) {
       clearTimeout(this.inactivityTimeout);
       this.inactivityTimeout = setTimeout(() => {
-        this.menuActive = false;
-        this.isDropdownOpen = false;
-        this.academicDropdownOpen = false;
+        // this.menuActive = false;
+        // this.isDropdownOpen = false;
+        // this.academicDropdownOpen = false;
       }, 300);
     }
   }
@@ -148,9 +145,9 @@ export class HeaderComponent implements OnInit {
     const insideMenu = target.closest('.navbar');
 
     if (!insideMenu) {
-      this.menuActive = false;
-      this.isDropdownOpen = false;
-      this.academicDropdownOpen = false;
+      // this.menuActive = false;
+      // this.isDropdownOpen = false;
+      // this.academicDropdownOpen = false;
     }
   }
 

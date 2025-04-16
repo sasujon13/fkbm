@@ -1,43 +1,53 @@
 <header>
   <div class="navbar">
     <div class="menu-toggle" #menuToggle (click)="toggleMenu()">
-        <i class="fa fa-bars"></i> <a [routerLink]="['/index']" routerLinkActive="index"><img src="./assets/images/kbm_logo.png" class="logo"></a>
+      <i class="fa fa-bars"></i> <a [routerLink]="['/index']" routerLinkActive="index"><img
+          src="./assets/images/kbm_logo.png" class="logo"></a>
     </div>
     <div class="search-bar" id="searchBar">
-      <input type="text" class="form-control" name="searchTerm" id="searchTerm" [(ngModel)]="searchTerm" (keyup)="search($event)" placeholder="Search here...">
+      <input type="text" class="form-control" name="searchTerm" id="searchTerm" [(ngModel)]="searchTerm"
+        (keyup)="search($event)" placeholder="Search here...">
       <i class="fa fa-search" *ngIf="!searchTerm" (click)="searchIconClick()"></i>
-      <i class="fa fa-times" *ngIf="searchTerm"  (click)="search2($event)"></i>
+      <i class="fa fa-times" *ngIf="searchTerm" (click)="search2($event)"></i>
     </div>
     <ul class="menu" [class.active]="menuActive" [@flyInOut] (click)="closeMenu()">
-        <li class="menu_item"><a [routerLink]="['/index']" routerLinkActive="index"><i class="fa fa-home"></i></a></li>
-<li class="menu_item dropdown" (mouseenter)="showDropdown()" (mouseleave)="hideDropdown()">
-  <a href="javascript:void(0)" (click)="toggleAcademicDropdown()">
-    <i class="fa pencil fa-pencil-square-o"></i>Academic
-  </a>
-  <ul class="dropdown-menu" *ngIf="academicDropdownOpen">
-    <li *ngFor="let dept of depts">
-      <a [routerLink]="['/academic', dept]">{{ dept }}</a>
-    </li>
-  </ul>
-</li>
-        <li class="menu_item"><a [routerLink]="['/personnel']" routerLinkActive="personnel"><i class="fa fa-user-tie"></i>Personnel</a></li>
-        <li class="menu_item"><a [routerLink]="['/admission']" routerLinkActive="admission"><i class="fa fa-university"></i>Admission</a></li>
-        <li class="menu_item"><a [routerLink]="['/administration']" routerLinkActive="administration"><i class="fa fa-user-shield"></i></a></li>
-        <li class="menu_item"><a [routerLink]="['/admin']" routerLinkActive="admin"><i class="fas fa-unlock"></i></a></li>
-        <li class="menu_item"><a [routerLink]="['/contact_us']" routerLinkActive="contact_us"><i class="fa fa-envelope"></i></a></li>
-        <li class="menu_item"><a [routerLink]="['/notice_board']" routerLinkActive="notice_board"><i class="fa fa-bell"></i></a></li>
-      </ul>
-</div>
-<div class="marquee" id="marquee">
-  <h5 class="msg"><a class="msg_link" style="text-decoration: none; color: teal;">Loading Latest Notifications.. ... ..</a></h5>
-</div>
+      <li class="menu_item"><a [routerLink]="['/index']" routerLinkActive="index"><i class="fa fa-home"></i></a></li>
+      <li class="menu_item dropdown" (mouseenter)="showDropdown()" (mouseleave)="hideDropdown()">
+        <a href="javascript:void(0)" (click)="toggleAcademicDropdown()">
+          <i class="fa pencil fa-pencil-square-o"></i>Academic
+        </a>
+        <ul class="dropdown-menu" *ngIf="academicDropdownOpen">
+          <li *ngFor="let dept of depts">
+            <a [routerLink]="['/academic']" [queryParams]="{ dept: dept }">{{ dept }}</a>
+          </li>
+        </ul>
+      </li>
+      <li class="menu_item"><a [routerLink]="['/personnel']" routerLinkActive="personnel"><i
+            class="fa fa-user-tie"></i>Personnel</a></li>
+      <li class="menu_item"><a [routerLink]="['/admission']" routerLinkActive="admission"><i
+            class="fa fa-university"></i>Admission</a></li>
+      <li class="menu_item"><a [routerLink]="['/administration']" routerLinkActive="administration"><i
+            class="fa fa-user-shield"></i></a></li>
+      <li class="menu_item"><a [routerLink]="['/admin']" routerLinkActive="admin"><i class="fas fa-unlock"></i></a></li>
+      <li class="menu_item"><a [routerLink]="['/external']" routerLinkActive="external"><i class="fa fa-globe"></i></a>
+      </li>
+      <li class="menu_item"><a [routerLink]="['/contact_us']" routerLinkActive="contact_us"><i
+            class="fa fa-envelope"></i></a></li>
+      <li class="menu_item"><a [routerLink]="['/notice_board']" routerLinkActive="notice_board"><i
+            class="fa fa-bell"></i></a></li>
+    </ul>
+  </div>
+  <div class="marquee" id="marquee">
+    <h5 class="msg"><a class="msg_link" style="text-decoration: none; color: teal;">Loading Latest Notifications.. ...
+        ..</a></h5>
+  </div>
 
-<div id="copyright" class="copyright">
-  <ng-container *ngIf="shouldDisplayCopyrightDiv">
-    <div class="scaleBeforeCopyright"></div>
-    <div class="beforeCopyright"></div>
-    &copy;All rights reserved by kbmcollege.edu.bd
-    <div class="afterCopyright"></div>
-  </ng-container>
-</div>
+  <div id="copyright" class="copyright">
+    <ng-container *ngIf="shouldDisplayCopyrightDiv">
+      <div class="scaleBeforeCopyright"></div>
+      <div class="beforeCopyright"></div>
+      &copy;All rights reserved by kbmcollege.edu.bd
+      <div class="afterCopyright"></div>
+    </ng-container>
+  </div>
 </header>

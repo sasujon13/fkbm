@@ -3,35 +3,6 @@
 body{
   margin-top: 115px;
 }
-  .dropdown {
-    position: relative;
-    transition: display 0.3s ease-in-out;
-  }
-  
-  .dropdown-menu {
-    position: absolute;
-    top: 100%;
-    left: 0;
-    background: white;
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    z-index: 100;
-    border: 1px solid #ccc;
-  }
-  
-  .dropdown-menu li {
-    padding: 8px 12px;
-  }
-  
-  .dropdown-menu li a {
-    text-decoration: none;
-    color: #333;
-  }
-  
-  .dropdown-menu li:hover {
-    background: #f0f0f0;
-  }
 
 a:hover{
   color: yellowgreen !important;
@@ -74,6 +45,7 @@ z-index: 99;
 list-style: none;
 display: flex;
 position: absolute;
+box-shadow: 0 0 7px rgba(0, 128, 128, 1);
 }
 
 .navbar {
@@ -127,7 +99,7 @@ padding: 4px 32px 4px 10px;
 }
 
 .search-bar input::placeholder {
-color: #cccccc; /* Set the text color for the placeholder */
+  color: #cccccc;
 }
 
 .search-bar i {
@@ -146,77 +118,6 @@ pointer-events: none;
 }
 i.fa-bars{
 display: none;
-}
-
-@media screen and (max-width: 1099px) {
-.search-bar {
-  right: 12px;
-  top: 70px;
-}
-
-.search-bar input {
-  background-color: teal;
-}
-}
-
-@media screen and (max-width: 839px) {
-.search-bar {
-  right: 70px;
-  top: 16px;
-}
-.search-bar input {
-  background-color: transparent;
-}
-.menu {
-  display: none;
-  position: fixed;
-  top: -100%; /* Initially hide the menu above the screen */
-  transition: top 0.3s ease-in-out;
-}
-i.fa-bars{
-  position: fixed;
-  right: 10px;
-  top: 18px;
-  font-size: 28px !important;
-  display: block;
-  z-index: 101;
-}
-.menu.active {
-    display: flex;
-    flex-direction: column;
-    position: absolute;
-    top: 52px;
-    right: 0;
-    background-color: teal;
-    padding: 10px;
-    z-index: 102;
-}
-
-.menu.active li {
-    margin: 10px 0;
-}
-
-.menu-toggle {
-    display: block;
-    cursor: pointer;
-    color: #fff;
-}
-
-.menu-toggle i {
-    font-size: 20px;
-}
-}
-@media screen and (max-width: 539px) {
-.search-bar {
-  top: 70px;
-  margin: 0 auto;
-  left: 10px;
-  right: 12px;
-}
-
-.search-bar input {
-  background-color: teal;
-}
 }
 
 .copyright{
@@ -276,18 +177,21 @@ div.notification{
 
 .dropdown {
   position: relative;
+  transition: display 0.3s ease-in-out;
 }
 
 .dropdown-menu {
-  position: absolute;
-  top: 100%;
-  left: 0;
-  background: white;
+  margin-top: 0;
+  padding: 32px 12px 12px 12px;
+  right: 0;
+  z-index: 90;
   list-style: none;
-  padding: 0;
-  margin: 0;
-  z-index: 100;
-  border: 1px solid #ccc;
+  display: block;
+  position: absolute;
+  width: max-content;
+  background: teal;
+  box-shadow: 0 0 7px rgba(0, 128, 128, 1);
+  border: 0;
 }
 
 .dropdown-menu li {
@@ -296,9 +200,95 @@ div.notification{
 
 .dropdown-menu li a {
   text-decoration: none;
-  color: #333;
+  color: white;
 }
 
-.dropdown-menu li:hover {
-  background: #f0f0f0;
+@media screen and (max-width: 1099px) {
+.search-bar {
+  right: 12px;
+  top: 70px;
+}
+
+.search-bar input {
+  background-color: teal;
+}
+}
+
+@media screen and (max-width: 839px) {
+  .dropdown-menu{
+    padding: 12px 17px 12px 12px;
+    margin: -19px 0 0 -255px;
+    right: auto;
+    scroll-behavior: smooth;
+    overflow-y: auto;
+    max-height: calc(100vh - 200px);
+    z-index: 88;
+    border: 0;
+    background: teal;
+  }
+  .dropdown-menu::-webkit-scrollbar {
+    width: 0;
+    z-index: 89;
+  }
+  .dropdown-menu li a {
+    text-decoration: none;
+    color: white;
+  }
+.search-bar {
+  right: 70px;
+  top: 16px;
+}
+.search-bar input {
+  background-color: transparent;
+}
+.menu {
+  display: none;
+  position: fixed;
+  top: -100%; /* Initially hide the menu above the screen */
+  transition: top 0.3s ease-in-out;
+}
+i.fa-bars{
+  position: fixed;
+  right: 10px;
+  top: 18px;
+  font-size: 28px !important;
+  display: block;
+  z-index: 101;
+}
+.menu.active {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    top: 52px;
+    right: 0;
+    background-color: teal;
+    padding: 10px;
+    z-index: 102;
+}
+
+.menu.active li {
+    margin: 10px 0;
+}
+
+.menu-toggle {
+    display: block;
+    cursor: pointer;
+    color: #fff;
+}
+
+.menu-toggle i {
+    font-size: 20px;
+}
+}
+@media screen and (max-width: 539px) {
+.search-bar {
+  top: 70px;
+  margin: 0 auto;
+  left: 10px;
+  right: 12px;
+}
+
+.search-bar input {
+  background-color: teal;
+}
 }

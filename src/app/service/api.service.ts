@@ -156,6 +156,17 @@ export class ApiService {
     return this.http.get<string[]>(url);
   }
 
+  getDepts(): Observable<any[]> {
+    const url = `${this.baseUrl}/dept`;
+    return this.http.get<string[]>(url);
+  }
+
+  getDepartments(deptName: string): Observable<any[]> {
+    const encodedName = encodeURIComponent(deptName);
+    const url = `${this.baseUrl}/department/${encodedName}/`;
+    return this.http.get<string[]>(url);
+  }
+
   getExTeachers(): Observable<any[]> {
     const url = `${this.baseUrl}/exTeacher`;
     return this.http.get<string[]>(url);
