@@ -107,19 +107,19 @@ export class HeaderComponent implements OnInit {
   }
 
   hideDropdown() {
-    // this.academicDropdownOpen = false;
+    this.academicDropdownOpen = false;
   }
 
   @HostListener('document:click', ['$event'])
   onDocumentClick(event: Event) {
     if (!this.menuToggle.nativeElement.contains(event.target)) {
-      // this.menuActive = true;
-      // this.isDropdownOpen = true;
-      // this.academicDropdownOpen = true;
+      this.menuActive = true;
+      this.isDropdownOpen = true;
+      this.academicDropdownOpen = true;
     }
     const target = event.target as HTMLElement;
     if (!target.closest('.dropdown')) {
-      // this.academicDropdownOpen = false;
+      this.academicDropdownOpen = false;
     }
   }
 
@@ -132,9 +132,9 @@ export class HeaderComponent implements OnInit {
     if (!insideMenu) {
       clearTimeout(this.inactivityTimeout);
       this.inactivityTimeout = setTimeout(() => {
-        // this.menuActive = false;
-        // this.isDropdownOpen = false;
-        // this.academicDropdownOpen = false;
+        this.menuActive = false;
+        this.isDropdownOpen = false;
+        this.academicDropdownOpen = false;
       }, 300);
     }
   }
@@ -145,9 +145,9 @@ export class HeaderComponent implements OnInit {
     const insideMenu = target.closest('.navbar');
 
     if (!insideMenu) {
-      // this.menuActive = false;
-      // this.isDropdownOpen = false;
-      // this.academicDropdownOpen = false;
+      this.menuActive = false;
+      this.isDropdownOpen = false;
+      this.academicDropdownOpen = false;
     }
   }
 
