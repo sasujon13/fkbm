@@ -29,7 +29,7 @@ export class HeaderComponent implements OnInit {
   @ViewChild('marquee', { static: true }) marqueeElement!: ElementRef;
   public notifications: any[] = [];
   private currentIndex = 0;
-  academicDropdownOpen = true;
+  academicDropdownOpen = false;
   depts: string[] = [];
 
   isCopyrightVisible = false;
