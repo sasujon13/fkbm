@@ -12,8 +12,8 @@
     </div>
     <ul class="menu" [class.active]="menuActive" [@flyInOut] (click)="closeMenu()">
       <li class="menu_item"><a [routerLink]="['/index']" routerLinkActive="index"><i class="fa fa-home"></i></a></li>
-      <li class="menu_item dropdown" (mouseenter)="showDropdown()" (mouseleave)="hideDropdown()">
-        <a href="javascript:void(0)" (click)="toggleAcademicDropdown()">
+      <li class="menu_item dropdown" (mouseenter)="showDropdown()" (mouseleave)="hideDropdown()" (click)="toggleAcademicDropdown()">
+        <a href="javascript:void(0)">
           <i class="fa pencil fa-pencil-square-o"></i>Academic
         </a>
         <ul class="dropdown-menu" *ngIf="academicDropdownOpen">
@@ -29,7 +29,14 @@
       <li class="menu_item"><a [routerLink]="['/administration']" routerLinkActive="administration"><i
             class="fa fa-user-shield"></i></a></li>
       <li class="menu_item"><a [routerLink]="['/admin']" routerLinkActive="admin"><i class="fas fa-unlock"></i></a></li>
-      <li class="menu_item"><a [routerLink]="['/external']" routerLinkActive="external"><i class="fa fa-globe"></i></a>
+      <li class="menu_item dropdown2" (mouseenter)="showDropdown2()" (mouseleave)="hideDropdown2()" (click)="toggleAcademicDropdown2()">
+        <a href="javascript:void(0)">
+          <i class="fa fa-globe"></i></a>
+        <ul class="dropdown-menu2" *ngIf="academicDropdownOpen2">
+          <li *ngFor="let dept of links">
+            <a [routerLink]="['/faqs']" [queryParams]="{ dept: dept }">{{ dept }}</a>
+          </li>
+        </ul>
       </li>
       <li class="menu_item"><a [routerLink]="['/contact_us']" routerLinkActive="contact_us"><i
             class="fa fa-envelope"></i></a></li>
@@ -37,9 +44,9 @@
             class="fa fa-bell"></i></a></li>
     </ul>
   </div>
-  <div class="marquee" id="marquee">
-    <h5 class="msg"><a class="msg_link" style="text-decoration: none; color: teal;">Loading Latest Notifications.. ...
-        ..</a></h5>
+  
+  <div class="marquee" #marquee>
+    <h5 class="msg"><a class="msg_link" style="text-decoration: none; color: teal;">Loading Latest Notifications.. ...</a></h5>
   </div>
 
   <div id="copyright" class="copyright">

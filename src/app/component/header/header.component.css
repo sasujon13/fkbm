@@ -15,6 +15,7 @@ a:hover{
 
 ul.dropdown {
   position: absolute;
+  transition: opacity 0.3s ease, transform 0.3s ease;
   margin: 40px 0 0 -160px;
   list-style-type: none;
   padding: 10px;
@@ -28,13 +29,20 @@ ul.dropdown li a {
   color: teal;
 }
 
-.menu_item2.open .dropdown {
-  display: block;
+ul.dropdown2 {
+  position: absolute;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  margin: 40px 0 0 -160px;
+  list-style-type: none;
+  padding: 10px;
+  width: 180px;
+  border: 1px solid #ccc;
+  z-index: 110;
+  background-color: white;
 }
-
-/* Add transition for a smoother appearance */
-.dropdown {
-  transition: display 0.3s ease-in-out;
+ul.dropdown2 li a {
+  text-decoration: none;
+  color: teal;
 }
 
 .menu {
@@ -169,15 +177,13 @@ div.notification{
   margin-bottom: -20px;
   position: fixed;
   z-index: 2;
+  max-width: 1920px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .marquee .msg {
   font-size: 1.25em;
-}
-
-.dropdown {
-  position: relative;
-  transition: display 0.3s ease-in-out;
 }
 
 .dropdown-menu {
@@ -199,6 +205,29 @@ div.notification{
 }
 
 .dropdown-menu li a {
+  text-decoration: none;
+  color: white;
+}
+
+.dropdown-menu2 {
+  margin-top: 0;
+  padding: 32px 12px 12px 12px;
+  right: 0;
+  z-index: 90;
+  list-style: none;
+  display: block;
+  position: absolute;
+  width: max-content;
+  background: teal;
+  box-shadow: 0 0 7px rgba(0, 128, 128, 1);
+  border: 0;
+}
+
+.dropdown-menu2 li {
+  padding: 8px 12px;
+}
+
+.dropdown-menu2 li a {
   text-decoration: none;
   color: white;
 }
@@ -231,6 +260,25 @@ div.notification{
     z-index: 89;
   }
   .dropdown-menu li a {
+    text-decoration: none;
+    color: white;
+  }
+  .dropdown-menu2{
+    padding: 12px 17px 12px 12px;
+    margin: -19px 0 0 -233px;
+    right: auto;
+    scroll-behavior: smooth;
+    overflow-y: auto;
+    max-height: calc(100vh - 200px);
+    z-index: 88;
+    border: 0;
+    background: teal;
+  }
+  .dropdown-menu2::-webkit-scrollbar {
+    width: 0;
+    z-index: 89;
+  }
+  .dropdown-menu2 li a {
     text-decoration: none;
     color: white;
   }

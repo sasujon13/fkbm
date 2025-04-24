@@ -161,6 +161,11 @@ export class ApiService {
     return this.http.get<string[]>(url);
   }
 
+  getLinks(): Observable<any[]> {
+    const url = `${this.baseUrl}/link`;
+    return this.http.get<string[]>(url);
+  }
+
   getDepartments(deptName: string): Observable<any[]> {
     const encodedName = encodeURIComponent(deptName);
     const url = `${this.baseUrl}/department/${encodedName}/`;

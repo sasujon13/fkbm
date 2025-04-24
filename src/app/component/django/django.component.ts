@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Renderer2 } from '@angular/core';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 
 @Component({
@@ -13,6 +13,16 @@ export class DjangoComponent {
 
   ngOnInit() {
     this.loadIframe();
+    const messageElement: HTMLElement | null = document.querySelector('.msg');
+    if (messageElement) {
+      this.renderer.setStyle(messageElement, 'display', 'none');
+    }
+  }
+  ngOnDestroy() {
+    const messageElement: HTMLElement | null = document.querySelector('.msg');
+    if (messageElement) {
+      this.renderer.removeStyle(messageElement, 'display');
+    }
   }
 
   loadIframe() {
@@ -22,7 +32,7 @@ export class DjangoComponent {
   onIframeLoad() {
     this.isLoading = false;
   }
-  constructor(private sanitizer: DomSanitizer) {
+  constructor(private sanitizer: DomSanitizer, private renderer: Renderer2) {
     this.iframeSrc = this.sanitizer.bypassSecurityTrustResourceUrl('http://127.0.0.1:8000/admin');
   }
 }

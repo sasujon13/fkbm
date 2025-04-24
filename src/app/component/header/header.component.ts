@@ -1,9 +1,5 @@
 import { Component, ElementRef, HostListener, OnInit, ViewChild } from '@angular/core';
 import { trigger, state, style, transition, animate } from '@angular/animations';
-import { CartService } from 'src/app/service/cart.service';
-import { ChoiceService } from 'src/app/service/choice.service';
-import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
-import { RouterModule } from '@angular/router';
 import { ApiService } from '..//../service/api.service';
 
 
@@ -30,11 +26,24 @@ export class HeaderComponent implements OnInit {
   public notifications: any[] = [];
   private currentIndex = 0;
   academicDropdownOpen = false;
+  academicDropdownOpen2 = false;
   depts: string[] = [];
+  links: string[] = [];
 
   isCopyrightVisible = false;
   shouldDisplayCopyrightDiv = false;
   headerHeight: number = 0;
+
+  public totalCartItem: number = 0;
+  public totalChoiceItem: number = 0;
+  public searchTerm!: string;
+  menuActive = false;
+  menuActive2 = false;
+  inactivityTimeout: any;
+  inactivityTimeout2: any;
+  loginStatus: boolean = false;
+  academicTimeout: any;
+  academicTimeout2: any;
 
   @HostListener('window:scroll', ['$event'])
   @HostListener('window:resize', ['$event'])
@@ -56,13 +65,6 @@ export class HeaderComponent implements OnInit {
     }
   }
 
-  public totalCartItem: number = 0;
-  public totalChoiceItem: number = 0;
-  public searchTerm!: string;
-  menuActive = false;
-  inactivityTimeout: any;
-  loginStatus: boolean = false;
-
   @ViewChild('menuToggle', { static: true }) menuToggle!: ElementRef;
   item2: any;
   item1: any;
@@ -75,7 +77,10 @@ export class HeaderComponent implements OnInit {
     this.apiService.getDepts().subscribe(data => {
       this.depts = [...new Set(data.map((t: any) => t.Name))];
     });
-
+    this.apiService.getLinks().subscribe(data => {
+      this.links = [...new Set(data.map((t: any) => t.Name))];
+    });
+    this.loadNotifications();
     const searchBarElement = document.getElementById('searchBar');
     if (searchBarElement) {
       searchBarElement.style.display = 'block';
@@ -85,41 +90,54 @@ export class HeaderComponent implements OnInit {
 
   closeMenu() {
     this.menuActive = false;
-    this.isDropdownOpen = false;
-    this.academicDropdownOpen = false;
   }
 
   toggleMenu() {
     this.menuActive = !this.menuActive;
   }
 
-  isDropdownOpen = false;
-  toggleDropdown() {
-    this.isDropdownOpen = !this.isDropdownOpen;
-  }
-
   toggleAcademicDropdown() {
     this.academicDropdownOpen = !this.academicDropdownOpen;
   }
 
+  toggleAcademicDropdown2() {
+    this.academicDropdownOpen2 = !this.academicDropdownOpen2;
+  }
+
   showDropdown() {
+    setTimeout(() => {
     this.academicDropdownOpen = true;
+  }, 700);
+  }
+
+  showDropdown2() {
+    setTimeout(() => {
+    this.academicDropdownOpen2 = true;
+  }, 700);
   }
 
   hideDropdown() {
-    this.academicDropdownOpen = false;
+    setTimeout(() => {
+      this.academicDropdownOpen = false;
+    }, 700);
+  }
+
+  hideDropdown2() {
+    setTimeout(() => {
+      this.academicDropdownOpen2 = false;
+    }, 700);
   }
 
   @HostListener('document:click', ['$event'])
   onDocumentClick(event: Event) {
-    if (!this.menuToggle.nativeElement.contains(event.target)) {
-      this.menuActive = true;
-      this.isDropdownOpen = true;
-      this.academicDropdownOpen = true;
-    }
     const target = event.target as HTMLElement;
+
     if (!target.closest('.dropdown')) {
-      this.academicDropdownOpen = false;
+        this.academicDropdownOpen = false;
+    }
+
+    if (!target.closest('.dropdown2')) {
+        this.academicDropdownOpen2 = false;
     }
   }
 
@@ -130,12 +148,9 @@ export class HeaderComponent implements OnInit {
     const insideMenu = target.closest('.navbar');
 
     if (!insideMenu) {
-      clearTimeout(this.inactivityTimeout);
-      this.inactivityTimeout = setTimeout(() => {
         this.menuActive = false;
-        this.isDropdownOpen = false;
         this.academicDropdownOpen = false;
-      }, 300);
+        this.academicDropdownOpen2 = false;
     }
   }
 
@@ -145,9 +160,9 @@ export class HeaderComponent implements OnInit {
     const insideMenu = target.closest('.navbar');
 
     if (!insideMenu) {
-      this.menuActive = false;
-      this.isDropdownOpen = false;
-      this.academicDropdownOpen = false;
+        this.menuActive = false;
+        this.academicDropdownOpen = false;
+        this.academicDropdownOpen2 = false;
     }
   }
 
@@ -158,7 +173,7 @@ export class HeaderComponent implements OnInit {
         this.startMarquee();
       },
       error => {
-        console.error('Error fetching notifications!');
+        console.error('Error Fetching Notifications!');
       }
     );
   }
@@ -179,7 +194,7 @@ export class HeaderComponent implements OnInit {
     for (let i = 0; i < this.notifications.length; i++) {
       const currentIndex = (this.currentIndex + i) % this.notifications.length;
       const currentNotification = this.notifications[currentIndex];
-      notificationsHTML += `<a href="${currentNotification.link}" class="msg_link" target="_blank">${currentNotification.text}</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`;
+      notificationsHTML += `<a href="${currentNotification.Link}" class="msg_link" target="_blank">${currentNotification.Text}</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`;
     }
 
     messageElement.innerHTML = notificationsHTML;
