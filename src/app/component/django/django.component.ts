@@ -1,4 +1,5 @@
 import { Component, Renderer2 } from '@angular/core';
+import { ApiService } from '..//../service/api.service';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 
 @Component({
@@ -9,9 +10,13 @@ import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 export class DjangoComponent {
   iframeSrc: SafeResourceUrl;
   isLoading = true;
+  searchKey: string = "";
 
 
   ngOnInit() {
+    this.apiService.search.subscribe((val: any) => {
+      this.searchKey = val;
+    });
     this.loadIframe();
     const messageElement: HTMLElement | null = document.querySelector('.msg');
     if (messageElement) {
@@ -32,8 +37,8 @@ export class DjangoComponent {
   onIframeLoad() {
     this.isLoading = false;
   }
-  constructor(private sanitizer: DomSanitizer, private renderer: Renderer2) {
-    this.iframeSrc = this.sanitizer.bypassSecurityTrustResourceUrl('http://127.0.0.1:8000/admin');
+  constructor(private sanitizer: DomSanitizer, private renderer: Renderer2, private apiService: ApiService,) {
+    this.iframeSrc = this.sanitizer.bypassSecurityTrustResourceUrl('https://kbmcollege.edu.bd/api/admin');
   }
 }
 

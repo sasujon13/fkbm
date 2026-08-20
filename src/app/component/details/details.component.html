@@ -1,1 +1,50 @@
-<p>details works!</p>
+<div style="margin-top: 115px; margin-bottom: 80px;" [hFilter]="searchKey">
+    <div class="container" *ngIf="(routines.length > 0)">
+      <div class="row">
+        <h3 class="heading">Class Routines</h3>
+  
+        <div *ngFor="let member of routines | orderBy:'Order' | filter:searchKey:['dept_name', 'Caption']"
+             class="col-12 col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xxl-6">
+          <div class="table-wrapper">
+            <h1 class="dept">
+                {{ member?.dept_name === 'Administration' ? 'HSC' : member?.dept_name }}
+            </h1>
+            <div *ngFor="let img of member.images">
+              <img [src]="baseUrl + img.Img" [alt]="img.Caption" (click)="openModal(img.Img)"/>
+  
+              <h4 class="caption">{{ img?.Caption }}</h4>
+              <!-- Show Open Button for Each Image -->
+              <div class="read-more">
+                <a href="javascript:void(0)" (click)="openModal(img.Img)">Open Full Image</a>
+              </div>
+            </div>
+  
+            <div class="make-blur" id="mpBlur"></div>
+          </div>
+        </div>
+  
+        <!-- Modal -->
+        <div *ngIf="isImageModalOpen" class="modal-overlay" (click)="closeModal()">
+          <div class="modal-content"
+               (wheel)="zoomImage($event)"
+               (mousedown)="startDragging($event)"
+               (mousemove)="dragImage($event)"
+               (mouseup)="stopDragging()"
+               (mouseleave)="stopDragging()"
+               (touchstart)="startDragging($event)"
+               (touchmove)="dragImage($event)"
+               (touchend)="stopDragging()"
+               (click)="$event.stopPropagation()">
+  
+            <img #modalImage [src]="fullImageSrc"
+                 [style.transform]="'scale(' + zoomLevel + ') translate(' + translateX + 'px, ' + translateY + 'px)'"
+                 alt="Routine Image" />
+  
+            <a class="download-button" href="javascript:void(0)" (click)="downloadImage(fullImageSrc); $event.stopPropagation()">&#8681;</a>
+            <button class="close-button" (click)="closeModal()" (touchstart)="closeModal()">&#10006;</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  

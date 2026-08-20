@@ -1,7 +1,7 @@
 <header>
   <div class="navbar">
-    <div class="menu-toggle" #menuToggle (click)="toggleMenu()">
-      <i class="fa fa-bars"></i> <a [routerLink]="['/index']" routerLinkActive="index"><img
+    <div class="menu-toggle">
+      <i class="fa fa-bars" (click)="toggleMenu()"></i> <a [routerLink]="['/index']" routerLinkActive="index"><img
           src="./assets/images/kbm_logo.png" class="logo"></a>
     </div>
     <div class="search-bar" id="searchBar">
@@ -10,38 +10,80 @@
       <i class="fa fa-search" *ngIf="!searchTerm" (click)="searchIconClick()"></i>
       <i class="fa fa-times" *ngIf="searchTerm" (click)="search2($event)"></i>
     </div>
-    <ul class="menu" [class.active]="menuActive" [@flyInOut] (click)="closeMenu()">
+    <ul class="menu" [class.active]="menuActive" [@flyInOut]>
       <li class="menu_item"><a [routerLink]="['/index']" routerLinkActive="index"><i class="fa fa-home"></i></a></li>
       <li class="menu_item dropdown" (mouseenter)="showDropdown()" (mouseleave)="hideDropdown()" (click)="toggleAcademicDropdown()">
         <a href="javascript:void(0)">
-          <i class="fa pencil fa-pencil-square-o"></i>Academic
+          <i class="fa fa-university"></i>Departments
         </a>
         <ul class="dropdown-menu" *ngIf="academicDropdownOpen">
-          <li *ngFor="let dept of depts">
-            <a [routerLink]="['/academic']" [queryParams]="{ dept: dept }">{{ dept }}</a>
+          <li *ngFor="let dept of depts" [ngStyle]="{ display: dept === 'Administration' ? 'none' : '' }">
+            <a [routerLink]="['/academic']" [queryParams]="{ dept: dept }"><i class="fas fa-info-circle" style="
+              background-color: seagreen;
+              color: white;
+              border: 2px dotted white;
+              border-radius: 50%;
+              padding: 1px;
+              font-size: 7px;
+              display: inline-flex;
+              align-items: center;
+              justify-content: center; "></i>&nbsp;&nbsp;{{ dept }}</a>
           </li>
         </ul>
       </li>
       <li class="menu_item"><a [routerLink]="['/personnel']" routerLinkActive="personnel"><i
             class="fa fa-user-tie"></i>Personnel</a></li>
-      <li class="menu_item"><a [routerLink]="['/admission']" routerLinkActive="admission"><i
-            class="fa fa-university"></i>Admission</a></li>
-      <li class="menu_item"><a [routerLink]="['/administration']" routerLinkActive="administration"><i
-            class="fa fa-user-shield"></i></a></li>
-      <li class="menu_item"><a [routerLink]="['/admin']" routerLinkActive="admin"><i class="fas fa-unlock"></i></a></li>
+      <li  class="menu_item dropdown" (mouseenter)="showDropdown3()" (mouseleave)="hideDropdown3()" (click)="toggleAcademicDropdown3()">
+        <a href="javascript:void(0)"><i class="fa pencil fa-pencil-square-o"></i>Academic</a>
+            <ul class="dropdown-menu" *ngIf="academicDropdownOpen3">
+              <li class="menu_item"><a [routerLink]="['/admission']" routerLinkActive="admission"><i class="fas fa-info-circle" style="
+                background-color: seagreen;
+                color: white;
+                border: 2px dotted white;
+                border-radius: 50%;
+                padding: 1px;
+                font-size: 7px;
+                display: inline-flex;
+                align-items: center;
+                justify-content: center; "></i>&nbsp;&nbsp; Admission</a> </li>
+              <li class="menu_item"><a [routerLink]="['/details']" routerLinkActive="details"><i class="fas fa-info-circle" style="
+                background-color: seagreen;
+                color: white;
+                border: 2px dotted white;
+                border-radius: 50%;
+                padding: 1px;
+                font-size: 7px;
+                display: inline-flex;
+                align-items: center;
+                justify-content: center; "></i>&nbsp;&nbsp; Routine</a> </li>
+              <li class="menu_item"><a [routerLink]="['/faqs']" routerLinkActive="faqs"><i class="fas fa-info-circle" style="
+                background-color: seagreen;
+                color: white;
+                border: 2px dotted white;
+                border-radius: 50%;
+                padding: 1px;
+                font-size: 7px;
+                display: inline-flex;
+                align-items: center;
+                justify-content: center; "></i>&nbsp;&nbsp; Result</a> </li>
+              <li class="menu_item"><a [routerLink]="['/administration']" routerLinkActive="administration"><i class="fa fa-user-shield"></i>&nbsp;&nbsp;Administration</a></li>
+              <li class="menu_item"><a [routerLink]="['/admin']" routerLinkActive="admin"><i class="fas fa-unlock"></i>&nbsp;&nbsp;KBM-Admin</a></li>
+          </ul></li>
       <li class="menu_item dropdown2" (mouseenter)="showDropdown2()" (mouseleave)="hideDropdown2()" (click)="toggleAcademicDropdown2()">
         <a href="javascript:void(0)">
           <i class="fa fa-globe"></i></a>
         <ul class="dropdown-menu2" *ngIf="academicDropdownOpen2">
-          <li *ngFor="let dept of links">
-            <a [routerLink]="['/faqs']" [queryParams]="{ dept: dept }">{{ dept }}</a>
+          <li *ngFor="let dept of deptNames">
+            <a [href]="dept.Link" target="_blank" rel="noopener noreferrer">
+              {{ dept.Name }}
+            </a>
           </li>
         </ul>
       </li>
       <li class="menu_item"><a [routerLink]="['/contact_us']" routerLinkActive="contact_us"><i
-            class="fa fa-envelope"></i></a></li>
+            class="fa fa-phone"></i></a></li>
       <li class="menu_item"><a [routerLink]="['/notice_board']" routerLinkActive="notice_board"><i
-            class="fa fa-bell"></i></a></li>
+            class="fa fa-bell"></i>Notice</a></li>
     </ul>
   </div>
   
@@ -50,10 +92,23 @@
   </div>
 
   <div id="copyright" class="copyright">
-    <ng-container *ngIf="shouldDisplayCopyrightDiv">
+    <ng-container *ngIf="shouldDisplayCopyrightDiv"><div class="social-links">
+      <a href="https://www.facebook.com/kbmc.dinajpur.7" target="_blank" rel="noopener noreferrer">
+        <i class="fab fa-facebook-f"></i><i> Facebook Page </i>
+      </a> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+      <a href="https://web.facebook.com/KBMC.Admin.Panel" target="_blank" rel="noopener noreferrer">
+        <i class="fab fa-facebook-f fb1 fb2"> Facebook Page 2 </i>
+      </a> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+      <a href="https://web.facebook.com/groups/540080523322053" target="_blank" rel="noopener noreferrer">
+        <i class="fab fa-facebook-f fb2"> Facebook Group </i>
+      </a> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+      <a href="https://www.youtube.com/channel/UCYAhWeYVpELaHmcPKfJKvQA" target="_blank" rel="noopener noreferrer">
+        <i class="fab fa-youtube"></i><i> YouTube </i>
+      </a>
+    </div>    
       <div class="scaleBeforeCopyright"></div>
       <div class="beforeCopyright"></div>
-      &copy;All rights reserved by kbmcollege.edu.bd
+      &copy; All rights reserved by kbmcollege.edu.bd  &nbsp; &nbsp; &nbsp; <i class="fas fa-cogs"></i> Developed by cheradip.com
       <div class="afterCopyright"></div>
     </ng-container>
   </div>

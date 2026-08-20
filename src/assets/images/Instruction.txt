@@ -1,3 +1,0 @@
-1. All profile images should be 600x700 pixel in size!
-2. All Other Images should be 1080x1920 pixel in size!
-3. Can use HTML with Data!

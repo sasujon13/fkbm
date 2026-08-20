@@ -1,9 +1,54 @@
-import { Component, OnInit, ElementRef, AfterViewInit, ViewChild, OnDestroy } from '@angular/core';
+import { Component, OnInit, ElementRef, ChangeDetectorRef, ViewChild, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ApiService } from '..//../service/api.service';
-import { interval, Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
-import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
+import { Subject } from 'rxjs';
+import { DomSanitizer, SafeHtml, SafeResourceUrl } from '@angular/platform-browser';
+
+interface DepartmentImage {
+  id: number;
+  Img: string;
+  Caption?: string | null;
+}
+
+interface PostImage {
+  id: number;
+  Img: string;
+  Caption?: string | null;
+}
+
+interface ImageItem {
+  Img: string;
+  Caption?: string | null;
+}
+
+interface Videos {
+  Title: string;
+  Dept: string;
+  Url: string;
+  embedUrl?: SafeResourceUrl;
+}
+
+interface OtherPerson {
+  Img: string;
+  Name: string;
+  Title: string | null;
+  Gender: string;
+  Designation: string;
+  Deptartment: string;
+  FName: string | null;
+  MName: string | null;
+  Joining: string | null;
+  Mobile: string | null;
+  Email: string | null;
+  PreAddress: string;
+  PerAddress: string;
+  DOB: string | null;
+  Order: number;
+  Retirement: string | null;
+  Comment: string | null;
+  Org: string | null;
+  Dept: number;
+}
 
 @Component({
   selector: 'app-academic',
@@ -11,10 +56,12 @@ import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
   styleUrls: ['./academic.component.css']
 })
 
-export class AcademicComponent implements OnInit, AfterViewInit, OnDestroy {
+export class AcademicComponent implements OnInit, OnDestroy {
+  baseUrl = 'https://kbmcollege.edu.bd'
   selectedDept: string | null = null;
   departmentNames: string[] = [];
   departmentDetails: any = {};
+  otherPeople: OtherPerson[] = [];
   filteredDepartment: any = null;
   observer!: IntersectionObserver;
   isImageModalOpen: boolean = false;
@@ -29,20 +76,29 @@ export class AcademicComponent implements OnInit, AfterViewInit, OnDestroy {
   translateY: number = 0;
   lastTranslateX: number = 0;
   lastTranslateY: number = 0;
-  admissionEndDate: Date = new Date('2024-03-31T23:59:59'); // Replace with your admission ending date
-  timeRemaining: any;
   currentMonthIndex: number = new Date().getMonth() - 1;
   months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
   currentYear: number = new Date().getFullYear();
-  currentSlideIndex: number = 0;
-  currentVideoSlideIndex: number = 0;
   currentIndex: number = 0;
   currentVideoIndex: number = 0;
+  postIndex: number[] = [];
+  deptID: number = 0;
+  posts: string[] = [];
   thumbnailContainerWidth: number = 0;
-  videoThumbnailContainerWidth: number = 0;
+  searchKey: string = "";
 
-  images: string[] = ['image1.jpg', 'image2.jpg', 'image3.jpg', 'image4.jpg', 'image5.jpg', 'image6.jpg', 'image7.jpg', 'image8.jpg', 'image9.jpg', 'image10.jpg', 'image11.jpg', 'image12.jpg', 'image13.jpg'];
-  videos: string[] = ['./assets/videos/sample1.mp4', './assets/videos/sample2.mp4', './assets/videos/sample1.mp4', './assets/videos/sample2.mp4', './assets/videos/sample1.mp4', './assets/videos/sample2.mp4', './assets/videos/sample1.mp4', './assets/videos/sample2.mp4', './assets/videos/sample1.mp4', './assets/videos/sample2.mp4', './assets/videos/sample1.mp4', './assets/videos/sample2.mp4'];
+  images: ImageItem[] = [];
+  postImages: { Img: string; Caption?: string | null }[][] = [];
+  videos: Videos[] = [];
+
+  teachers: any[] = [];
+  exTeachers: any[] = [];
+  staffs: any[] = [];
+  exStaffs: any[] = [];
+  teacherHonours: any[] = [];
+  otherPeoples: any[] = [];
+  nonMpoStaffs: any[] = [];
+  departments: any[] = [];
 
   @ViewChild('videoPlayer') videoPlayer!: ElementRef;
   @ViewChild('imageSlideContainer') imageSlideContainer!: ElementRef;
@@ -54,89 +110,149 @@ export class AcademicComponent implements OnInit, AfterViewInit, OnDestroy {
   constructor(
     private sanitizer: DomSanitizer,
     private route: ActivatedRoute,
-    private apiService: ApiService) { }
-
-  currentSlide(index: number): void {
-    this.showSlide(index);
-    this.currentIndex = index;
-  }
-
-  currentVideoSlide(index: number): void {
-    this.currentVideoIndex = index;
-  }
-
-  playNextVideo() {
-    this.currentVideoIndex = (this.currentVideoIndex + 1) % this.videos.length;
-  }
-
-  playPreVideo() {
-    this.currentVideoIndex = (this.currentVideoIndex - 1 + this.videos.length) % this.videos.length;
-  }
-
-  isImage(): boolean {
-    return this.images.includes(this.images[this.currentIndex]);
-  }
-
-  isVideo(): boolean {
-    return this.videos.includes(this.videos[this.currentIndex]);
-  }
-
-  startAutoScroll(): void {
-    interval(7000)
-      .pipe(takeUntil(this.destroy$))
-      .subscribe(() => {
-        const nextIndex = (this.currentIndex + 1) % this.images.length;
-        this.currentSlide(nextIndex);
-      });
-  }
+    private apiService: ApiService,
+    private cdr: ChangeDetectorRef) { }
 
   ngOnInit() {
+    this.startAutoChange();
+    this.loadOtherPeople();
+    this.loadVideo();
+    this.apiService.search.subscribe((val: any) => {
+      this.searchKey = val;
+    });
+    this.postIndex = this.postImages.map(() => 0);
     this.route.queryParams.subscribe(params => {
       const deptName = params['dept'];
-      console.log("Received deptName from URL:", deptName);
-
       if (deptName) {
         this.selectedDept = deptName;
         this.loadDepartmentData(deptName);
+
+        this.apiService.getDepts().subscribe(data => {
+          this.departments = data;
+        });
+
+        this.apiService.getTeachers().subscribe((res: any[]) => {
+          if (this.selectedDept) {
+            this.teachers = res.filter(teacher => teacher.dept_name === this.selectedDept);
+          } else {
+            this.teachers = res;
+          }
+        },
+          error => {
+            console.error("teachers not found or server error:", error);
+          });
+        this.apiService.getExTeachers().subscribe((res: any[]) => {
+          if (this.selectedDept) {
+            this.exTeachers = res.filter(exTeacher => exTeacher.dept_name === this.selectedDept);
+          } else {
+            this.exTeachers = res;
+          }
+        },
+          error => {
+            console.error("exTeachers not found or server error:", error);
+          });
+        this.apiService.getStaffs().subscribe((res: any[]) => {
+          if (this.selectedDept) {
+            this.staffs = res.filter(staff => staff.dept_name === this.selectedDept);
+          } else {
+            this.staffs = res;
+          }
+        },
+          error => {
+            console.error("staffs not found or server error:", error);
+          });
+        this.apiService.getExStaffs().subscribe((res: any[]) => {
+          if (this.selectedDept) {
+            this.exStaffs = res.filter(exStaff => exStaff.dept_name === this.selectedDept);
+          } else {
+            this.exStaffs = res;
+          }
+        },
+          error => {
+            console.error("exStaffs not found or server error:", error);
+          });
+        this.apiService.getTeacherHonours().subscribe((res: any[]) => {
+          if (this.selectedDept) {
+            this.teacherHonours = res.filter(teacherHonour => teacherHonour.dept_name === this.selectedDept);
+          } else {
+            this.teacherHonours = res;
+          }
+        },
+          error => {
+            console.error("teacherHonours not found or server error:", error);
+          });
+        this.apiService.getNonMpoStaff().subscribe((res: any[]) => {
+          if (this.selectedDept) {
+            this.nonMpoStaffs = res.filter(nonMpoStaff => nonMpoStaff.dept_name === this.selectedDept);
+          } else {
+            this.nonMpoStaffs = res;
+          }
+        },
+          error => {
+            console.error("NonMpoStaff not found or server error:", error);
+          });
       }
     });
   }
 
-  ngAfterViewInit(): void {
-    this.setupIntersectionObserver();
-    this.playVideo();
-    this.calculateTimeRemaining();
-    setTimeout(() => this.generateCalendar(), 0);
+  startAutoChange() {
     setInterval(() => {
-      this.calculateTimeRemaining();
-    }, 1000);
-    if (this.imageSlideContainer) {
-      this.startAutoChange();
-      this.showSlide(this.currentSlideIndex);
-      this.thumbnailContainerWidth = this.imageSlideContainer.nativeElement.clientWidth;
-      this.calculateThumbnailContainerWidthAfterViewInit();
-    }
-    if (this.videoSlideContainer) {
-      this.startAutoChange();
-      this.showSlide(this.currentVideoSlideIndex);
-      this.videoThumbnailContainerWidth = this.videoSlideContainer.nativeElement.clientWidth;
-      this.calculateThumbnailContainerWidthAfterViewInit();
-    }
+      this.nextImage();
+      this.departmentDetails?.posts?.postDetails.forEach((_: any, postIndex: number) => {
+        this.nextImage2(postIndex);
+      });
+    }, 7000);
   }
 
-  calculateThumbnailContainerWidthAfterViewInit(): void {
-    this.thumbnailContainerWidth = this.imageSlideContainer.nativeElement.clientWidth;
-  }
-
-  calculateVideoThumbnailContainerWidthAfterViewInit(): void {
-    this.videoThumbnailContainerWidth = this.videoSlideContainer.nativeElement.clientWidth;
+  ngAfterViewInit(): void {
+    setTimeout(() => this.generateCalendar(), 0);
   }
   prevImage() {
-    this.currentIndex = (this.currentIndex - 1 + this.images.length) % this.images.length;
+    if (this.currentIndex > 0) {
+      this.currentIndex--;
+    } else {
+      this.currentIndex = this.images.length - 1;
+    }
   }
 
   nextImage() {
-    this.currentIndex = (this.currentIndex + 1) % this.images.length;
+    if (this.currentIndex < this.images.length - 1) {
+      this.currentIndex++;
+    } else {
+      this.currentIndex = 0;
+    }
+  }
+
+  prevVideo() {
+    if (this.currentVideoIndex > 0) {
+      this.currentVideoIndex--;
+    } else {
+      this.currentVideoIndex = this.videos.length - 1;
+    }
+  }
+
+  nextVideo() {
+    if (this.currentVideoIndex < this.videos.length - 1) {
+      this.currentVideoIndex++;
+    } else {
+      this.currentVideoIndex = 0;
+    }
+  }
+
+  prevImage2(pi: number) {
+    if (this.postIndex[pi] > 0) {
+      this.postIndex[pi]--;
+    } else {
+      this.postIndex[pi] = this.postImages[pi].length - 1;
+    }
+  }
+
+  nextImage2(pi: number) {
+    if (this.postIndex[pi] < this.postImages[pi].length - 1) {
+      this.postIndex[pi]++;
+    } else {
+      this.postIndex[pi] = 0;
+    }
   }
 
   ngOnDestroy(): void {
@@ -144,84 +260,6 @@ export class AcademicComponent implements OnInit, AfterViewInit, OnDestroy {
     this.destroy$.complete();
     if (this.observer) {
       this.observer.disconnect();
-    }
-  }
-
-  startAutoChange() {
-    setInterval(() => {
-      this.nextImage();
-    }, 7000);
-  }
-
-  showSlide(index: number): void {
-    if (index < 0) {
-      this.currentSlideIndex = this.images.length - 1;
-    } else if (index >= this.images.length) {
-      this.currentSlideIndex = 0;
-    } else {
-      this.currentSlideIndex = index;
-    }
-  }
-
-  setupIntersectionObserver() {
-    const options = {
-      root: null, // relative to the viewport
-      threshold: 0.5 // when 50% of the video is visible
-    };
-
-    this.observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          this.playVideo();
-        } else {
-          this.pauseVideo();
-        }
-      });
-    }, options);
-
-    if (this.videoPlayer && this.videoPlayer.nativeElement) {
-      this.observer.observe(this.videoPlayer.nativeElement);
-    }
-  }
-
-  playVideo() {
-    if (this.videoPlayer && this.videoPlayer.nativeElement) {
-      this.videoPlayer.nativeElement.play();
-    }
-  }
-
-  pauseVideo() {
-    if (this.videoPlayer && this.videoPlayer.nativeElement) {
-      this.videoPlayer.nativeElement.pause();
-    }
-  }
-  playVideoIfVisible() {
-    if (this.videoPlayer && this.videoPlayer.nativeElement) {
-      const observerEntry = this.observer.takeRecords().find(entry => entry.target === this.videoPlayer.nativeElement);
-      if (observerEntry && observerEntry.isIntersecting) {
-        this.playVideo();
-      }
-    }
-  }
-  calculateTimeRemaining() {
-    const currentDate = new Date();
-    const timeDifference = this.admissionEndDate.getTime() - currentDate.getTime();
-
-    if (timeDifference > 0) {
-      const seconds = Math.floor(timeDifference / 1000);
-      const minutes = Math.floor(seconds / 60);
-      const hours = Math.floor(minutes / 60);
-      const days = Math.floor(hours / 24);
-      const months = Math.floor(days / 30);
-
-      this.timeRemaining = {
-        months: months % 12,
-        days: days % 30,
-        hours: hours % 24,
-        minutes: minutes % 60
-      };
-    } else {
-      this.timeRemaining = null; // Admission date has passed
     }
   }
 
@@ -309,7 +347,42 @@ export class AcademicComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   openModal() {
-    this.fullImageSrc = "./assets/images/Collegemap.jpg";
+    this.fullImageSrc = this.departmentDetails.Photo;
+    this.isImageModalOpen = true;
+    this.zoomLevel = 1;
+    this.resetPosition();
+  }
+
+  openModalPhoto2() {
+    this.fullImageSrc = this.departmentDetails.Photo2;
+    this.isImageModalOpen = true;
+    this.zoomLevel = 1;
+    this.resetPosition();
+  }
+
+  openModalPhoto3() {
+    this.fullImageSrc = this.departmentDetails.Photo3;
+    this.isImageModalOpen = true;
+    this.zoomLevel = 1;
+    this.resetPosition();
+  }
+
+  openModalPhoto4() {
+    this.fullImageSrc = this.departmentDetails.Photo4;
+    this.isImageModalOpen = true;
+    this.zoomLevel = 1;
+    this.resetPosition();
+  }
+
+  openModalPhoto5() {
+    this.fullImageSrc = this.departmentDetails.Photo5;
+    this.isImageModalOpen = true;
+    this.zoomLevel = 1;
+    this.resetPosition();
+  }
+
+  openModalPhoto6() {
+    this.fullImageSrc = this.departmentDetails.Photo6;
     this.isImageModalOpen = true;
     this.zoomLevel = 1;
     this.resetPosition();
@@ -325,6 +398,7 @@ export class AcademicComponent implements OnInit, AfterViewInit, OnDestroy {
       if (paragraph && paragraph.innerHTML) {
         this.fullProfileText = this.sanitizer.bypassSecurityTrustHtml(paragraph.innerHTML);
         this.isProfileModalOpen = true;
+        this.cdr.detectChanges();
       } else {
         console.warn('No paragraph found inside profile-text');
       }
@@ -332,8 +406,6 @@ export class AcademicComponent implements OnInit, AfterViewInit, OnDestroy {
       console.warn('Could not find profile container');
     }
   }
-
-
 
   closeModal() {
     this.isImageModalOpen = false;
@@ -401,14 +473,160 @@ export class AcademicComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   loadDepartmentData(deptName: string) {
-    this.apiService.getDepartments(deptName).subscribe(
-      data => {
-        this.departmentDetails = data;
-        console.log("Department Title:", this.departmentDetails);
+    try {
+      this.apiService.getDepartments(deptName).subscribe(
+        data => {
+          this.departmentDetails = data;
+          this.images = this.departmentDetails.images.map((imgObj: DepartmentImage) => ({
+            Img: this.baseUrl + imgObj.Img,
+            Caption: imgObj.Caption ?? null
+          }))
+          console.log("imgObj.Img:",this.images);
+          this.deptID = this.departmentDetails.id;
+          this.apiService.getPost(this.deptID).subscribe(
+            postData => {
+              this.departmentDetails.posts = postData;
+              this.postImages = this.departmentDetails.posts.postDetails.map((post: { images: PostImage[] }) =>
+                post.images.map((imgObj2: PostImage) => ({
+                  Img: this.baseUrl + imgObj2.Img,
+                  Caption: imgObj2.Caption ?? null
+                }))
+              );
+            },
+            error => {
+              console.error("Post not found or server error:", error);
+            }
+          );
+        },
+        error => {
+          console.error("Department not found or server error:", error);
+        }
+      );
+    }
+    catch { }
+  }
+
+  loadOtherPeople() {
+    this.apiService.getOtherPeoples().subscribe(
+      (data: any[]) => {
+        this.otherPeople = data;
       },
       error => {
         console.error("Department not found or server error:", error);
       }
     );
+  }
+
+  loadVideo() {
+    this.apiService.getVideos().subscribe((res: any[]) => {
+      if (this.selectedDept) {
+        this.videos = res.filter(video => video.dept_name === this.selectedDept);
+      } else {
+        this.videos = res;
+      }
+      this.videos.forEach(video => {
+        video.embedUrl = this.getEmbedUrl(video.Url);
+      });
+    },
+      error => {
+        console.error("Videos not found or server error:", error);
+      });
+  }
+
+
+  oadDepartmentData(deptName: string) {
+    this.apiService.getDepartments(deptName).subscribe(
+      data => {
+        this.departmentDetails = data;
+        this.images = this.departmentDetails.images.map((imgObj: DepartmentImage) => ({
+          Img: this.baseUrl + imgObj.Img,
+          Caption: imgObj.Caption ?? null
+        }))
+        this.deptID = this.departmentDetails.id;
+        this.apiService.getPost(this.deptID).subscribe(
+          postData => {
+            this.departmentDetails.posts = postData;
+            this.postImages = this.departmentDetails.posts.postDetails.map((post: { images: PostImage[] }) =>
+              post.images.map((imgObj2: PostImage) => ({
+                Img: this.baseUrl + imgObj2.Img,
+                Caption: imgObj2.Caption ?? null
+              }))
+            );
+          },
+          error => {
+            console.error("Post not found or server error:", error);
+          }
+        );
+      },
+      error => {
+        console.error("Department not found or server error:", error);
+      }
+    );
+  }
+
+  getEmbedUrl(url: string): SafeResourceUrl {
+    const videoId = this.getVideoId(url);
+    const embed = `https://www.youtube.com/embed/${videoId}`;
+    return this.sanitizer.bypassSecurityTrustResourceUrl(embed);
+  }
+
+  getOtherPeople(order: number) {
+    return this.otherPeople.filter(op => op.Order === order);
+  }
+
+  getVideoId(url: string): string {
+    if (!url) return '';
+    const regex = /(?:https?:\/\/)?(?:www\.)?(?:youtube\.com\/(?:watch\?(?:.*&)?v=|embed\/|v\/)|youtu\.be\/)([a-zA-Z0-9_-]{11})/;
+    const match = url.match(regex);
+    return match && match[1] ? match[1] : '';
+  }
+
+  getDept(deptId: number): string {
+    const dept = this.departments.find(department => department.id === deptId);
+    return dept ? dept.Name : 'NA';
+  }
+
+  openedButtonElement?: HTMLElement;
+
+  openModal3(event: Event): void {
+    const button = event.currentTarget as HTMLElement;
+    const wrapper = button.closest('.table-wrapper');
+
+    if (wrapper) {
+      const table = wrapper.querySelector('table');
+      const detailsButton = wrapper.querySelector('button.details') as HTMLElement;
+
+      if (table) {
+        const hiddenRows = wrapper.querySelectorAll('tr.showHide');
+        hiddenRows.forEach(row => {
+          row.classList.add('visible');
+        });
+        const clonedTable = table.cloneNode(true) as HTMLElement;
+        const buttonRow = clonedTable.querySelector('tr .viewButton')?.parentElement;
+        if (buttonRow) {
+          buttonRow.remove();
+        }
+        this.fullProfileText = this.sanitizer.bypassSecurityTrustHtml(clonedTable.outerHTML);
+        this.isProfileModalOpen = true;
+
+        if (detailsButton) {
+          detailsButton.style.visibility = 'hidden';
+          this.openedButtonElement = detailsButton;
+        }
+      }
+    }
+  }
+
+  closeModal3(): void {
+    this.isProfileModalOpen = false;
+    const visibleRows = document.querySelectorAll('tr.showHide.visible');
+    visibleRows.forEach(row => {
+      row.classList.remove('visible');
+    });
+
+    if (this.openedButtonElement) {
+      this.openedButtonElement.style.visibility = 'visible';
+      this.openedButtonElement = undefined;
+    }
   }
 }

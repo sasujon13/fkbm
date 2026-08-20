@@ -18,12 +18,16 @@ export class PersonnelComponent implements OnInit {
   isProfileModalOpen: boolean = false;
   fullProfileText: SafeHtml | undefined;
   searchKey: string = "";
+  departments: any[] = [];
 
   constructor(
     private apiService: ApiService,
     private sanitizer: DomSanitizer) { }
 
   ngOnInit(): void {
+    this.apiService.getDepts().subscribe(data => {
+      this.departments = data;
+    });
     this.apiService.getTeachers().subscribe(data => {
       this.teachers = data;
     });
@@ -48,6 +52,10 @@ export class PersonnelComponent implements OnInit {
     this.apiService.search.subscribe((val: any) => {
       this.searchKey = val;
     });
+  }
+  getDept(deptId: number): string {
+    const dept = this.departments.find(department => department.id === deptId);
+    return dept ? dept.Name : 'NA';
   }
 
   openedButtonElement?: HTMLElement;

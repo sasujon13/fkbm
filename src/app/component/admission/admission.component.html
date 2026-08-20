@@ -1,4 +1,4 @@
-<div class="iframe-container">
+<div class="iframe-container" [hFilter]="searchKey">
   <h1 *ngIf="isLoading" style="text-align: center; margin-top:150px">Loading Admission Page... ..</h1>
     <iframe (load)="onIframeLoad()" [src]="iframeSrc" id="iframeContent"></iframe>
   </div>

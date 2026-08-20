@@ -1,8 +1,9 @@
-<div style="margin-top: 115px; margin-bottom: 80px;">
-    <div class="container">
+<div style="margin-top: 115px; margin-bottom: 80px;" [hFilter]="searchKey">
+    <div class="container" *ngIf="(teachers.length > 0)">
         <div class="row">
             <h3 class="heading3">MPO Teachers</h3>
-            <div *ngFor="let member of teachers | filter:searchKey:['Name', 'Designation', 'Dept', 'FName', 'MName', 'Gender', 'Joining', 'Index', 'Mobile', 'Tmis', 'Email', 'DOB', 'PreAddress', 'PerAddress', 'Exam', 'Year', 'Result', 'Board_Uni', 'Title', 'Description', 'Comment', 'Retirement']" class="col-12 col-xs-8 col-xs-7 col-sm-6 col-md-5 col-lg-4 col-xl-3 col-xxl-2">
+            <div *ngFor="let member of teachers | orderBy:'Order' | filter:searchKey:['Name', 'Designation', 'Dept', 'Father_Name', 'Mother_Name', 'Gender', 'Joining', 'Index', 'Mobile', 'TMIS', 'TTIS', 'Email', 'Date_of_Birth', 'Present_Address', 'Permanent_Address', 'Exam', 'Year', 'Result', 'Board_Uni', 'Title', 'Description', 'Comment', 'Retirement']"
+                class="col-12 col-xs-8 col-xs-7 col-sm-6 col-md-5 col-lg-4 col-xl-3 col-xxl-2">
                 <div class="table-wrapper">
                     <table>
                         <tr>
@@ -16,7 +17,7 @@
                             <td colspan="4" class="heading">{{member.Designation}}</td>
                         </tr>
                         <tr>
-                            <td colspan="4" class="heading">{{member.Dept}}</td>
+                            <td colspan="4" class="heading">{{ getDept(member.Dept) }}</td>
                         </tr>
                         <tr>
                             <td class="viewButton" colspan="4"><button (click)="openModal($event)" class="details"
@@ -29,17 +30,22 @@
                         <tr class="showHide">
                             <td>Fathers Name</td>
                             <td>:</td>
-                            <td colspan="2">{{member.FName}}</td>
+                            <td colspan="2">{{member.Father_Name}}</td>
                         </tr>
                         <tr class="showHide">
                             <td>Mothers Name</td>
                             <td>:</td>
-                            <td colspan="2">{{member.MName}}</td>
+                            <td colspan="2">{{member.Mother_Name}}</td>
                         </tr>
                         <tr class="showHide">
                             <td>Gender</td>
                             <td>:</td>
                             <td colspan="2">{{member.Gender}}</td>
+                        </tr>
+                        <tr class="showHide">
+                            <td>Blood Group</td>
+                            <td>:</td>
+                            <td colspan="2">{{member.Blood_Group}}</td>
                         </tr>
                         <tr class="showHide">
                             <td>Joining Date</td>
@@ -52,14 +58,19 @@
                             <td colspan="2">{{member.Index}}</td>
                         </tr>
                         <tr class="showHide">
+                            <td>TMIS No.</td>
+                            <td>:</td>
+                            <td colspan="2">{{member.TMIS}}</td>
+                        </tr>
+                        <tr class="showHide">
+                            <td>TTIS No.</td>
+                            <td>:</td>
+                            <td colspan="2">{{member.TTIS}}</td>
+                        </tr>
+                        <tr class="showHide">
                             <td>Mobile No.</td>
                             <td>:</td>
                             <td colspan="2">{{member.Mobile}}</td>
-                        </tr>
-                        <tr class="showHide">
-                            <td>TMIS No.</td>
-                            <td>:</td>
-                            <td colspan="2">{{member.Tmis}}</td>
                         </tr>
                         <tr class="showHide">
                             <td>Email</td>
@@ -67,19 +78,19 @@
                             <td colspan="2">{{member.Email}}</td>
                         </tr>
                         <tr class="showHide">
-                            <td>DOB</td>
+                            <td>Date of Birth</td>
                             <td>:</td>
-                            <td colspan="2">{{member.DOB}}</td>
+                            <td colspan="2">{{member.Date_of_Birth}}</td>
                         </tr>
                         <tr class="showHide">
                             <td>Present Address</td>
                             <td>:</td>
-                            <td colspan="2">{{member.PreAddress}}</td>
+                            <td colspan="2">{{member.Present_Address}}</td>
                         </tr>
                         <tr class="showHide">
                             <td>Permanent Address</td>
                             <td>:</td>
-                            <td colspan="2">{{member.PerAddress}}</td>
+                            <td colspan="2">{{member.Permanent_Address}}</td>
                         </tr>
                         <tr class="showHide">
                             <td colspan="4">
@@ -92,14 +103,12 @@
                             <th class="colC">Result</th>
                             <th class="colD">Board / Univarsity</th>
                         </tr>
-                        <div class="education">
-                            <tr *ngFor="let ed of member.educations" class="showHide">
-                                <td class="colA">{{ed.Exam}}</td>
-                                <td class="colB">{{ed.Year}}</td>
-                                <td class="colC">{{ed.Result}}</td>
-                                <td class="colD">{{ed.Board_Uni}}</td>
-                            </tr>
-                        </div>
+                        <tr *ngFor="let ed of member.educations" class="showHide">
+                            <td class="colA">{{ed.Exam}}</td>
+                            <td class="colB">{{ed.Year}}</td>
+                            <td class="colC">{{ed.Result}}</td>
+                            <td class="colD">{{ed.Board_Uni}}</td>
+                        </tr>
                         <tr class="showHide">
                             <td colspan="4">
                                 <br>Experience :
@@ -111,27 +120,26 @@
                             <th class="colC">Description</th>
                             <th class="colD">Comment</th>
                         </tr>
-                        <div *ngFor="let ex of member.experiences" class="experience">
-                            <tr class="showHide">
-                                <td class="colA">{{ex.Title}}</td>
-                                <td class="colB">{{ex.Year}}</td>
-                                <td class="colC">{{ex.Description}}</td>
-                                <td class="colD">{{ex.Comment}}</td>
-                            </tr>
-                        </div>
+                        <tr *ngFor="let ex of member.experiences" class="experience" class="showHide">
+                            <td class="colA">{{ex.Title}}</td>
+                            <td class="colB">{{ex.Year}}</td>
+                            <td class="colC">{{ex.Description}}</td>
+                            <td class="colD">{{ex.Comment}}</td>
+                        </tr>
                         <tr class="showHide">
                             <td colspan="3" style="color:darkred"><br>Probable Retirement Date : </td>
-                            <td style="color:darkred">{{member.Retirement}}</td>
+                            <td style="color:darkred"><br>{{member.Retirement}}</td>
                         </tr>
                     </table>
                 </div>
             </div>
         </div>
     </div>
-    <div class="container">
+    <div class="container" *ngIf="(teacherHonours.length > 0)">
         <div class="row">
             <h3 class="heading3">Honours Teachers</h3>
-            <div *ngFor="let member of teacherHonours | filter:searchKey:['Name', 'Designation', 'Dept', 'FName', 'MName', 'Gender', 'Joining', 'Index', 'Mobile', 'Tmis', 'Email', 'DOB', 'PreAddress', 'PerAddress', 'Exam', 'Year', 'Result', 'Board_Uni', 'Title', 'Description', 'Comment', 'Retirement']" class="col-12 col-xs-8 col-xs-7 col-sm-6 col-md-5 col-lg-4 col-xl-3 col-xxl-2">
+            <div *ngFor="let member of teacherHonours | orderBy:'Order' | filter:searchKey:['Name', 'Designation', 'Dept', 'Father_Name', 'Mother_Name', 'Gender', 'Joining', 'Index', 'Mobile', 'TTIS', 'Email', 'Date_of_Birth', 'Present_Address', 'Permanent_Address', 'Exam', 'Year', 'Result', 'Board_Uni', 'Title', 'Description', 'Comment', 'Retirement']"
+                class="col-12 col-xs-8 col-xs-7 col-sm-6 col-md-5 col-lg-4 col-xl-3 col-xxl-2">
                 <div class="table-wrapper">
                     <table>
                         <tr>
@@ -145,7 +153,7 @@
                             <td colspan="4" class="heading">{{member.Designation}}</td>
                         </tr>
                         <tr>
-                            <td colspan="4" class="heading">{{member.Dept}}</td>
+                            <td colspan="4" class="heading">{{ getDept(member.Dept) }}</td>
                         </tr>
                         <tr>
                             <td class="viewButton" colspan="4"><button (click)="openModal($event)" class="details"
@@ -158,17 +166,22 @@
                         <tr class="showHide">
                             <td>Fathers Name</td>
                             <td>:</td>
-                            <td colspan="2">{{member.FName}}</td>
+                            <td colspan="2">{{member.Father_Name}}</td>
                         </tr>
                         <tr class="showHide">
                             <td>Mothers Name</td>
                             <td>:</td>
-                            <td colspan="2">{{member.MName}}</td>
+                            <td colspan="2">{{member.Mother_Name}}</td>
                         </tr>
                         <tr class="showHide">
                             <td>Gender</td>
                             <td>:</td>
                             <td colspan="2">{{member.Gender}}</td>
+                        </tr>
+                        <tr class="showHide">
+                            <td>Blood Group</td>
+                            <td>:</td>
+                            <td colspan="2">{{member.Blood_Group}}</td>
                         </tr>
                         <tr class="showHide">
                             <td>Joining Date</td>
@@ -178,7 +191,12 @@
                         <tr class="showHide">
                             <td>TMIS No.</td>
                             <td>:</td>
-                            <td colspan="2">{{member.Index}}</td>
+                            <td colspan="2">{{member.TMIS}}</td>
+                        </tr>
+                        <tr class="showHide">
+                            <td>TTIS No.</td>
+                            <td>:</td>
+                            <td colspan="2">{{member.TTIS}}</td>
                         </tr>
                         <tr class="showHide">
                             <td>Mobile No.</td>
@@ -191,19 +209,19 @@
                             <td colspan="2">{{member.Email}}</td>
                         </tr>
                         <tr class="showHide">
-                            <td>DOB</td>
+                            <td>Date of Birth</td>
                             <td>:</td>
-                            <td colspan="2">{{member.DOB}}</td>
+                            <td colspan="2">{{member.Date_of_Birth}}</td>
                         </tr>
                         <tr class="showHide">
                             <td>Present Address</td>
                             <td>:</td>
-                            <td colspan="2">{{member.PreAddress}}</td>
+                            <td colspan="2">{{member.Present_Address}}</td>
                         </tr>
                         <tr class="showHide">
                             <td>Permanent Address</td>
                             <td>:</td>
-                            <td colspan="2">{{member.PerAddress}}</td>
+                            <td colspan="2">{{member.Permanent_Address}}</td>
                         </tr>
                         <tr class="showHide">
                             <td colspan="4">
@@ -216,14 +234,12 @@
                             <th class="colC">Result</th>
                             <th class="colD">Board / Univarsity</th>
                         </tr>
-                        <div *ngFor="let ed of member.educations" class="education">
-                            <tr class="showHide">
-                                <td class="colA">{{ed.Exam}}</td>
-                                <td class="colB">{{ed.Year}}</td>
-                                <td class="colC">{{ed.Result}}</td>
-                                <td class="colD">{{ed.Board_Uni}}</td>
-                            </tr>
-                        </div>
+                        <tr *ngFor="let ed of member.educations" class="education" class="showHide">
+                            <td class="colA">{{ed.Exam}}</td>
+                            <td class="colB">{{ed.Year}}</td>
+                            <td class="colC">{{ed.Result}}</td>
+                            <td class="colD">{{ed.Board_Uni}}</td>
+                        </tr>
                         <tr class="showHide" style="visibility:hidden">
                             <td colspan="4">
                                 <br>Experience :
@@ -235,31 +251,30 @@
                             <th class="colC">Description</th>
                             <th class="colD">Comment</th>
                         </tr>
-                        <div *ngFor="let ex of member.experiences" class="experience">
-                            <tr class="showHide">
-                                <td class="colA">{{ex.Title}}</td>
-                                <td class="colB">{{ex.Year}}</td>
-                                <td class="colC">{{ex.Description}}</td>
-                                <td class="colD">{{ex.Comment}}</td>
-                            </tr>
-                        </div>
+                        <tr *ngFor="let ex of member.experiences" class="experience" class="showHide">
+                            <td class="colA">{{ex.Title}}</td>
+                            <td class="colB">{{ex.Year}}</td>
+                            <td class="colC">{{ex.Description}}</td>
+                            <td class="colD">{{ex.Comment}}</td>
+                        </tr>
                         <tr class="showHide">
                             <td colspan="3" style="color:darkred"><br>Probable Retirement Date : </td>
-                            <td style="color:darkred">{{member.Retirement}}</td>
+                            <td style="color:darkred"><br>{{member.Retirement}}</td>
                         </tr>
                     </table>
                 </div>
             </div>
         </div>
     </div>
-    <div class="container">
+    <div class="container" *ngIf="(staffs.length > 0)">
         <div class="row">
             <h3 class="heading3">MPO Staffs</h3>
-            <div *ngFor="let member of staffs | filter:searchKey:['Name', 'Designation', 'Dept', 'FName', 'MName', 'Gender', 'Joining', 'Index', 'Mobile', 'Tmis', 'Email', 'DOB', 'PreAddress', 'PerAddress', 'Exam', 'Year', 'Result', 'Board_Uni', 'Title', 'Description', 'Comment', 'Retirement']" class="col-12 col-xs-8 col-xs-7 col-sm-6 col-md-5 col-lg-4 col-xl-3 col-xxl-2">
+            <div *ngFor="let member of staffs | orderBy:'Order' | filter:searchKey:['Name', 'Designation', 'Dept', 'Father_Name', 'Mother_Name', 'Gender', 'Joining', 'Index', 'Mobile', 'TMIS', 'Email', 'Date_of_Birth', 'Present_Address', 'Permanent_Address', 'Exam', 'Year', 'Result', 'Board_Uni', 'Title', 'Description', 'Comment', 'Retirement']"
+                class="col-12 col-xs-8 col-xs-7 col-sm-6 col-md-5 col-lg-4 col-xl-3 col-xxl-2">
                 <div class="table-wrapper">
                     <table>
                         <tr>
-                            <td colspan="4" class="img"><img src="./assets/images/employee.jpg" class="profile-picture">
+                            <td colspan="4" class="img"><img [src]="member.Img || './assets/images/employee.jpg'" class="profile-picture">
                             </td>
                         </tr>
                         <tr>
@@ -269,7 +284,7 @@
                             <td colspan="4" class="heading">{{member.Designation}}</td>
                         </tr>
                         <tr>
-                            <td colspan="4" class="heading">{{member.Dept}}</td>
+                            <td colspan="4" class="heading">{{ getDept(member.Dept) }}</td>
                         </tr>
                         <tr>
                             <td class="viewButton" colspan="4"><button (click)="openModal($event)" class="details"
@@ -282,17 +297,22 @@
                         <tr class="showHide">
                             <td>Fathers Name</td>
                             <td>:</td>
-                            <td colspan="2">{{member.FName}}</td>
+                            <td colspan="2">{{member.Father_Name}}</td>
                         </tr>
                         <tr class="showHide">
                             <td>Mothers Name</td>
                             <td>:</td>
-                            <td colspan="2">{{member.MName}}</td>
+                            <td colspan="2">{{member.Mother_Name}}</td>
                         </tr>
                         <tr class="showHide">
                             <td>Gender</td>
                             <td>:</td>
                             <td colspan="2">{{member.Gender}}</td>
+                        </tr>
+                        <tr class="showHide">
+                            <td>Blood Group</td>
+                            <td>:</td>
+                            <td colspan="2">{{member.Blood_Group}}</td>
                         </tr>
                         <tr class="showHide">
                             <td>Joining Date</td>
@@ -315,19 +335,19 @@
                             <td colspan="2">{{member.Email}}</td>
                         </tr>
                         <tr class="showHide">
-                            <td>DOB</td>
+                            <td>Date of Birth</td>
                             <td>:</td>
-                            <td colspan="2">{{member.DOB}}</td>
+                            <td colspan="2">{{member.Date_of_Birth}}</td>
                         </tr>
                         <tr class="showHide">
                             <td>Present Address</td>
                             <td>:</td>
-                            <td colspan="2">{{member.PreAddress}}</td>
+                            <td colspan="2">{{member.Present_Address}}</td>
                         </tr>
                         <tr class="showHide">
                             <td>Permanent Address</td>
                             <td>:</td>
-                            <td colspan="2">{{member.PerAddress}}</td>
+                            <td colspan="2">{{member.Permanent_Address}}</td>
                         </tr>
                         <tr class="showHide">
                             <td colspan="4">
@@ -340,14 +360,12 @@
                             <th class="colC">Result</th>
                             <th class="colD">Board / Univarsity</th>
                         </tr>
-                        <div *ngFor="let ed of member.educations" class="education">
-                            <tr class="showHide">
-                                <td class="colA">{{ed.Exam}}</td>
-                                <td class="colB">{{ed.Year}}</td>
-                                <td class="colC">{{ed.Result}}</td>
-                                <td class="colD">{{ed.Board_Uni}}</td>
-                            </tr>
-                        </div>
+                        <tr *ngFor="let ed of member.educations" class="education" class="showHide">
+                            <td class="colA">{{ed.Exam}}</td>
+                            <td class="colB">{{ed.Year}}</td>
+                            <td class="colC">{{ed.Result}}</td>
+                            <td class="colD">{{ed.Board_Uni}}</td>
+                        </tr>
                         <tr class="showHide">
                             <td colspan="4">
                                 <br>Experience :
@@ -359,31 +377,30 @@
                             <th class="colC">Description</th>
                             <th class="colD">Comment</th>
                         </tr>
-                        <div *ngFor="let ex of member.experiences" class="experience">
-                            <tr class="showHide">
-                                <td class="colA">{{ex.Title}}</td>
-                                <td class="colB">{{ex.Year}}</td>
-                                <td class="colC">{{ex.Description}}</td>
-                                <td class="colD">{{ex.Comment}}</td>
-                            </tr>
-                        </div>
+                        <tr *ngFor="let ex of member.experiences" class="experience" class="showHide">
+                            <td class="colA">{{ex.Title}}</td>
+                            <td class="colB">{{ex.Year}}</td>
+                            <td class="colC">{{ex.Description}}</td>
+                            <td class="colD">{{ex.Comment}}</td>
+                        </tr>
                         <tr class="showHide">
                             <td colspan="3" style="color:darkred"><br>Probable Retirement Date : </td>
-                            <td style="color:darkred">{{member.Retirement}}</td>
+                            <td style="color:darkred"><br>{{member.Retirement}}</td>
                         </tr>
                     </table>
                 </div>
             </div>
         </div>
     </div>
-    <div class="container">
+    <div class="container" *ngIf="(nonMpoStaffs.length > 0)">
         <div class="row">
             <h3 class="heading3">Non-MPO Staffs</h3>
-            <div *ngFor="let member of nonMpoStaffs | filter:searchKey:['Name', 'Designation', 'Dept', 'FName', 'MName', 'Gender', 'Joining', 'Index', 'Mobile', 'Tmis', 'Email', 'DOB', 'PreAddress', 'PerAddress', 'Exam', 'Year', 'Result', 'Board_Uni', 'Title', 'Description', 'Comment', 'Retirement']" class="col-12 col-xs-8 col-xs-7 col-sm-6 col-md-5 col-lg-4 col-xl-3 col-xxl-2">
+            <div *ngFor="let member of nonMpoStaffs | orderBy:'Order' | filter:searchKey:['Name', 'Designation', 'Dept', 'Father_Name', 'Mother_Name', 'Gender', 'Joining', 'Index', 'Mobile', 'Email', 'Date_of_Birth', 'Present_Address', 'Permanent_Address', 'Exam', 'Year', 'Result', 'Board_Uni', 'Title', 'Description', 'Comment', 'Retirement']"
+                class="col-12 col-xs-8 col-xs-7 col-sm-6 col-md-5 col-lg-4 col-xl-3 col-xxl-2">
                 <div class="table-wrapper">
                     <table>
                         <tr>
-                            <td colspan="4" class="img"><img src="./assets/images/employee.jpg" class="profile-picture">
+                            <td colspan="4" class="img"><img [src]="member.Img || './assets/images/employee.jpg'" class="profile-picture">
                             </td>
                         </tr>
                         <tr>
@@ -393,7 +410,7 @@
                             <td colspan="4" class="heading">{{member.Designation}}</td>
                         </tr>
                         <tr>
-                            <td colspan="4" class="heading">{{member.Dept}}</td>
+                            <td colspan="4" class="heading">{{ getDept(member.Dept) }}</td>
                         </tr>
                         <tr>
                             <td class="viewButton" colspan="4"><button (click)="openModal($event)" class="details"
@@ -406,17 +423,22 @@
                         <tr class="showHide">
                             <td>Fathers Name</td>
                             <td>:</td>
-                            <td colspan="2">{{member.FName}}</td>
+                            <td colspan="2">{{member.Father_Name}}</td>
                         </tr>
                         <tr class="showHide">
                             <td>Mothers Name</td>
                             <td>:</td>
-                            <td colspan="2">{{member.MName}}</td>
+                            <td colspan="2">{{member.Mother_Name}}</td>
                         </tr>
                         <tr class="showHide">
                             <td>Gender</td>
                             <td>:</td>
                             <td colspan="2">{{member.Gender}}</td>
+                        </tr>
+                        <tr class="showHide">
+                            <td>Blood Group</td>
+                            <td>:</td>
+                            <td colspan="2">{{member.Blood_Group}}</td>
                         </tr>
                         <tr class="showHide">
                             <td>Joining Date</td>
@@ -434,19 +456,19 @@
                             <td colspan="2">{{member.Email}}</td>
                         </tr>
                         <tr class="showHide">
-                            <td>DOB</td>
+                            <td>Date of Birth</td>
                             <td>:</td>
-                            <td colspan="2">{{member.DOB}}</td>
+                            <td colspan="2">{{member.Date_of_Birth}}</td>
                         </tr>
                         <tr class="showHide">
                             <td>Present Address</td>
                             <td>:</td>
-                            <td colspan="2">{{member.PreAddress}}</td>
+                            <td colspan="2">{{member.Present_Address}}</td>
                         </tr>
                         <tr class="showHide">
                             <td>Permanent Address</td>
                             <td>:</td>
-                            <td colspan="2">{{member.PerAddress}}</td>
+                            <td colspan="2">{{member.Permanent_Address}}</td>
                         </tr>
                         <tr class="showHide">
                             <td colspan="4">
@@ -459,14 +481,12 @@
                             <th class="colC">Result</th>
                             <th class="colD">Board / Univarsity</th>
                         </tr>
-                        <div *ngFor="let ed of member.educations" class="education">
-                            <tr class="showHide">
-                                <td class="colA">{{ed.Exam}}</td>
-                                <td class="colB">{{ed.Year}}</td>
-                                <td class="colC">{{ed.Result}}</td>
-                                <td class="colD">{{ed.Board_Uni}}</td>
-                            </tr>
-                        </div>
+                        <tr *ngFor="let ed of member.educations" class="education" class="showHide">
+                            <td class="colA">{{ed.Exam}}</td>
+                            <td class="colB">{{ed.Year}}</td>
+                            <td class="colC">{{ed.Result}}</td>
+                            <td class="colD">{{ed.Board_Uni}}</td>
+                        </tr>
                         <tr class="showHide">
                             <td colspan="4">
                                 <br>Experience :
@@ -478,27 +498,26 @@
                             <th class="colC">Description</th>
                             <th class="colD">Comment</th>
                         </tr>
-                        <div *ngFor="let ex of member.experiences" class="experience">
-                            <tr class="showHide">
-                                <td class="colA">{{ex.Title}}</td>
-                                <td class="colB">{{ex.Year}}</td>
-                                <td class="colC">{{ex.Description}}</td>
-                                <td class="colD">{{ex.Comment}}</td>
-                            </tr>
-                        </div>
+                        <tr *ngFor="let ex of member.experiences" class="experience" class="showHide">
+                            <td class="colA">{{ex.Title}}</td>
+                            <td class="colB">{{ex.Year}}</td>
+                            <td class="colC">{{ex.Description}}</td>
+                            <td class="colD">{{ex.Comment}}</td>
+                        </tr>
                         <tr class="showHide">
                             <td colspan="3" style="color:darkred"><br>Probable Retirement Date : </td>
-                            <td style="color:darkred">{{member.Retirement}}</td>
+                            <td style="color:darkred"><br>{{member.Retirement}}</td>
                         </tr>
                     </table>
                 </div>
             </div>
         </div>
     </div>
-    <div class="container">
+    <div class="container" *ngIf="(exTeachers.length > 0)">
         <div class="row">
             <h3 class="heading3">Ex Teachers</h3>
-            <div *ngFor="let member of exTeachers | filter:searchKey:['Name', 'Designation', 'Dept', 'FName', 'MName', 'Gender', 'Joining', 'Index', 'Mobile', 'Tmis', 'Email', 'DOB', 'PreAddress', 'PerAddress', 'Exam', 'Year', 'Result', 'Board_Uni', 'Title', 'Description', 'Comment', 'Retirement']" class="col-12 col-xs-8 col-xs-7 col-sm-6 col-md-5 col-lg-4 col-xl-3 col-xxl-2">
+            <div *ngFor="let member of exTeachers | orderBy:'Order' | filter:searchKey:['Name', 'Designation', 'Dept', 'Father_Name', 'Mother_Name', 'Gender', 'Joining', 'Index', 'Mobile', 'TMIS', 'TTIS', 'Email', 'Date_of_Birth', 'Present_Address', 'Permanent_Address', 'Exam', 'Year', 'Result', 'Board_Uni', 'Title', 'Description', 'Comment', 'Retirement']"
+                class="col-12 col-xs-8 col-xs-7 col-sm-6 col-md-5 col-lg-4 col-xl-3 col-xxl-2">
                 <div class="table-wrapper">
                     <table>
                         <tr>
@@ -512,7 +531,7 @@
                             <td colspan="4" class="heading">{{member.Designation}}</td>
                         </tr>
                         <tr>
-                            <td colspan="4" class="heading">{{member.Dept}}</td>
+                            <td colspan="4" class="heading">{{ getDept(member.Dept) }}</td>
                         </tr>
                         <tr>
                             <td class="viewButton" colspan="4"><button (click)="openModal($event)" class="details"
@@ -525,17 +544,22 @@
                         <tr class="showHide">
                             <td>Fathers Name</td>
                             <td>:</td>
-                            <td colspan="2">{{member.FName}}</td>
+                            <td colspan="2">{{member.Father_Name}}</td>
                         </tr>
                         <tr class="showHide">
                             <td>Mothers Name</td>
                             <td>:</td>
-                            <td colspan="2">{{member.MName}}</td>
+                            <td colspan="2">{{member.Mother_Name}}</td>
                         </tr>
                         <tr class="showHide">
                             <td>Gender</td>
                             <td>:</td>
                             <td colspan="2">{{member.Gender}}</td>
+                        </tr>
+                        <tr class="showHide">
+                            <td>Blood Group</td>
+                            <td>:</td>
+                            <td colspan="2">{{member.Blood_Group}}</td>
                         </tr>
                         <tr class="showHide">
                             <td>Joining Date</td>
@@ -550,7 +574,12 @@
                         <tr class="showHide">
                             <td>TMIS No.</td>
                             <td>:</td>
-                            <td colspan="2">{{member.Tmis}}</td>
+                            <td colspan="2">{{member.TMIS}}</td>
+                        </tr>
+                        <tr class="showHide">
+                            <td>TTIS No.</td>
+                            <td>:</td>
+                            <td colspan="2">{{member.TTIS}}</td>
                         </tr>
                         <tr class="showHide">
                             <td>Mobile No.</td>
@@ -563,19 +592,19 @@
                             <td colspan="2">{{member.Email}}</td>
                         </tr>
                         <tr class="showHide">
-                            <td>DOB</td>
+                            <td>Date of Birth</td>
                             <td>:</td>
-                            <td colspan="2">{{member.DOB}}</td>
+                            <td colspan="2">{{member.Date_of_Birth}}</td>
                         </tr>
                         <tr class="showHide">
                             <td>Present Address</td>
                             <td>:</td>
-                            <td colspan="2">{{member.PreAddress}}</td>
+                            <td colspan="2">{{member.Present_Address}}</td>
                         </tr>
                         <tr class="showHide">
                             <td>Permanent Address</td>
                             <td>:</td>
-                            <td colspan="2">{{member.PerAddress}}</td>
+                            <td colspan="2">{{member.Permanent_Address}}</td>
                         </tr>
                         <tr class="showHide">
                             <td colspan="4">
@@ -588,14 +617,12 @@
                             <th class="colC">Result</th>
                             <th class="colD">Board / Univarsity</th>
                         </tr>
-                        <div *ngFor="let ed of member.educations" class="education">
-                            <tr class="showHide">
-                                <td class="colA">{{ed.Exam}}</td>
-                                <td class="colB">{{ed.Year}}</td>
-                                <td class="colC">{{ed.Result}}</td>
-                                <td class="colD">{{ed.Board_Uni}}</td>
-                            </tr>
-                        </div>
+                        <tr *ngFor="let ed of member.educations" class="education" class="showHide">
+                            <td class="colA">{{ed.Exam}}</td>
+                            <td class="colB">{{ed.Year}}</td>
+                            <td class="colC">{{ed.Result}}</td>
+                            <td class="colD">{{ed.Board_Uni}}</td>
+                        </tr>
                         <tr class="showHide">
                             <td colspan="4">
                                 <br>Experience :
@@ -607,31 +634,30 @@
                             <th class="colC">Description</th>
                             <th class="colD">Comment</th>
                         </tr>
-                        <div *ngFor="let ex of member.experiences" class="experience">
-                            <tr class="showHide">
-                                <td class="colA">{{ex.Title}}</td>
-                                <td class="colB">{{ex.Year}}</td>
-                                <td class="colC">{{ex.Description}}</td>
-                                <td class="colD">{{ex.Comment}}</td>
-                            </tr>
-                        </div>
+                        <tr *ngFor="let ex of member.experiences" class="experience" class="showHide">
+                            <td class="colA">{{ex.Title}}</td>
+                            <td class="colB">{{ex.Year}}</td>
+                            <td class="colC">{{ex.Description}}</td>
+                            <td class="colD">{{ex.Comment}}</td>
+                        </tr>
                         <tr class="showHide">
                             <td colspan="3" style="color:darkred"><br>Probable Retirement Date : </td>
-                            <td style="color:darkred">{{member.Retirement}}</td>
+                            <td style="color:darkred"><br>{{member.Retirement}}</td>
                         </tr>
                     </table>
                 </div>
             </div>
         </div>
     </div>
-    <div class="container">
+    <div class="container" *ngIf="(exStaffs.length > 0)">
         <div class="row">
             <h3 class="heading3">Ex Staffs</h3>
-            <div *ngFor="let member of exStaffs | filter:searchKey:['Name', 'Designation', 'Dept', 'FName', 'MName', 'Gender', 'Joining', 'Index', 'Mobile', 'Tmis', 'Email', 'DOB', 'PreAddress', 'PerAddress', 'Exam', 'Year', 'Result', 'Board_Uni', 'Title', 'Description', 'Comment', 'Retirement']" class="col-12 col-xs-8 col-xs-7 col-sm-6 col-md-5 col-lg-4 col-xl-3 col-xxl-2">
+            <div *ngFor="let member of exStaffs | orderBy:'Order' | filter:searchKey:['Name', 'Designation', 'Dept', 'Father_Name', 'Mother_Name', 'Gender', 'Joining', 'Index', 'Mobile', 'TMIS', 'Email', 'Date_of_Birth', 'Present_Address', 'Permanent_Address', 'Exam', 'Year', 'Result', 'Board_Uni', 'Title', 'Description', 'Comment', 'Retirement']"
+                class="col-12 col-xs-8 col-xs-7 col-sm-6 col-md-5 col-lg-4 col-xl-3 col-xxl-2">
                 <div class="table-wrapper">
                     <table>
                         <tr>
-                            <td colspan="4" class="img"><img src="./assets/images/employee.jpg" class="profile-picture">
+                            <td colspan="4" class="img"><img [src]="member.Img || './assets/images/employee.jpg'" class="profile-picture">
                             </td>
                         </tr>
                         <tr>
@@ -641,7 +667,7 @@
                             <td colspan="4" class="heading">{{member.Designation}}</td>
                         </tr>
                         <tr>
-                            <td colspan="4" class="heading">{{member.Dept}}</td>
+                            <td colspan="4" class="heading">{{ getDept(member.Dept) }}</td>
                         </tr>
                         <tr>
                             <td class="viewButton" colspan="4"><button (click)="openModal($event)" class="details"
@@ -654,17 +680,22 @@
                         <tr class="showHide">
                             <td>Fathers Name</td>
                             <td>:</td>
-                            <td colspan="2">{{member.FName}}</td>
+                            <td colspan="2">{{member.Father_Name}}</td>
                         </tr>
                         <tr class="showHide">
                             <td>Mothers Name</td>
                             <td>:</td>
-                            <td colspan="2">{{member.MName}}</td>
+                            <td colspan="2">{{member.Mother_Name}}</td>
                         </tr>
                         <tr class="showHide">
                             <td>Gender</td>
                             <td>:</td>
                             <td colspan="2">{{member.Gender}}</td>
+                        </tr>
+                        <tr class="showHide">
+                            <td>Blood Group</td>
+                            <td>:</td>
+                            <td colspan="2">{{member.Blood_Group}}</td>
                         </tr>
                         <tr class="showHide">
                             <td>Joining Date</td>
@@ -682,19 +713,19 @@
                             <td colspan="2">{{member.Email}}</td>
                         </tr>
                         <tr class="showHide">
-                            <td>DOB</td>
+                            <td>Date of Birth</td>
                             <td>:</td>
-                            <td colspan="2">{{member.DOB}}</td>
+                            <td colspan="2">{{member.Date_of_Birth}}</td>
                         </tr>
                         <tr class="showHide">
                             <td>Present Address</td>
                             <td>:</td>
-                            <td colspan="2">{{member.PreAddress}}</td>
+                            <td colspan="2">{{member.Present_Address}}</td>
                         </tr>
                         <tr class="showHide">
                             <td>Permanent Address</td>
                             <td>:</td>
-                            <td colspan="2">{{member.PerAddress}}</td>
+                            <td colspan="2">{{member.Permanent_Address}}</td>
                         </tr>
                         <tr class="showHide">
                             <td colspan="4">
@@ -707,14 +738,12 @@
                             <th class="colC">Result</th>
                             <th class="colD">Board / Univarsity</th>
                         </tr>
-                        <div *ngFor="let ed of member.educations" class="education">
-                            <tr class="showHide">
-                                <td class="colA">{{ed.Exam}}</td>
-                                <td class="colB">{{ed.Year}}</td>
-                                <td class="colC">{{ed.Result}}</td>
-                                <td class="colD">{{ed.Board_Uni}}</td>
-                            </tr>
-                        </div>
+                        <tr *ngFor="let ed of member.educations" class="education" class="showHide">
+                            <td class="colA">{{ed.Exam}}</td>
+                            <td class="colB">{{ed.Year}}</td>
+                            <td class="colC">{{ed.Result}}</td>
+                            <td class="colD">{{ed.Board_Uni}}</td>
+                        </tr>
                         <tr class="showHide">
                             <td colspan="4">
                                 <br>Experience :
@@ -726,17 +755,15 @@
                             <th class="colC">Description</th>
                             <th class="colD">Comment</th>
                         </tr>
-                        <div *ngFor="let ex of member.experiences" class="experience">
-                            <tr class="showHide">
-                                <td class="colA">{{ex.Title}}</td>
-                                <td class="colB">{{ex.Year}}</td>
-                                <td class="colC">{{ex.Description}}</td>
-                                <td class="colD">{{ex.Comment}}</td>
-                            </tr>
-                        </div>
+                        <tr *ngFor="let ex of member.experiences" class="experience" class="showHide">
+                            <td class="colA">{{ex.Title}}</td>
+                            <td class="colB">{{ex.Year}}</td>
+                            <td class="colC">{{ex.Description}}</td>
+                            <td class="colD">{{ex.Comment}}</td>
+                        </tr>
                         <tr class="showHide">
                             <td colspan="3" style="color:darkred"><br>Probable Retirement Date : </td>
-                            <td style="color:darkred">{{member.Retirement}}</td>
+                            <td style="color:darkred"><br>{{member.Retirement}}</td>
                         </tr>
                     </table>
                 </div>
@@ -744,9 +771,9 @@
         </div>
     </div>
 
-    <div *ngIf="isProfileModalOpen" class="modal-backdrop">
+    <div *ngIf="isProfileModalOpen" class="modal-backdrop" (click)="closeModal()">
         <div class="modal-container">
-            <div class="modal-content">
+            <div class="modal-content" (click)="$event.stopPropagation()">
                 <div class="modal-body" [innerHTML]="fullProfileText"></div>
                 <button class="close-button" (click)="closeModal()">&#10006;</button>
             </div>

@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { ContactUsComponent } from './component/contact-us/contact-us.component';
 import { FaqsComponent } from './component/faqs/faqs.component';
-import { Router } from '@angular/router';
 import { IndexComponent } from './component/index/index.component';
 import { AcademicComponent } from './component/academic/academic.component';
 import { PersonnelComponent } from './component/personnel/personnel.component';

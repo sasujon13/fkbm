@@ -5,7 +5,10 @@
   background: #fff;
   font-family: 'Segoe UI', sans-serif;
 }
-
+p.member_name {
+  margin-bottom: -4px;
+  padding-top: 3px;
+}
 h2 {
   text-align: center;
   margin-bottom: 25px;
@@ -72,8 +75,100 @@ div.order{
   background: white;
 }
 
+img.contactImage {
+  border-radius: 12px;
+  width: 92px;
+  height: 107px;
+  position: absolute;
+  margin-left: -200px;
+  margin-top: 5px;
+}
 
-@media screen and (max-width: 620px) {
+.deptLabel {
+  background-color: rgba(0, 128, 128, 0.25);
+  color: green;
+  padding: 7px 12px;
+}
+
+.deptSelect {
+  background-color: white;
+  color: teal;
+  padding: 5px;
+  border: 3px dotted rgba(0, 128, 128, 0.25);
+}
+
+.deptOption {
+  background-color: white;
+  color: teal;
+}
+
+.deptSelect:focus {
+  box-shadow: 0 0 10px rgba(0, 128, 128, 0.25);
+  outline: none;
+  background-color: #f0faff;
+}
+
+.deptOption:hover {
+  background-color: #e0f7ff;
+}
+
+
+@media screen and (min-width: 220px) {
   .container {
   width: 90%;
-    }}
+    }
+    img.contactImage {
+      position: relative;
+      margin-left: auto;
+      margin-bottom: 7px;
+  }
+}
+
+@media screen and (min-width: 360px) {
+}
+
+@media screen and (min-width: 480px) {
+}
+
+@media screen and (min-width: 480px) {
+    img.contactImage {
+      position: absolute;
+      margin-left: -200px;
+  }
+}
+
+@media screen and (min-width: 576px) {
+  .container {
+  width: 48%;
+    }
+    img.contactImage {
+      position: relative;
+      margin-left: auto;
+  }
+}
+
+@media screen and (min-width: 768px) {
+}
+
+@media screen and (min-width: 840px) {
+  p.member_name{
+    margin-bottom: -14px;
+    padding-top: 10px;
+  }
+  img.contactImage {
+    margin-top: 12px;
+    width: 84px;
+    height: 98px;
+    position: absolute;
+    margin-left: -188px;
+}
+}
+
+@media screen and (min-width: 992px) {
+  img.contactImage {
+    margin-top: 5px;
+  width: 92px;
+  height: 107px;
+    margin-left: -200px;
+}
+}

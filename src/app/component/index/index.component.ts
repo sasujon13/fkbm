@@ -1,21 +1,75 @@
-import { Component, ElementRef, AfterViewInit, ViewChild, OnDestroy } from '@angular/core';
+import { Component, OnInit, ElementRef, ChangeDetectorRef, ViewChild, OnDestroy } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { ApiService } from '..//../service/api.service';
 import { interval, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
+import { DomSanitizer, SafeHtml, SafeResourceUrl } from '@angular/platform-browser';
+
+interface DepartmentImage {
+  id: number;
+  Img: string;
+  Caption?: string | null;
+}
+
+interface PostImage {
+  id: number;
+  Img: string;
+  Caption?: string | null;
+}
+
+interface ImageItem {
+  Img: string;
+  Caption?: string | null;
+}
+
+interface Videos {
+  Title: string;
+  Dept: string;
+  Url: string;
+  embedUrl?: SafeResourceUrl;
+}
+
+interface OtherPerson {
+  Img: string;
+  Name: string;
+  Title: string | null;
+  Gender: string;
+  Designation: string;
+  Deptartment: string;
+  FName: string | null;
+  MName: string | null;
+  Joining: string | null;
+  Mobile: string | null;
+  Email: string | null;
+  PreAddress: string;
+  PerAddress: string;
+  Date_of_Birth: string | null;
+  Order: number;
+  Retirement: string | null;
+  Comment: string | null;
+  Org: string | null;
+  Dept: number;
+}
 
 @Component({
-  selector: 'app-index',
+  selector: 'app-academic',
   templateUrl: './index.component.html',
   styleUrls: ['./index.component.css']
 })
-export class IndexComponent implements AfterViewInit, OnDestroy {
+
+export class IndexComponent implements OnInit, OnDestroy {
+  baseUrl = 'https://kbmcollege.edu.bd'
+  selectedDept: string | null = null;
+  departmentNames: string[] = [];
+  departmentDetails: any = {};
+  otherPeople: OtherPerson[] = [];
+  filteredDepartment: any = null;
   observer!: IntersectionObserver;
   isImageModalOpen: boolean = false;
   isProfileModalOpen: boolean = false;
   fullImageSrc: string = '';
   fullProfileText: SafeHtml | undefined;
-  ;
-  zoomLevel: number = 1; 
+  zoomLevel: number = 1;
   isDragging: boolean = false;
   startX: number = 0;
   startY: number = 0;
@@ -25,94 +79,103 @@ export class IndexComponent implements AfterViewInit, OnDestroy {
   lastTranslateY: number = 0;
   admissionEndDate: Date = new Date('2024-03-31T23:59:59'); // Replace with your admission ending date
   timeRemaining: any;
+  currentMonthIndex: number = new Date().getMonth() - 1;
+  months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+  currentYear: number = new Date().getFullYear();
+  currentIndex: number = 0;
+  currentVideoIndex: number = 0;
+  postIndex: number[] = [];
+  deptID: number = 0;
+  posts: string[] = [];
+  thumbnailContainerWidth: number = 0;
+  searchKey: string = "";
+
+  images: ImageItem[] = [];
+  postImages: { Img: string; Caption?: string | null }[][] = [];
+  videos: Videos[] = [];
+
   @ViewChild('videoPlayer') videoPlayer!: ElementRef;
   @ViewChild('imageSlideContainer') imageSlideContainer!: ElementRef;
   @ViewChild('videoSlideContainer') videoSlideContainer!: ElementRef;
   @ViewChild('calendarContainer', { static: false }) calendarContainer!: ElementRef;
-  currentMonthIndex: number = new Date().getMonth() - 1;
-  months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-  currentYear: number = new Date().getFullYear();
-  constructor(private sanitizer: DomSanitizer) {}
-  currentSlideIndex: number = 0;
-  currentVideoSlideIndex: number = 0;
-  currentIndex: number = 0;
-  currentVideoIndex: number = 0;
-  thumbnailContainerWidth: number = 0;
-  videoThumbnailContainerWidth: number = 0;
-  images: string[] = ['image1.jpg', 'image2.jpg', 'image3.jpg', 'image4.jpg', 'image5.jpg', 'image6.jpg', 'image7.jpg', 'image8.jpg', 'image9.jpg', 'image10.jpg', 'image11.jpg', 'image12.jpg', 'image13.jpg'];
-  videos: string[] = ['./assets/videos/sample1.mp4', './assets/videos/sample2.mp4', './assets/videos/sample1.mp4', './assets/videos/sample2.mp4', './assets/videos/sample1.mp4', './assets/videos/sample2.mp4', './assets/videos/sample1.mp4', './assets/videos/sample2.mp4', './assets/videos/sample1.mp4', './assets/videos/sample2.mp4', './assets/videos/sample1.mp4', './assets/videos/sample2.mp4'];
 
   private destroy$: Subject<void> = new Subject<void>();
 
-  currentSlide(index: number): void {
-    this.showSlide(index);
-    this.currentIndex = index;
+  constructor(
+    private sanitizer: DomSanitizer,
+    private route: ActivatedRoute,
+    private apiService: ApiService, 
+    private cdr: ChangeDetectorRef) { }
+
+  ngOnInit() {
+    this.apiService.search.subscribe((val: any) => {
+      this.searchKey = val;
+    });
+    this.startAutoChange();
+    this.loadOtherPeople();
+    this.loadVideo();
+    this.loadDepartmentData('Administration');
+    this.postIndex = this.postImages.map(() => 0);
   }
 
-  currentVideoSlide(index: number): void {
-    this.currentVideoIndex = index;
-  }
-
-  playNextVideo() {
-    this.currentVideoIndex = (this.currentVideoIndex + 1) % this.videos.length;
-  }
-
-  playPreVideo() {
-    this.currentVideoIndex = (this.currentVideoIndex - 1 + this.videos.length) % this.videos.length;
-  }
-
-  isImage(): boolean {
-    return this.images.includes(this.images[this.currentIndex]);
-  }
-
-  isVideo(): boolean {
-    return this.videos.includes(this.videos[this.currentIndex]);
-  }
-
-  startAutoScroll(): void {
-    interval(7000)
-      .pipe(takeUntil(this.destroy$))
-      .subscribe(() => {
-        const nextIndex = (this.currentIndex + 1) % this.images.length;
-        this.currentSlide(nextIndex);
-      });
-  }
-
-  ngAfterViewInit(): void {
-    this.setupIntersectionObserver();
-    this.playVideo();
-    this.calculateTimeRemaining();
-    setTimeout(() => this.generateCalendar(), 0);
+  startAutoChange() {
     setInterval(() => {
-      this.calculateTimeRemaining();
-    }, 1000);
-    if (this.imageSlideContainer) {
-      this.startAutoChange();
-      this.showSlide(this.currentSlideIndex);
-      this.thumbnailContainerWidth = this.imageSlideContainer.nativeElement.clientWidth;
-      this.calculateThumbnailContainerWidthAfterViewInit();
-    }
-    if (this.videoSlideContainer) {
-      this.startAutoChange();
-      this.showSlide(this.currentVideoSlideIndex);
-      this.videoThumbnailContainerWidth = this.videoSlideContainer.nativeElement.clientWidth;
-      this.calculateThumbnailContainerWidthAfterViewInit();
-    }
+      this.nextImage();
+      this.departmentDetails?.posts?.postDetails.forEach((_: any, postIndex: number) => {
+        this.nextImage2(postIndex);
+      });
+    }, 7000);
   }
-
-  calculateThumbnailContainerWidthAfterViewInit(): void {
-    this.thumbnailContainerWidth = this.imageSlideContainer.nativeElement.clientWidth;
-  }
-
-  calculateVideoThumbnailContainerWidthAfterViewInit(): void {
-    this.videoThumbnailContainerWidth = this.videoSlideContainer.nativeElement.clientWidth;
+  
+  ngAfterViewInit(): void {
+    setTimeout(() => this.generateCalendar(), 0);
   }
   prevImage() {
-    this.currentIndex = (this.currentIndex - 1 + this.images.length) % this.images.length;
+    if (this.currentIndex > 0) {
+      this.currentIndex--;
+    } else {
+      this.currentIndex = this.images.length - 1;
+    }
   }
 
   nextImage() {
-    this.currentIndex = (this.currentIndex + 1) % this.images.length;
+    if (this.currentIndex < this.images.length - 1) {
+      this.currentIndex++;
+    } else {
+      this.currentIndex = 0;
+    }
+  }
+  
+  prevVideo() {
+    if (this.currentVideoIndex > 0) {
+      this.currentVideoIndex--;
+    } else {
+      this.currentVideoIndex = this.videos.length - 1;
+    }
+  }
+
+  nextVideo() {
+    if (this.currentVideoIndex < this.videos.length - 1) {
+      this.currentVideoIndex++;
+    } else {
+      this.currentVideoIndex = 0;
+    }
+  }
+
+  prevImage2(pi: number) {
+    if (this.postIndex[pi] > 0) {
+      this.postIndex[pi]--;
+    } else {
+      this.postIndex[pi] = this.postImages[pi].length - 1;
+    }
+  }
+
+  nextImage2(pi: number) {
+    if (this.postIndex[pi] < this.postImages[pi].length - 1) {
+      this.postIndex[pi]++;
+    } else {
+      this.postIndex[pi] = 0;
+    }
   }
 
   ngOnDestroy(): void {
@@ -122,85 +185,7 @@ export class IndexComponent implements AfterViewInit, OnDestroy {
       this.observer.disconnect();
     }
   }
-
-  startAutoChange() {
-    setInterval(() => {
-      this.nextImage();
-    }, 7000);
-  }
-
-  showSlide(index: number): void {
-    if (index < 0) {
-      this.currentSlideIndex = this.images.length - 1;
-    } else if (index >= this.images.length) {
-      this.currentSlideIndex = 0;
-    } else {
-      this.currentSlideIndex = index;
-    }
-  }
-
-  setupIntersectionObserver() {
-    const options = {
-      root: null, // relative to the viewport
-      threshold: 0.5 // when 50% of the video is visible
-    };
-
-    this.observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          this.playVideo();
-        } else {
-          this.pauseVideo();
-        }
-      });
-    }, options);
-
-    if (this.videoPlayer && this.videoPlayer.nativeElement) {
-      this.observer.observe(this.videoPlayer.nativeElement);
-    }
-  }
-
-  playVideo() {
-    if (this.videoPlayer && this.videoPlayer.nativeElement) {
-      this.videoPlayer.nativeElement.play();
-    }
-  }
-
-  pauseVideo() {
-    if (this.videoPlayer && this.videoPlayer.nativeElement) {
-      this.videoPlayer.nativeElement.pause();
-    }
-  }
-  playVideoIfVisible() {
-    if (this.videoPlayer && this.videoPlayer.nativeElement) {
-      const observerEntry = this.observer.takeRecords().find(entry => entry.target === this.videoPlayer.nativeElement);
-      if (observerEntry && observerEntry.isIntersecting) {
-        this.playVideo();
-      }
-    }
-  }
-  calculateTimeRemaining() {
-    const currentDate = new Date();
-    const timeDifference = this.admissionEndDate.getTime() - currentDate.getTime();
-
-    if (timeDifference > 0) {
-      const seconds = Math.floor(timeDifference / 1000);
-      const minutes = Math.floor(seconds / 60);
-      const hours = Math.floor(minutes / 60);
-      const days = Math.floor(hours / 24);
-      const months = Math.floor(days / 30);
-
-      this.timeRemaining = {
-        months: months % 12,
-        days: days % 30,
-        hours: hours % 24,
-        minutes: minutes % 60
-      };
-    } else {
-      this.timeRemaining = null; // Admission date has passed
-    }
-  }
-
+  
   generateCalendar(): void {
     if (!this.calendarContainer) return;
 
@@ -283,24 +268,25 @@ export class IndexComponent implements AfterViewInit, OnDestroy {
     table += '</tr></table>';
     return table;
   }
-  
+
   openModal() {
-    this.fullImageSrc = "./assets/images/Collegemap.jpg";
+    this.fullImageSrc = this.departmentDetails.Photo;
     this.isImageModalOpen = true;
-    this.zoomLevel = 1; 
+    this.zoomLevel = 1;
     this.resetPosition();
   }
 
   openModal2(event: Event): void {
     const element = event.currentTarget as HTMLElement;
     let profileDiv = element.previousElementSibling?.previousElementSibling;
-  
+
     if (profileDiv && profileDiv.classList.contains('profile')) {
       const paragraph = profileDiv.querySelector('.profile-text');
-  
+
       if (paragraph && paragraph.innerHTML) {
         this.fullProfileText = this.sanitizer.bypassSecurityTrustHtml(paragraph.innerHTML);
         this.isProfileModalOpen = true;
+        this.cdr.detectChanges(); 
       } else {
         console.warn('No paragraph found inside profile-text');
       }
@@ -308,8 +294,6 @@ export class IndexComponent implements AfterViewInit, OnDestroy {
       console.warn('Could not find profile container');
     }
   }
-  
-  
 
   closeModal() {
     this.isImageModalOpen = false;
@@ -376,4 +360,75 @@ export class IndexComponent implements AfterViewInit, OnDestroy {
     this.lastTranslateY = 0;
   }
 
+  loadDepartmentData(deptName: string) {
+    this.apiService.getDepartments(deptName).subscribe(
+      data => {
+        this.departmentDetails = data;
+        this.images = this.departmentDetails.images.map((imgObj: DepartmentImage) => ({
+          Img: this.baseUrl + imgObj.Img,
+          Caption: imgObj.Caption ?? null
+        }))
+        this.deptID = this.departmentDetails.id;
+        this.apiService.getPost(this.deptID).subscribe(
+          postData => {
+            this.departmentDetails.posts = postData;
+            this.postImages = this.departmentDetails.posts.postDetails.map((post: { images: PostImage[] }) =>
+              post.images.map((imgObj2: PostImage) => ({
+                Img: this.baseUrl + imgObj2.Img,
+                Caption: imgObj2.Caption ?? null
+              }))
+            );
+          },
+          error => {
+            console.error("Post not found or server error:", error);
+          }
+        );
+      },
+      error => {
+        console.error("Department not found or server error:", error);
+      }
+    );
+  }
+
+  loadOtherPeople() {
+    this.apiService.getOtherPeoples().subscribe(
+      (data: any[]) => {
+        this.otherPeople = data;
+      },
+      error => {
+        console.error("Department not found or server error:", error);
+      }
+    );
+  }
+
+  loadVideo() {
+    this.apiService.getVideos().subscribe(
+      (data: any[]) => {
+        this.videos = data;
+        this.videos.forEach(video => {
+          video.embedUrl = this.getEmbedUrl(video.Url);
+        });
+      },
+      error => {
+        console.error("Videos not found or server error:", error);
+      }
+    );
+  }
+
+  getEmbedUrl(url: string): SafeResourceUrl {
+    const videoId = this.getVideoId(url);
+    const embed = `https://www.youtube.com/embed/${videoId}`;
+    return this.sanitizer.bypassSecurityTrustResourceUrl(embed);
+  }
+
+  getOtherPeople(order: number) {
+    return this.otherPeople.filter(op => op.Order === order);
+  }
+
+  getVideoId(url: string): string {
+    if (!url) return '';
+    const regex = /(?:https?:\/\/)?(?:www\.)?(?:youtube\.com\/(?:watch\?(?:.*&)?v=|embed\/|v\/)|youtu\.be\/)([a-zA-Z0-9_-]{11})/;
+    const match = url.match(regex);
+    return match && match[1] ? match[1] : '';
+  } 
 }

@@ -8,7 +8,6 @@ import { ApiService } from '..//../service/api.service';
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.css'],
   animations: [
-    // Define the animation triggers
     trigger('flyInOut', [
       state('in', style({ transform: 'translateY(0)' })),
       transition('void => *', [
@@ -21,14 +20,20 @@ import { ApiService } from '..//../service/api.service';
     ])
   ]
 })
+
 export class HeaderComponent implements OnInit {
+  baseUrl = 'https://kbmcollege.edu.bd';
   @ViewChild('marquee', { static: true }) marqueeElement!: ElementRef;
   public notifications: any[] = [];
   private currentIndex = 0;
   academicDropdownOpen = false;
   academicDropdownOpen2 = false;
+  academicDropdownOpen3 = false;
+  academicDropdownOpen4 = false;
+  academicDropdownOpen5 = false;
   depts: string[] = [];
-  links: string[] = [];
+  deptNames: any[] = [];
+  searchKey: string = "";
 
   isCopyrightVisible = false;
   shouldDisplayCopyrightDiv = false;
@@ -38,7 +43,6 @@ export class HeaderComponent implements OnInit {
   public totalChoiceItem: number = 0;
   public searchTerm!: string;
   menuActive = false;
-  menuActive2 = false;
   inactivityTimeout: any;
   inactivityTimeout2: any;
   loginStatus: boolean = false;
@@ -59,9 +63,7 @@ export class HeaderComponent implements OnInit {
       const scrollTop = window.scrollY;
       const lastScrollPosition = contentHeight - screenHeight;
       this.shouldDisplayCopyrightDiv =
-        // contentHeight <= screenHeight || (scrollTop >= lastScrollPosition && contentHeight > screenHeight);
         contentHeight <= (screenHeight + 100) || (scrollTop >= (lastScrollPosition - 100) && contentHeight > (screenHeight - 100));
-
     }
   }
 
@@ -69,16 +71,18 @@ export class HeaderComponent implements OnInit {
   item2: any;
   item1: any;
 
-
   constructor(
     private apiService: ApiService) { }
 
   ngOnInit(): void {
+    this.apiService.search.subscribe((val: any) => {
+      this.searchKey = val;
+    });
     this.apiService.getDepts().subscribe(data => {
       this.depts = [...new Set(data.map((t: any) => t.Name))];
     });
     this.apiService.getLinks().subscribe(data => {
-      this.links = [...new Set(data.map((t: any) => t.Name))];
+      this.deptNames = data;
     });
     this.loadNotifications();
     const searchBarElement = document.getElementById('searchBar');
@@ -86,10 +90,6 @@ export class HeaderComponent implements OnInit {
       searchBarElement.style.display = 'block';
     }
     this.checkVisibility();
-  }
-
-  closeMenu() {
-    this.menuActive = false;
   }
 
   toggleMenu() {
@@ -104,6 +104,18 @@ export class HeaderComponent implements OnInit {
     this.academicDropdownOpen2 = !this.academicDropdownOpen2;
   }
 
+  toggleAcademicDropdown3() {
+    this.academicDropdownOpen3 = !this.academicDropdownOpen3;
+  }
+
+  toggleAcademicDropdown4() {
+    this.academicDropdownOpen4 = !this.academicDropdownOpen4;
+  }
+
+  toggleAcademicDropdown5() {
+    this.academicDropdownOpen5 = !this.academicDropdownOpen5;
+  }
+
   showDropdown() {
     setTimeout(() => {
     this.academicDropdownOpen = true;
@@ -113,6 +125,24 @@ export class HeaderComponent implements OnInit {
   showDropdown2() {
     setTimeout(() => {
     this.academicDropdownOpen2 = true;
+  }, 700);
+  }
+
+  showDropdown3() {
+    setTimeout(() => {
+    this.academicDropdownOpen3 = true;
+  }, 700);
+  }
+
+  showDropdown4() {
+    setTimeout(() => {
+    this.academicDropdownOpen4 = true;
+  }, 700);
+  }
+
+  showDropdown5() {
+    setTimeout(() => {
+    this.academicDropdownOpen5 = true;
   }, 700);
   }
 
@@ -128,48 +158,53 @@ export class HeaderComponent implements OnInit {
     }, 700);
   }
 
-  @HostListener('document:click', ['$event'])
-  onDocumentClick(event: Event) {
-    const target = event.target as HTMLElement;
-
-    if (!target.closest('.dropdown')) {
-        this.academicDropdownOpen = false;
-    }
-
-    if (!target.closest('.dropdown2')) {
-        this.academicDropdownOpen2 = false;
-    }
+  hideDropdown3() {
+    setTimeout(() => {
+      this.academicDropdownOpen3 = false;
+    }, 700);
   }
 
-  @HostListener('window:mousemove', ['$event'])
-  onWindowMouseMove(event: MouseEvent) {
-    const target = event.target as HTMLElement;
-
-    const insideMenu = target.closest('.navbar');
-
-    if (!insideMenu) {
-        this.menuActive = false;
-        this.academicDropdownOpen = false;
-        this.academicDropdownOpen2 = false;
-    }
+  hideDropdown4() {
+    setTimeout(() => {
+      this.academicDropdownOpen4 = false;
+    }, 700);
   }
 
+  hideDropdown5() {
+    setTimeout(() => {
+      this.academicDropdownOpen5 = false;
+    }, 700);
+  }
+  
   @HostListener('window:click', ['$event'])
-  onWindowClick(event: MouseEvent) {
-    const target = event.target as HTMLElement;
-    const insideMenu = target.closest('.navbar');
+  onClick(event: Event) {
+    this.handleInteraction(event, false);
+  }
 
-    if (!insideMenu) {
-        this.menuActive = false;
-        this.academicDropdownOpen = false;
-        this.academicDropdownOpen2 = false;
+  @HostListener('window:touchend', ['$event'])
+  onTouchEnd(event: Event) {
+    setTimeout(() => {
+      this.handleInteraction(event, true);
+    }, 100);
+  }
+
+  handleInteraction(event: Event, isTouch: boolean) {
+    const target = event.target as HTMLElement;
+    const insideDropdown = target.closest('.dropdown, .dropdown2');
+    const insideToggle = target.closest('.fa-bars');
+    const insideMenuItem = target.closest('.menu_item');
+
+    if (insideDropdown) {
+      this.menuActive = true;
+    } else if (insideMenuItem || !insideToggle) {
+      this.menuActive = false;
     }
   }
 
   loadNotifications() {
     this.apiService.getNotifications().subscribe(
       data => {
-        this.notifications = data;
+        this.notifications = data.reverse();
         this.startMarquee();
       },
       error => {
@@ -181,20 +216,41 @@ export class HeaderComponent implements OnInit {
   startMarquee() {
     if (this.notifications.length > 0) {
       this.updateMarqueeMessage();
-      this.marqueeElement.nativeElement.addEventListener('animationiteration', () => {
-        this.updateMarqueeMessage();
-      });
     }
   }
 
   updateMarqueeMessage() {
     const messageElement: HTMLElement = this.marqueeElement.nativeElement.querySelector('.msg');
+    const lastTen = this.notifications.slice(-12);
 
     let notificationsHTML = '';
-    for (let i = 0; i < this.notifications.length; i++) {
+    for (let i = 0; i < lastTen.length; i++) {
       const currentIndex = (this.currentIndex + i) % this.notifications.length;
       const currentNotification = this.notifications[currentIndex];
-      notificationsHTML += `<a href="${currentNotification.Link}" class="msg_link" target="_blank">${currentNotification.Text}</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`;
+      if(currentNotification.Link) {
+        notificationsHTML += `<i class="fas fa-info-circle" style="
+        background-color: seagreen;
+        color: white;
+        border: 2px dotted white;
+        border-radius: 50%;
+        padding: 1px;
+        font-size: 16px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center; "></i>&nbsp;&nbsp;<a href="${currentNotification.Link}" target="_blank" class="msg_link">${currentNotification.Text}</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`;
+      }
+      else {
+          notificationsHTML += `<i class="fas fa-info-circle" style="
+          background-color: seagreen;
+          color: white;
+          border: 2px dotted white;
+          border-radius: 50%;
+          padding: 1px;
+          font-size: 16px;
+          display: inline-flex;
+          align-items: center;
+          justify-content: center; "></i>&nbsp;&nbsp;<a href="https://kbmcollege.edu.bd${currentNotification.Img}" target="_blank" class="msg_link">${currentNotification.Text}</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`;
+      } 
     }
 
     messageElement.innerHTML = notificationsHTML;
@@ -258,6 +314,13 @@ export class HeaderComponent implements OnInit {
       }
       .msg_link:hover {
         color: yellowgreen;
+      }
+      .marquee .msg {
+        animation-play-state: running;
+      }
+      .marquee .msg:hover {
+        animation-play-state: paused !important;
+        cursor: pointer;
       }
     `;
     document.head.appendChild(style);

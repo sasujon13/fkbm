@@ -1,5 +1,6 @@
 import { Component, ElementRef, HostListener, OnInit, Renderer2, ViewChild } from '@angular/core';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
+import { ApiService } from '..//../service/api.service';
 
 @Component({
   selector: 'app-administration',
@@ -11,9 +12,13 @@ export class AdministrationComponent {
   iframeSrc: SafeResourceUrl;
   isLoading = true;
   showDjango = true;
+  searchKey: string = "";
 
 
   ngOnInit() {
+    this.apiService.search.subscribe((val: any) => {
+      this.searchKey = val;
+    });
     this.loadIframe();
   }
 
@@ -29,7 +34,7 @@ export class AdministrationComponent {
     this.showDjango = false;
   }
   
-  constructor(private sanitizer: DomSanitizer, private renderer: Renderer2) {
+  constructor(private sanitizer: DomSanitizer, private renderer: Renderer2, private apiService: ApiService,) {
     this.iframeSrc = this.sanitizer.bypassSecurityTrustResourceUrl('https://school.shebashikkha.com/login');
   }
 

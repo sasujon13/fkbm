@@ -1,4 +1,5 @@
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
+import { ApiService } from '..//../service/api.service';
 import { Component, Renderer2 } from '@angular/core';
 
 @Component({
@@ -9,9 +10,13 @@ import { Component, Renderer2 } from '@angular/core';
 export class NoticeComponent {
   iframeSrc: SafeResourceUrl;
   isLoading = true;
+  searchKey: string = "";
 
   ngOnInit() {
     this.loadIframe();
+    this.apiService.search.subscribe((val: any) => {
+      this.searchKey = val;
+    });
     const messageElement: HTMLElement | null = document.querySelector('.msg');
     if (messageElement) {
       this.renderer.setStyle(messageElement, 'display', 'none');
@@ -31,7 +36,7 @@ export class NoticeComponent {
   onIframeLoad() {
     this.isLoading = false;
   }
-  constructor(private sanitizer: DomSanitizer, private renderer: Renderer2) {
-    this.iframeSrc = this.sanitizer.bypassSecurityTrustResourceUrl('http://127.0.0.1:8000/open-admin/kbm/notification/');
+  constructor(private sanitizer: DomSanitizer, private renderer: Renderer2, private apiService: ApiService,) {
+    this.iframeSrc = this.sanitizer.bypassSecurityTrustResourceUrl('https://kbmcollege.edu.bd/api/open-admin/kbm/notice/');
   }
 }
